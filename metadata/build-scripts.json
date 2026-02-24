@@ -1,10 +1,4 @@
 {
-  "build-essential": {
-    "deps": [],
-    "relative_path": "build-essential.def",
-    "sbatch": false,
-    "whatis": "Missing description"
-  },
   "cellranger/8.0.1": {
     "deps": [],
     "relative_path": "cellranger/8.0.1",
@@ -16,12 +10,6 @@
     "relative_path": "cellranger/9.0.1",
     "sbatch": false,
     "whatis": "10X Genomics Single Cell Software Suite"
-  },
-  "code-server": {
-    "deps": [],
-    "relative_path": "code-server.def",
-    "sbatch": false,
-    "whatis": "Missing description"
   },
   "grch38/bowtie2/ucsc_no_alt": {
     "deps": [
@@ -2903,12 +2891,6 @@
     "sbatch": false,
     "whatis": "GRCm39 GENCODE M9 transcript FASTA"
   },
-  "igv": {
-    "deps": [],
-    "relative_path": "igv.def",
-    "sbatch": false,
-    "whatis": "Missing description"
-  },
   "orad/2.7.0": {
     "deps": [],
     "relative_path": "orad/2.7.0",
@@ -2920,12 +2902,6 @@
     "relative_path": "rpvg/1.0",
     "sbatch": false,
     "whatis": "Inferring the expression VG mpmap results for RNA-seq"
-  },
-  "rstudio-server": {
-    "deps": [],
-    "relative_path": "rstudio-server.def",
-    "sbatch": false,
-    "whatis": "Missing description"
   },
   "ubuntu20/base_image": {
     "deps": [],
@@ -3626,12 +3602,6 @@
   "ubuntu24/xfce4": {
     "deps": [],
     "relative_path": "ubuntu24/xfce4.def",
-    "sbatch": false,
-    "whatis": "Missing description"
-  },
-  "xfce4": {
-    "deps": [],
-    "relative_path": "xfce4.def",
     "sbatch": false,
     "whatis": "Missing description"
   }
