@@ -32,6 +32,7 @@ print_help() {
     echo "Options:"
     echo "  -p <port>       Port for noVNC (default: ${PORT:-randomly picked}). Valid range: 1024-65535"
     echo "  -a <passwd>     VNC password (if empty, one is generated)"
+    echo "  -w              Use current directory as working directory (clears additional overlays)"
     echo ""
     echo "  -b <image>      Base image file"
     echo "  -e <.img>       Writable overlay (default: $OVERLAY)"
@@ -41,6 +42,7 @@ print_help() {
     echo ""
     echo "State  file: $(state_path $HELPER_NAME)"
     echo "Config file: $(config_path $HELPER_NAME)"
+    echo "REUSE_MODE: 'always' (auto-reuse), 'ask' (prompt, default), 'never' (always use config)"
 }
 
 case $1 in
@@ -49,17 +51,50 @@ case $1 in
     *)              ;;
 esac
 
+# Override print_specs to add DESKTOP_HOME
+print_specs() {
+    spec_line "Port" PORT
+    local cwd_hint=""
+    local current_dir=$(readlink -f .)
+    [ "$CWD" != "$current_dir" ] && cwd_hint=" (use -w for current dir)"
+    print_msg "  Working Dir: ${BLUE}$CWD${NC}${cwd_hint}"
+    spec_line "Desktop Home" DESKTOP_HOME
+    spec_line "Base Image" BASE_IMAGE
+    spec_line "Overlay" OVERLAY
+    [ -n "$OVERLAYS" ] && print_msg "  Additional overlays: ${BLUE}$OVERLAYS${NC}"
+}
+
+REUSE_PREVIOUS_CWD=false
+_HAS_PREVIOUS_STATE=false
+_STATE_PORT=""
+
+STATE_FILE="$HELPER_STATE_DIR/$HELPER_NAME"
+read_headless_state "$STATE_FILE"
+case $? in
+    3) # Has previous state - handle reuse after arg parse
+        _HAS_PREVIOUS_STATE=true
+        _STATE_PORT="${PORT:-}"
+        print_info "Found previous $HELPER_NAME settings."
+        ;;
+esac
+
 # Track if -o flag is used to clear overlays on first use
 _OVERLAYS_CLEARED=false
 # track whether -a supplied a password
 AUTH_FLAG_SET=false
+# Track if user wants to change working directory
+NEW_CWD=""
 
-while getopts "p:a:b:e:o:" opt; do
+while getopts "p:a:b:e:o:w" opt; do
     case ${opt} in
-        p ) PORT=$OPTARG ;;
+        w )
+            NEW_CWD="$(readlink -f .)"
+            if [ "$_OVERLAYS_CLEARED" = false ]; then OVERLAYS=""; _OVERLAYS_CLEARED=true; fi
+            ;;
+        p ) PORT=$OPTARG; _ARG_PORT=1 ;;
         a ) VNC_PASSWD=$OPTARG; AUTH_FLAG_SET=true ;;
-        b ) BASE_IMAGE="$OPTARG" ;;
-        e ) OVERLAY=$OPTARG ;;
+        b ) BASE_IMAGE="$OPTARG"; _ARG_BASE_IMAGE=1 ;;
+        e ) OVERLAY=$OPTARG; _ARG_OVERLAY=1 ;;
         o ) # First -o clears previous overlays, then builds fresh list
             if [ "$_OVERLAYS_CLEARED" = false ]; then OVERLAYS=""; _OVERLAYS_CLEARED=true; fi
             OVERLAYS="${OVERLAYS:+$OVERLAYS:}$OPTARG"
@@ -67,6 +102,34 @@ while getopts "p:a:b:e:o:" opt; do
         \? ) print_help; exit 1 ;;
     esac
 done
+
+# Handle reuse mode (after arg parse)
+if [ "$_HAS_PREVIOUS_STATE" = true ]; then
+    handle_reuse_mode "$HELPER_NAME"
+fi
+
+# Handle working directory changes
+if [ -n "$NEW_CWD" ]; then
+    CWD="$NEW_CWD"
+elif [ "$REUSE_PREVIOUS_CWD" = true ]; then
+    cd "$CWD"
+fi
+
+# Resolve port: CLI > config > state
+if [ -z "${_ARG_PORT:-}" ] && [ "$REUSE_PREVIOUS_CWD" != true ]; then
+    if [ -n "${_CONFIG_PORT:-}" ]; then
+        PORT="$_CONFIG_PORT"
+    elif [ -n "$_STATE_PORT" ]; then
+        PORT="$_STATE_PORT"
+    fi
+fi
+
+# Show settings (once)
+if [ "$_SPECS_SHOWN" != true ]; then
+    print_msg "Using settings:"
+    print_specs
+    countdown 3
+fi
 
 # If no port specified, pick an available one
 if [ -z "$PORT" ]; then
@@ -91,7 +154,7 @@ check_and_install_overlays xfce4 igv $OVERLAYS
 
 if [ ! -f "$OVERLAY" ]; then
     print_info "Overlay ${BLUE}$OVERLAY${NC} not found. Continuing without it."
-    sleep 3
+    countdown 3
 else
     check_overlay_integrity "$OVERLAY"
 fi
@@ -166,6 +229,16 @@ cleanup() {
 }
 
 trap cleanup SIGINT SIGTERM
+
+# Save state before running
+cat > "$STATE_FILE" <<RUNSTATE
+PORT=$PORT
+CWD=$CWD
+DESKTOP_HOME="$DESKTOP_HOME"
+BASE_IMAGE="$BASE_IMAGE"
+OVERLAY="$OVERLAY"
+OVERLAYS="$OVERLAYS"
+RUNSTATE
 
 condatainer instance start \
     $BASE_IMAGE_ARG \
