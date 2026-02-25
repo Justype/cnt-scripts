@@ -350,10 +350,12 @@ spec_line() {
     local config_var="_CONFIG_${var}"
     local note=""
 
-    if [ -z "${!arg_var:-}" ] && [ -n "${!config_var:-}" ] && [ "$val" != "${!config_var}" ]; then
-        note=" (default: ${!config_var})"
-    elif [ -n "${!config_var:-}" ]; then
-        note=" (default)"
+    if [ -z "${!arg_var:-}" ] && [ -n "${!config_var:-}" ]; then
+        if [ "$val" != "${!config_var}" ]; then
+            note=" (default: ${!config_var})"
+        else
+            note=" (default)"
+        fi
     fi
 
     local current_len=$(( ${#label} + ${#val} + 4 )) # 4 for beginning space and ": "
@@ -435,7 +437,7 @@ handle_reuse_mode() {
             fi
             print_msg "Previous settings:"
             print_specs
-            if confirm_default_yes "Reuse?" "Y: accept / n: defaults / Ctrl+C: cancel"; then
+            if confirm_default_yes "Reuse?" "Y: accept / n: defaults (use pwd) / Ctrl+C: cancel"; then
                 REUSE_PREVIOUS_CWD=true
                 _SPECS_SHOWN=true
             else
