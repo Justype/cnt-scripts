@@ -4,7 +4,7 @@ Scan `build-scripts/` and generate a JSON metadata file mapping
 normalized spec strings to raw GitHub URLs for the script files.
 
 - App packages: build-scripts/<name>/<version> -> key: "name=version" -> raw URL
-- Reference packages: build-scripts/<assembly>/<data_type>/<version> -> key: "assembly=data_type=version" -> raw URL
+- Reference packages: build-scripts/<assembly|project>/<data_type>/<version> -> key: "assembly=data_type=version" -> raw URL
 
 The generated file is written to `metadata/build-scripts.json`.
 """
@@ -64,7 +64,6 @@ for script_name, path in get_local_build_scripts().items():
     script_metadata['relative_path'] = os.path.relpath(path, BUILD_SCRIPTS_DIR)
     script_metadata['whatis'] = "Missing description"
     script_metadata['deps'] = []
-    script_metadata['sbatch'] = False
     try:
         with open(path, 'r') as sf:
             for line in sf:
@@ -73,8 +72,6 @@ for script_name, path in get_local_build_scripts().items():
                 if line.startswith('#DEP:'):
                     dep = line[len('#DEP:'):].strip()
                     script_metadata['deps'].append(dep)
-                if line.startswith('#SBATCH'):
-                    script_metadata['sbatch'] = True
     except Exception:
         pass
 
