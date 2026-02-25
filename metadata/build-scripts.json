@@ -2763,6 +2763,11 @@
     "relative_path": "ubuntu20/r4.5.2.def",
     "whatis": "Ubuntu focal R 4.5.2"
   },
+  "ubuntu20/rstudio-server": {
+    "deps": [],
+    "relative_path": "ubuntu20/rstudio-server.def",
+    "whatis": "Missing description"
+  },
   "ubuntu20/xfce4": {
     "deps": [],
     "relative_path": "ubuntu20/xfce4.def",
@@ -2957,6 +2962,11 @@
     "deps": [],
     "relative_path": "ubuntu22/r4.5.2.def",
     "whatis": "Ubuntu jammy R 4.5.2"
+  },
+  "ubuntu22/rstudio-server": {
+    "deps": [],
+    "relative_path": "ubuntu22/rstudio-server.def",
+    "whatis": "Missing description"
   },
   "ubuntu22/xfce4": {
     "deps": [],
