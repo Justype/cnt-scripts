@@ -474,7 +474,7 @@ parse_htcondor_memory() {
 time_to_seconds() {
     local t="$1"
     t=$(echo "$t" | tr -d '[:space:]') # Strip whitespace
-    
+
     # Note: 10# forces bash to read numbers as base-10, preventing octal errors on "08" or "09"
     if [[ "$t" =~ ^([0-9]+):([0-9]{2}):([0-9]{2})$ ]]; then
         echo $(( 10#${BASH_REMATCH[1]}*3600 + 10#${BASH_REMATCH[2]}*60 + 10#${BASH_REMATCH[3]} ))
@@ -527,7 +527,7 @@ read_job_state() {
 
 # wait_for_job <job_id>
 #   Polls condor_q until job is RUNNING. Sets global NODE variable.
-#   Exits if job disappears from condor_q or is held. 
+#   Exits if job disappears from condor_q or is held.
 #   When the job starts, attempts to locate a log file in $LOG_DIR.
 wait_for_job() {
     local job_id="$1"

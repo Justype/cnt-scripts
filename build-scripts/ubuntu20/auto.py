@@ -5,7 +5,7 @@ Query the Docker Hub to generate ubuntu20/*def files
 - R related => query posit/r-base tags
     - For we look for tags like 4.4.3-focal-{arch} => 4.4.3-focal in r4.4.3.def
     python3 build-scripts/ubuntu20/auto.py # to generate new files
-    rm build-scripts/ubuntu20/r*.def # to remove generated files
+    rm build-scripts/ubuntu20/r[0-9]*.def # to remove generated files
 """
 
 import json
@@ -63,7 +63,7 @@ class RVersions:
     def filter_versions(self, tag_list, pattern=None):
         """Extract semver versions from relevant tags.
 
-        By default, search for ``major.minor.patch-{CODE_NAME}`` with an 
+        By default, search for ``major.minor.patch-{CODE_NAME}`` with an
             optional architecture suffix (e.g. ``-amd64`` or ``-arm64``).
         """
 

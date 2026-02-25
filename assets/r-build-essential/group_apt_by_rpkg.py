@@ -4,10 +4,11 @@
 
 # Packages to comment out (can include simple glob suffix '*')
 FILTERS = [
-    "chromium", "dcraw", "gsfonts", "imagej", "nvidia-cuda-dev",
-    "ocl-icd-opencl-dev", "pari-gp", "patch", "saga",
-    "software-properties-common", "tcl", "tk", "tk-dev", "tk-table",
-    "tesseract-ocr-eng", "texlive", "coinor-*",
+    "chromium", "dcraw", "imagej", "nvidia-cuda-dev",
+    "ocl-icd-opencl-dev", "saga", "texlive",
+    "tesseract-ocr-eng", "coinor-*",
+    # "software-properties-common", "tk", "tk-dev", "tk-table",
+    # "pari-gp", "patch", "gsfonts",
 ]
 
 import sys
@@ -86,5 +87,8 @@ with output_path.open("w") as out:
         write_pkg_line(pkg)
     for pkg in sorted(lib_pkgs):
         write_pkg_line(pkg)
+
+    # Clean up apt lists to reduce image size
+    out.write("\n    apt-get clean && rm -rf /var/lib/apt/lists/*\n")
 
 print(f"Generated: {output_path}")

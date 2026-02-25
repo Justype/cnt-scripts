@@ -467,7 +467,7 @@ read_job_state() {
 
     case "$status" in
         PEND) return 1 ;;
-        RUN) 
+        RUN)
             [ -z "$NODE" ] && NODE=$(bjobs -noheader -o exec_host "$JOB_ID" 2>/dev/null | awk '{print $1}' | cut -d'/' -f1)
             return 2 ;;
         *) return 3 ;;

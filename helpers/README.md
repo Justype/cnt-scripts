@@ -102,7 +102,7 @@ Scheduler scripts handle this automatically by SSH-ing to the compute node after
 
 ## Logs
 
-Scheduler job logs are written to `~/logs/`: 
+Scheduler job logs are written to `~/logs/`:
 
 ```
 ~/logs/<service>-<jobid>.log
