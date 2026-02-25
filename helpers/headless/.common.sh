@@ -356,3 +356,123 @@ check_and_install_overlays() {
         fi
     fi
 }
+
+# ============= Reuse Mode Functions =============
+
+# spec_line <label> <VAR_NAME>
+#   Prints one spec line. Shows "(default: X)" if value differs from
+#   config default and was not set via CLI (_ARG_ prefix).
+spec_line() {
+    local label="$1" var="$2"
+    local val="${!var}"
+    [ -z "$val" ] && return
+
+    local arg_var="_ARG_${var}"
+    local config_var="_CONFIG_${var}"
+    local note=""
+
+    if [ -z "${!arg_var:-}" ] && [ -n "${!config_var:-}" ]; then
+        if [ "$val" != "${!config_var}" ]; then
+            note=" (default: ${!config_var})"
+        else
+            note=" (default)"
+        fi
+    fi
+
+    local current_len=$(( ${#label} + ${#val} + 4 )) # 4 for beginning space and ": "
+    local pad_width=22
+    local spaces=""
+
+    if [ "$current_len" -lt "$pad_width" ]; then
+        local diff=$(( pad_width - current_len ))
+        spaces=$(printf '%*s' "$diff" "")
+    fi
+
+    print_msg "  ${label}: ${BLUE}${val}${NC}${spaces}${note}"
+}
+
+# print_specs
+#   Prints all current job settings. Override in helper scripts for custom fields.
+print_specs() {
+    spec_line "Port" PORT
+    local cwd_hint=""
+    local current_dir=$(readlink -f .)
+    [ "$CWD" != "$current_dir" ] && cwd_hint=" (use -w for current dir)"
+    print_msg "  Working Dir: ${BLUE}$CWD${NC}${cwd_hint}"
+    spec_line "Base Image" BASE_IMAGE
+    spec_line "Overlay" OVERLAY
+    [ -n "$OVERLAYS" ] && print_msg "  Additional overlays: ${BLUE}$OVERLAYS${NC}"
+}
+
+# countdown [seconds]
+#   Prints a countdown with Ctrl+C hint, overwriting the same line each tick.
+countdown() {
+    local secs="${1:-3}"
+    while [ "$secs" -gt 0 ]; do
+        printf "\r[MSG] Press Ctrl+C to cancel %d " "$secs"
+        sleep 1
+        secs=$((secs - 1))
+    done
+    printf "\r\033[K"
+}
+
+# Flag: set to true when print_specs already displayed specs
+_SPECS_SHOWN=false
+
+# handle_reuse_mode <helper_name>
+#   Handles REUSE_MODE logic when a previous state file exists.
+#   Sets global REUSE_PREVIOUS_CWD=true if reusing, false otherwise.
+handle_reuse_mode() {
+    local helper_name="$1"
+
+    if [ -z "$OVERLAY" ]; then
+        config_load "$helper_name"
+        return
+    fi
+
+    # CLI args given - keep state values with CLI overrides, no prompt
+    if [ "${OPTIND:-1}" -gt 1 ]; then
+        REUSE_PREVIOUS_CWD=true
+        return
+    fi
+
+    case "${REUSE_MODE,,}" in  # Convert to lowercase
+        always)
+            print_info "Auto-reusing previous settings (REUSE_MODE=always)."
+            REUSE_PREVIOUS_CWD=true
+            ;;
+        never)
+            print_info "Not reusing previous settings (REUSE_MODE=never)."
+            config_load "$helper_name"
+            OVERLAYS=""
+            rm -f "$STATE_FILE"
+            ;;
+        *)
+            if [ "${REUSE_MODE,,}" != "ask" ]; then
+                print_warn "Invalid REUSE_MODE='$REUSE_MODE'. Defaulting to 'ask'."
+            fi
+            print_msg "Previous settings:"
+            print_specs
+            if confirm_default_yes "Reuse?" "Y: accept / n: defaults (use pwd) / Ctrl+C: cancel"; then
+                REUSE_PREVIOUS_CWD=true
+                _SPECS_SHOWN=true
+            else
+                config_load "$helper_name"
+                OVERLAYS=""
+                print_msg "Using default settings:"
+                print_specs
+                _SPECS_SHOWN=true
+            fi
+            ;;
+    esac
+}
+
+# read_headless_state <state_file>
+#   Sources state file and loads previous settings.
+#   Returns: 0 = no state file, 3 = has previous state
+read_headless_state() {
+    local state_file="$1"
+    [ ! -f "$state_file" ] && return 0
+    source "$state_file"
+    return 3
+}
