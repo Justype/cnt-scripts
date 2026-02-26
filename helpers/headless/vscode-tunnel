@@ -18,7 +18,6 @@ config_init $HELPER_NAME \
     TIME=12:00:00 \
     GPU= \
     BASE_IMAGE= \
-    BASE_IMAGE_DISTRO=noble \
     AUTH=github \
     MACHINE_NAME="$DEFAULT_MACHINE_NAME" \
     REUSE_MODE=ask \
@@ -56,7 +55,7 @@ esac
 print_specs() {
     spec_line "Machine" MACHINE_NAME
     local cwd_hint=""
-    local current_dir=$(readlink -f .)
+    local current_dir="${_ORIGINAL_CWD:-$(readlink -f .)}"
     [ "$CWD" != "$current_dir" ] && cwd_hint=" (use -w for current dir)"
     print_msg "  Working Dir: ${BLUE}$CWD${NC}${cwd_hint}"
     spec_line "Base Image" BASE_IMAGE
@@ -114,7 +113,7 @@ fi
 if [ "$_SPECS_SHOWN" != true ]; then
     print_msg "Using settings:"
     print_specs
-    countdown 3
+    countdown 5
 fi
 
 #region Sanity Checks

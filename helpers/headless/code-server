@@ -13,7 +13,6 @@ config_init $HELPER_NAME \
     TIME=12:00:00 \
     GPU= \
     BASE_IMAGE= \
-    BASE_IMAGE_DISTRO=noble \
     PORT= \
     AUTH=none \
     REUSE_MODE=ask \
@@ -110,7 +109,7 @@ fi
 if [ "$_SPECS_SHOWN" != true ]; then
     print_msg "Using settings:"
     print_specs
-    countdown 3
+    countdown 5
 fi
 
 # If no port specified, pick an available one

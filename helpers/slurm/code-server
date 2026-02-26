@@ -13,7 +13,6 @@ config_init $HELPER_NAME \
     TIME=12:00:00 \
     GPU= \
     BASE_IMAGE= \
-    BASE_IMAGE_DISTRO=noble \
     PORT= \
     AUTH=none \
     REUSE_MODE=ask \
@@ -80,7 +79,7 @@ print_specs() {
     spec_line "Port" PORT
     spec_line "Password" AUTH
     local cwd_hint=""
-    local current_dir=$(readlink -f .)
+    local current_dir="${_ORIGINAL_CWD:-$(readlink -f .)}"
     [ "$CWD" != "$current_dir" ] && cwd_hint=" (use -w for current dir)"
     print_msg "  Working Dir: ${BLUE}$CWD${NC}${cwd_hint}"
     spec_line "Base Image" BASE_IMAGE
@@ -170,7 +169,7 @@ fi
 if [ "$_SPECS_SHOWN" != true ]; then
     print_msg "Using settings:"
     print_specs
-    countdown 3
+    countdown 5
 fi
 
 # If no port specified, pick an available one

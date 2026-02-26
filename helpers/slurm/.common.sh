@@ -26,6 +26,7 @@ HELPER_DEFAULTS_DIR="$CONDATAINER_CONFIG_DIR/helper"
 HELPER_STATE_DIR="${XDG_STATE_HOME:-$HOME/.local/state}/condatainer/helper"
 LOG_DIR="$HOME/logs"
 mkdir -p "$CONDATAINER_CONFIG_DIR" "$HELPER_DEFAULTS_DIR" "$HELPER_STATE_DIR" "$LOG_DIR"
+_ORIGINAL_CWD=$(readlink -f .) # Capture user's pwd before any cd
 # Ensure SCRATCH is set up
 if [ -z "$SCRATCH" ]; then
     print_info "SCRATCH environment variable is not set. Falling back to HOME directory."
@@ -379,7 +380,7 @@ print_specs() {
     spec_line "GPU" GPU
     spec_line "Port" PORT
     local cwd_hint=""
-    local current_dir=$(readlink -f .)
+    local current_dir="${_ORIGINAL_CWD:-$(readlink -f .)}"
     [ "$CWD" != "$current_dir" ] && cwd_hint=" (use -w for current dir)"
     print_msg "  Working Dir: ${BLUE}$CWD${NC}${cwd_hint}"
     spec_line "Base Image" BASE_IMAGE
@@ -490,10 +491,12 @@ wait_for_job() {
     while true; do
         local status=$(squeue -j $job_id -h -o "%T" 2>/dev/null)
         if [ "$status" == "RUNNING" ]; then
+            sleep 2 # Give some time for job initialization
+            printf "\r\033[K"
             break
         fi
         if [ -z "$status" ]; then
-            echo ""
+            printf "\r\033[K"
             print_error "Job $job_id not found in the queue."
             # If job vanished, silently set JOB_LOG if a matching log exists
             local matches=()
@@ -507,14 +510,12 @@ wait_for_job() {
             fi
             exit 1
         fi
-        printf "\r[INFO] Waiting for job %s to start running. Current status: %s." "$job_id" "$status"
+        printf "\r[${CYAN}INFO${NC}] Waiting for job ${YELLOW}%s${NC} to start running. Current status: ${YELLOW}%s${NC}." "$job_id" "$status"
         sleep 5
     done
 
-    sleep 2 # Give some time for job initialization
     NODE=$(squeue -j $job_id -h -o "%N")
     if [ -z "$NODE" ]; then
-        echo ""
         print_error "Failed to retrieve node for job $job_id."
         local matches=()
         while IFS= read -r -d $'\0' f; do
@@ -526,6 +527,5 @@ wait_for_job() {
         fi
         exit 1
     fi
-    echo ""
     print_info "Job ${YELLOW}$job_id${NC} is now running on node ${BLUE}$NODE${NC}."
 }
