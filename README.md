@@ -29,7 +29,7 @@ cnt-scripts/
 
 Scripts are discovered automatically by **CondaTainer** — no manual configuration needed for the common cases below.
 
-**CondaTainer** fetches scripts directly from this repo at runtime:
+**CondaTainer** fetches scripts directly from this repo at runtime.
 
 ### Local clone (portable install)
 
@@ -75,3 +75,10 @@ make clean      # remove build/ directory
 ## Contributing
 
 See [CONTRIBUTING.md](./CONTRIBUTING.md) for how to add build scripts or helper scripts.
+
+You can overwrite the `CNT_SCRIPTS_LINK` env to point to your own repo for testing.
+
+```
+CNT_SCRIPTS_LINK=https://raw.githubusercontent.com/Justype/cnt-scripts/refs/heads/helper/add-headless-state \
+    condatainer helper --update
+```
