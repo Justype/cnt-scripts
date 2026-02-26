@@ -495,10 +495,12 @@ wait_for_job() {
     while true; do
         local status=$(bjobs -noheader -o stat "$job_id" 2>/dev/null | awk '{print $1}')
         if [ "$status" == "RUN" ]; then
+            sleep 2 # Give some time for job initialization
+            printf "\r\033[K"
             break
         fi
         if [ -z "$status" ]; then
-            echo ""
+            printf "\r\033[K"
             print_error "Job $job_id not found in the queue."
             # If job vanished, silently set JOB_LOG if a matching log exists
             local matches=()
@@ -512,14 +514,12 @@ wait_for_job() {
             fi
             exit 1
         fi
-        printf "\r[INFO] Waiting for job %s to start running. Current status: %s." "$job_id" "$status"
+        printf "\r[${CYAN}INFO${NC}] Waiting for job ${YELLOW}%s${NC} to start running. Current status: ${YELLOW}%s${NC}." "$job_id" "$status"
         sleep 5
     done
 
-    sleep 2 # Give some time for job initialization
     NODE=$(bjobs -noheader -o exec_host "$job_id" 2>/dev/null | awk '{print $1}' | cut -d'/' -f1)
     if [ -z "$NODE" ]; then
-        echo ""
         print_error "Failed to retrieve node for job $job_id."
         local matches=()
         while IFS= read -r -d $'\0' f; do
@@ -531,6 +531,5 @@ wait_for_job() {
         fi
         exit 1
     fi
-    echo ""
     print_info "Job ${YELLOW}$job_id${NC} is now running on node ${BLUE}$NODE${NC}."
 }

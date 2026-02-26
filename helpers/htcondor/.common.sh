@@ -545,16 +545,18 @@ wait_for_job() {
     while true; do
         local status=$(condor_q "$job_id" -format "%s" JobStatus 2>/dev/null | head -n1 || true)
         if [ "$status" == "2" ]; then
+            sleep 2 # Give some time for job initialization
+            printf "\r\033[K"
             break
         fi
         if [ "$status" == "5" ]; then
-            echo ""
+            printf "\r\033[K"
             print_error "Job $job_id is HELD by HTCondor."
             print_info "Run ${YELLOW}condor_q -analyze $job_id${NC} to see why it is held."
             exit 1
         fi
         if [ -z "$status" ]; then
-            echo ""
+            printf "\r\033[K"
             print_error "Job $job_id not found in the queue."
             # If job vanished, silently set JOB_LOG if a matching log exists
             local matches=()
@@ -568,15 +570,13 @@ wait_for_job() {
             fi
             exit 1
         fi
-        printf "\r[INFO] Waiting for job %s to start running. Current status: %s." "$job_id" "$status"
+        printf "\r[${CYAN}INFO${NC}] Waiting for job ${YELLOW}%s${NC} to start running. Current status: ${YELLOW}%s${NC}." "$job_id" "$status"
         sleep 5
     done
 
-    sleep 2 # Give some time for job initialization
     local remote=$(condor_q "$job_id" -format "%s" RemoteHost 2>/dev/null | head -n1 || true)
     NODE=$(echo "$remote" | sed -E 's/.*@//; s/:.*//')
     if [ -z "$NODE" ]; then
-        echo ""
         print_error "Failed to retrieve node for job $job_id."
         local matches=()
         while IFS= read -r -d $'\0' f; do
@@ -588,6 +588,5 @@ wait_for_job() {
         fi
         exit 1
     fi
-    echo ""
     print_info "Job ${YELLOW}$job_id${NC} is now running on node ${BLUE}$NODE${NC}."
 }
