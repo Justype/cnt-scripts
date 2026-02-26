@@ -26,6 +26,7 @@ HELPER_DEFAULTS_DIR="$CONDATAINER_CONFIG_DIR/helper"
 HELPER_STATE_DIR="${XDG_STATE_HOME:-$HOME/.local/state}/condatainer/helper"
 LOG_DIR="$HOME/logs"
 mkdir -p "$CONDATAINER_CONFIG_DIR" "$HELPER_DEFAULTS_DIR" "$HELPER_STATE_DIR" "$LOG_DIR"
+_ORIGINAL_CWD=$(readlink -f .) # Capture user's pwd before any cd
 # Ensure SCRATCH is set up
 if [ -z "$SCRATCH" ]; then
     print_info "SCRATCH environment variable is not set. Falling back to HOME directory."
@@ -379,7 +380,7 @@ print_specs() {
     spec_line "GPU" GPU
     spec_line "Port" PORT
     local cwd_hint=""
-    local current_dir=$(readlink -f .)
+    local current_dir="${_ORIGINAL_CWD:-$(readlink -f .)}"
     [ "$CWD" != "$current_dir" ] && cwd_hint=" (use -w for current dir)"
     print_msg "  Working Dir: ${BLUE}$CWD${NC}${cwd_hint}"
     spec_line "Base Image" BASE_IMAGE
