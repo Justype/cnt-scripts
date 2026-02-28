@@ -122,7 +122,7 @@ while getopts "c:m:t:g:wp:e:o:v" opt; do
         t ) TIME=$OPTARG; _TIME=$OPTARG; _ARG_TIME=1 ;;
         g ) if [ -n "$OPTARG" ] && ! [[ "$OPTARG" =~ ^[0-9]+$ ]]; then
                 print_error "-g requires a positive integer (got: '$OPTARG'). Use -g '' to clear."
-                exit 1
+                exit 2
             fi
             GPU=$OPTARG; _GPU=$OPTARG; _ARG_GPU=1 ;;
         v ) NCPUS=1; MEM=8G; TIME=02:00:00; _ARG_NCPUS=1; _ARG_MEM=1; _ARG_TIME=1;
@@ -137,7 +137,7 @@ while getopts "c:m:t:g:wp:e:o:v" opt; do
             if [ "$_OVERLAYS_CLEARED" = false ]; then OVERLAYS=""; _OVERLAYS_CLEARED=true; fi
             OVERLAYS="${OVERLAYS:+$OVERLAYS:}$OPTARG"
             ;;
-        \? ) print_help; exit 1 ;;
+        \? ) print_help; exit 2 ;;
     esac
 done
 

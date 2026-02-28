@@ -218,11 +218,11 @@ validate_port() {
     local port="$1"
     if ! printf '%s' "$port" | grep -qE '^[0-9]+$'; then
         print_error "Port must be a number."
-        exit 1
+        exit 2
     fi
     if [ "$port" -lt 1024 ] || [ "$port" -gt 65535 ]; then
         print_error "Port $port is out of allowed range (1024-65535)."
-        exit 1
+        exit 2
     fi
 }
 

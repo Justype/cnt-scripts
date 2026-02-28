@@ -93,7 +93,7 @@ while getopts "n:b:e:o:w" opt; do
             if [ "$_OVERLAYS_CLEARED" = false ]; then OVERLAYS=""; _OVERLAYS_CLEARED=true; fi
             OVERLAYS="${OVERLAYS:+$OVERLAYS:}$OPTARG"
             ;;
-        \? ) print_help; exit 1 ;;
+        \? ) print_help; exit 2 ;;
     esac
 done
 
