@@ -36,7 +36,7 @@ print_help() {
     echo "  -c <number>     Number of CPUs to allocate (default: $NCPUS)"
     echo "  -m <memory>     Amount of memory to allocate (default: $MEM)"
     echo "  -t <time>       Time limit for the job (default: $TIME)"
-    echo "  -g <gpu>        GPU resources (e.g., 1, a100:2). Use -g '' to clear"
+    echo "  -g <gpu>        Number of GPUs to request (e.g., 1, 2). Use -g '' to clear"
     echo "  -v              View Mode NCPUS:1 MEM:4G TIME:02:00:00"
     echo "  -w              Use current directory as working directory (clears additional overlays)"
     echo ""
@@ -129,7 +129,11 @@ while getopts "j:c:m:t:g:wp:a:b:e:o:v" opt; do
         c ) NCPUS=$OPTARG; _NCPUS=$OPTARG; _ARG_NCPUS=1 ;;
         m ) MEM=$OPTARG; _MEM=$OPTARG; _ARG_MEM=1 ;;
         t ) TIME=$OPTARG; _TIME=$OPTARG; _ARG_TIME=1 ;;
-        g ) GPU=$OPTARG; _GPU=$OPTARG; _ARG_GPU=1 ;;
+        g ) if [ -n "$OPTARG" ] && ! [[ "$OPTARG" =~ ^[0-9]+$ ]]; then
+                print_error "-g requires a positive integer (got: '$OPTARG'). Use -g '' to clear."
+                exit 1
+            fi
+            GPU=$OPTARG; _GPU=$OPTARG; _ARG_GPU=1 ;;
         v ) NCPUS=1; MEM=4G; TIME=02:00:00; _ARG_NCPUS=1; _ARG_MEM=1; _ARG_TIME=1;
             echo "[MSG] View Mode: NCPUS=1, MEM=4G, TIME=02:00:00" ;;
         w )
@@ -225,26 +229,10 @@ fi
 [ -n "$BASE_IMAGE" ] && BASE_IMAGE_ARG="-b $BASE_IMAGE"
 [ -n "$OVERLAY" ] && [ -f "$OVERLAY" ] && OVERLAY_ARG="-o $OVERLAY"
 [ -n "$OVERLAYS" ] && OVERLAYS_ARG=$(build_overlays_arg "$OVERLAYS")
-PBS_RESOURCES="select=1:ncpus=$NCPUS:mem=$MEM"
+PBS_MEM=$(normalize_pbs_mem "$MEM")
+PBS_RESOURCES="select=1:ncpus=$NCPUS:mem=$PBS_MEM"
 if [ -n "$GPU" ]; then
-    # Parse GPU input (supports '1', 'h100:2', '2:h100')
-    if [[ "$GPU" == *":"* ]]; then
-        PART1="${GPU%:*}"
-        PART2="${GPU#*:}"
-        if [[ "$PART1" =~ ^[0-9]+$ ]]; then
-            GPU_NUM="$PART1"
-            GPU_MODEL="$PART2"
-        else
-            GPU_NUM="$PART2"
-            GPU_MODEL="$PART1"
-        fi
-    else
-        GPU_NUM="$GPU"
-        GPU_MODEL=""
-    fi
-
-    PBS_RESOURCES="${PBS_RESOURCES}:ngpus=${GPU_NUM}"
-    [ -n "$GPU_MODEL" ] && PBS_RESOURCES="${PBS_RESOURCES}:gpu_model=${GPU_MODEL}"
+    PBS_RESOURCES="${PBS_RESOURCES}:ngpus=${GPU}"
 fi
 
 # Decide jupyter command
