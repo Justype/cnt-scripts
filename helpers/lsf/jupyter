@@ -37,7 +37,7 @@ print_help() {
     echo "  -m <memory>     Amount of memory to allocate (default: $MEM)"
     echo "  -t <time>       Time limit for the job (default: $TIME)"
   echo "  -g <gpu>        GPU resources (examples: '1', 'h100:2', '2:h100'). Use -g '' to clear"
-    echo "  -v              View Mode NCPUS:1 MEM:4G TIME:02:00:00"
+    echo "  -v              View Mode NCPUS:1 MEM:4G TIME:02:00:00, GPU cleared"
     echo "  -w              Use current directory as working directory (clears additional overlays)"
     echo ""
     echo "  -b <image>      Base image file"
@@ -130,8 +130,8 @@ while getopts "j:c:m:t:g:wp:a:b:e:o:v" opt; do
         m ) MEM=$OPTARG; _MEM=$OPTARG; _ARG_MEM=1 ;;
         t ) TIME=$OPTARG; _TIME=$OPTARG; _ARG_TIME=1 ;;
         g ) GPU=$OPTARG; _GPU=$OPTARG; _ARG_GPU=1 ;;
-        v ) NCPUS=1; MEM=4G; TIME=02:00:00; _ARG_NCPUS=1; _ARG_MEM=1; _ARG_TIME=1;
-            echo "[MSG] View Mode: NCPUS=1, MEM=4G, TIME=02:00:00" ;;
+        v ) NCPUS=1; MEM=4G; TIME=02:00:00; GPU=; _ARG_NCPUS=1; _ARG_MEM=1; _ARG_TIME=1; _ARG_GPU=1;
+            print_info "View Mode: NCPUS=1, MEM=4G, TIME=02:00:00, GPU cleared" ;;
         w )
             NEW_CWD="$(readlink -f .)"
             if [ "$_OVERLAYS_CLEARED" = false ]; then OVERLAYS=""; _OVERLAYS_CLEARED=true; fi
@@ -144,7 +144,7 @@ while getopts "j:c:m:t:g:wp:a:b:e:o:v" opt; do
             if [ "$_OVERLAYS_CLEARED" = false ]; then OVERLAYS=""; _OVERLAYS_CLEARED=true; fi
             OVERLAYS="${OVERLAYS:+$OVERLAYS:}$OPTARG"
             ;;
-        \? ) print_help; exit 1 ;;
+        \? ) print_help; exit 2 ;;
     esac
 done
 

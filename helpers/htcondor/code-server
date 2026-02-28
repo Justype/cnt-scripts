@@ -32,8 +32,8 @@ print_help() {
     echo "  -c <number>     Number of CPUs to allocate (default: $NCPUS)"
     echo "  -m <memory>     Amount of memory to allocate (default: $MEM)"
     echo "  -t <time>       Time limit for the job (default: $TIME)"
-    echo "  -g <gpu>        GPU resources (e.g., 1, a100:2). Use -g '' to clear"
-    echo "  -v              View Mode NCPUS:1 MEM:4G TIME:02:00:00"
+    echo "  -g <gpu>        Number of GPUs to request (e.g., 1, 2). Use -g '' to clear"
+    echo "  -v              View Mode NCPUS:1 MEM:4G TIME:02:00:00, GPU cleared"
     echo "  -w              Use current directory as working directory (clears additional overlays)"
     echo ""
     echo "  -b <image>      Base image file"
@@ -125,9 +125,13 @@ while getopts "c:m:t:g:wp:a:b:e:o:v" opt; do
         c ) NCPUS=$OPTARG; _NCPUS=$OPTARG; _ARG_NCPUS=1 ;;
         m ) MEM=$OPTARG; _MEM=$OPTARG; _ARG_MEM=1 ;;
         t ) TIME=$OPTARG; _TIME=$OPTARG; _ARG_TIME=1 ;;
-        g ) GPU=$OPTARG; _GPU=$OPTARG; _ARG_GPU=1 ;;
-        v ) NCPUS=1; MEM=4G; TIME=02:00:00; _ARG_NCPUS=1; _ARG_MEM=1; _ARG_TIME=1;
-            echo "[MSG] View Mode: NCPUS=1, MEM=4G, TIME=02:00:00" ;;
+        g ) if [ -n "$OPTARG" ] && ! [[ "$OPTARG" =~ ^[0-9]+$ ]]; then
+                print_error "-g requires a positive integer (got: '$OPTARG'). Use -g '' to clear."
+                exit 2
+            fi
+            GPU=$OPTARG; _GPU=$OPTARG; _ARG_GPU=1 ;;
+        v ) NCPUS=1; MEM=4G; TIME=02:00:00; GPU=; _ARG_NCPUS=1; _ARG_MEM=1; _ARG_TIME=1; _ARG_GPU=1;
+            print_info "View Mode: NCPUS=1, MEM=4G, TIME=02:00:00, GPU cleared" ;;
         w )
             NEW_CWD="$(readlink -f .)"
             if [ "$_OVERLAYS_CLEARED" = false ]; then OVERLAYS=""; _OVERLAYS_CLEARED=true; fi
@@ -140,7 +144,7 @@ while getopts "c:m:t:g:wp:a:b:e:o:v" opt; do
             if [ "$_OVERLAYS_CLEARED" = false ]; then OVERLAYS=""; _OVERLAYS_CLEARED=true; fi
             OVERLAYS="${OVERLAYS:+$OVERLAYS:}$OPTARG"
             ;;
-        \? ) print_help; exit 1 ;;
+        \? ) print_help; exit 2 ;;
     esac
 done
 
@@ -206,27 +210,6 @@ fi
 [ -n "$OVERLAY" ] && [ -f "$OVERLAY" ] && OVERLAY_ARG="-o $OVERLAY"
 [ -n "$OVERLAYS" ] && OVERLAYS_ARG=$(build_overlays_arg "$OVERLAYS")
 
-# Parse GPU input (supports '1', 'h100:2', '2:h100') — HTCondor will only use the count
-if [ -n "$GPU" ]; then
-    if [[ "$GPU" == *":"* ]]; then
-        PART1="${GPU%:*}"
-        PART2="${GPU#*:}"
-        if [[ "$PART1" =~ ^[0-9]+$ ]]; then
-            GPU_NUM="$PART1"
-            GPU_MODEL="$PART2"
-        else
-            GPU_NUM="$PART2"
-            GPU_MODEL="$PART1"
-        fi
-    else
-        GPU_NUM="$GPU"
-        GPU_MODEL=""
-    fi
-    CONDOR_REQUEST_GPUS="$GPU_NUM"
-else
-    CONDOR_REQUEST_GPUS=""
-fi
-
 if [ "$AUTH" != "none" ]; then
     AUTH_OPTION="--auth password --password $AUTH"
 else
@@ -273,11 +256,8 @@ request_memory = $MEM_MB
 +MaxRuntime = $MAX_SECS
 SUBEOF
 
-if [ -n "$CONDOR_REQUEST_GPUS" ]; then
-    printf 'request_gpus = %s\n' "$CONDOR_REQUEST_GPUS" >> "$SUBMIT_PATH"
-    if [ -n "$GPU_MODEL" ]; then
-        printf 'requirements = regexp("%s", Target.GPUs_DeviceName, "i")\n' "$GPU_MODEL" >> "$SUBMIT_PATH"
-    fi
+if [ -n "$GPU" ]; then
+    printf 'request_gpus = %s\n' "$GPU" >> "$SUBMIT_PATH"
 fi
 
 printf 'queue\n' >> "$SUBMIT_PATH"

@@ -31,8 +31,8 @@ print_help() {
     echo "  -c <number>     Number of CPUs to allocate (default: $NCPUS)"
     echo "  -m <memory>     Amount of memory to allocate (default: $MEM)"
     echo "  -t <time>       Time limit for the job (default: $TIME)"
-    echo "  -g <gpu>        GPU resources (e.g., 1, a100:2). Use -g '' to clear"
-    echo "  -v              View Mode NCPUS:1 MEM:8G TIME:02:00:00"
+    echo "  -g <gpu>        Number of GPUs to request (e.g., 1, 2). Use -g '' to clear"
+    echo "  -v              View Mode NCPUS:1 MEM:8G TIME:02:00:00, GPU cleared"
     echo "  -w              Use current directory as working directory (clears additional overlays)"
     echo ""
     echo "  -e <.img>       Writable overlay (default: $OVERLAY)"
@@ -120,9 +120,13 @@ while getopts "c:m:t:g:wp:e:o:v" opt; do
         c ) NCPUS=$OPTARG; _NCPUS=$OPTARG; _ARG_NCPUS=1 ;;
         m ) MEM=$OPTARG; _MEM=$OPTARG; _ARG_MEM=1 ;;
         t ) TIME=$OPTARG; _TIME=$OPTARG; _ARG_TIME=1 ;;
-        g ) GPU=$OPTARG; _GPU=$OPTARG; _ARG_GPU=1 ;;
-        v ) NCPUS=1; MEM=8G; TIME=02:00:00; _ARG_NCPUS=1; _ARG_MEM=1; _ARG_TIME=1;
-            echo "[MSG] View Mode: NCPUS=1, MEM=8G, TIME=02:00:00" ;;
+        g ) if [ -n "$OPTARG" ] && ! [[ "$OPTARG" =~ ^[0-9]+$ ]]; then
+                print_error "-g requires a positive integer (got: '$OPTARG'). Use -g '' to clear."
+                exit 2
+            fi
+            GPU=$OPTARG; _GPU=$OPTARG; _ARG_GPU=1 ;;
+        v ) NCPUS=1; MEM=8G; TIME=02:00:00; GPU=; _ARG_NCPUS=1; _ARG_MEM=1; _ARG_TIME=1; _ARG_GPU=1;
+            print_info "View Mode: NCPUS=1, MEM=8G, TIME=02:00:00, GPU cleared" ;;
         w )
             NEW_CWD="$(readlink -f .)"
             if [ "$_OVERLAYS_CLEARED" = false ]; then OVERLAYS=""; _OVERLAYS_CLEARED=true; fi
@@ -133,7 +137,7 @@ while getopts "c:m:t:g:wp:e:o:v" opt; do
             if [ "$_OVERLAYS_CLEARED" = false ]; then OVERLAYS=""; _OVERLAYS_CLEARED=true; fi
             OVERLAYS="${OVERLAYS:+$OVERLAYS:}$OPTARG"
             ;;
-        \? ) print_help; exit 1 ;;
+        \? ) print_help; exit 2 ;;
     esac
 done
 
@@ -205,26 +209,10 @@ fi
 # Construct arguments for CondaTainer exec
 [ -n "$OVERLAY" ] && OVERLAY_ARG="-o $OVERLAY"
 [ -n "$OVERLAYS" ] && OVERLAYS_ARG=$(build_overlays_arg "$OVERLAYS")
-PBS_RESOURCES="select=1:ncpus=$NCPUS:mem=$MEM"
+PBS_MEM=$(normalize_pbs_mem "$MEM")
+PBS_RESOURCES="select=1:ncpus=$NCPUS:mem=$PBS_MEM"
 if [ -n "$GPU" ]; then
-    # Parse GPU input (supports '1', 'h100:2', '2:h100')
-    if [[ "$GPU" == *":"* ]]; then
-        PART1="${GPU%:*}"
-        PART2="${GPU#*:}"
-        if [[ "$PART1" =~ ^[0-9]+$ ]]; then
-            GPU_NUM="$PART1"
-            GPU_MODEL="$PART2"
-        else
-            GPU_NUM="$PART2"
-            GPU_MODEL="$PART1"
-        fi
-    else
-        GPU_NUM="$GPU"
-        GPU_MODEL=""
-    fi
-
-    PBS_RESOURCES="${PBS_RESOURCES}:ngpus=${GPU_NUM}"
-    [ -n "$GPU_MODEL" ] && PBS_RESOURCES="${PBS_RESOURCES}:gpu_model=${GPU_MODEL}"
+    PBS_RESOURCES="${PBS_RESOURCES}:ngpus=${GPU}"
 fi
 
 CWD_FOLDER_NAME=$(basename $CWD)

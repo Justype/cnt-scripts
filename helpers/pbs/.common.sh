@@ -218,11 +218,11 @@ validate_port() {
     local port="$1"
     if ! printf '%s' "$port" | grep -qE '^[0-9]+$'; then
         print_error "Port must be a number."
-        exit 1
+        exit 2
     fi
     if [ "$port" -lt 1024 ] || [ "$port" -gt 65535 ]; then
         print_error "Port $port is out of allowed range (1024-65535)."
-        exit 1
+        exit 2
     fi
 }
 
@@ -450,6 +450,27 @@ handle_reuse_mode() {
             fi
             ;;
     esac
+}
+
+# normalize_pbs_mem <memory-string>
+#   Converts user memory input to PBS Pro-compliant format (unit suffix must end in 'b').
+#   Examples: 16G -> 16gb, 32M -> 32mb, 8gb -> 8gb, 4096mb -> 4096mb
+normalize_pbs_mem() {
+    local mem="$1"
+    # Already has a 'b' suffix (case-insensitive): gb, mb, kb, tb, pb, b
+    if echo "$mem" | grep -qiE '^[0-9]+[kmgtp]?b$'; then
+        echo "${mem,,}"
+        return
+    fi
+    # Single-letter suffix without 'b': G -> gb, M -> mb, K -> kb, T -> tb
+    if echo "$mem" | grep -qiE '^[0-9]+[KMGTP]$'; then
+        local num="${mem%?}"
+        local unit="${mem: -1}"
+        echo "${num}${unit,,}b"
+        return
+    fi
+    # No recognized suffix: pass through unchanged (let PBS validate)
+    echo "$mem"
 }
 
 # read_job_state <state_file>
