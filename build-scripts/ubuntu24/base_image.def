@@ -31,6 +31,9 @@ From: ubuntu:24.04
         python3-requests python3-bs4 python-is-python3 \
         tzdata time jq tmux bash-completion
 
+    # Install all locales (for better compatibility with different host locales)
+    apt-get install -y locales-all
+
     # Internal Apptainer (add nested mounting support)
     apt-get install -y \
         build-essential libseccomp-dev uidmap \
