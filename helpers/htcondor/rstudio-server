@@ -250,6 +250,7 @@ fi
 
 check_and_install_overlays rstudio-server build-essential $OVERLAYS
 
+resolve_env_overlay
 if [ ! -f "$OVERLAY" ]; then
     print_error "Overlay ${BLUE}$OVERLAY${NC} not found."
     exit 1
@@ -391,7 +392,7 @@ GPU=$_GPU
 PORT=$PORT
 CWD=$CWD
 R_VERSION="$R_VERSION"
-OVERLAY="$OVERLAY"
+OVERLAY="${_OVERLAY_ORIGINAL:-$OVERLAY}"
 OVERLAYS="$OVERLAYS"
 RUNSTATE
 

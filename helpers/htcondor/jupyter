@@ -201,6 +201,7 @@ check_condatainer
 
 check_and_install_overlays $OVERLAYS
 
+resolve_env_overlay
 if [ ! -f "$OVERLAY" ]; then
     print_error "Overlay ${BLUE}$OVERLAY${NC} not found."
     exit 1
@@ -304,7 +305,7 @@ CWD=$CWD
 TOKEN=$TOKEN
 JUPYTER_MODE=$JUPYTER_MODE
 BASE_IMAGE="$BASE_IMAGE"
-OVERLAY="$OVERLAY"
+OVERLAY="${_OVERLAY_ORIGINAL:-$OVERLAY}"
 OVERLAYS="$OVERLAYS"
 RUNSTATE
 

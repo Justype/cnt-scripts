@@ -337,6 +337,25 @@ check_and_install_overlays() {
     fi
 }
 
+# resolve_env_overlay
+#   If OVERLAY is exactly "env.img", searches for the file in order:
+#     1. env.img         (current directory)
+#     2. overlay/env.img
+#     3. src/overlay/env.img
+#   Sets OVERLAY to the found relative path for the current run.
+#   Sets _OVERLAY_ORIGINAL="env.img" so state files preserve the portable name.
+resolve_env_overlay() {
+    [ "$OVERLAY" != "env.img" ] && return 0
+    _OVERLAY_ORIGINAL="env.img"
+    local -a candidates=("env.img" "overlay/env.img" "src/overlay/env.img")
+    for candidate in "${candidates[@]}"; do
+        if [ -f "$candidate" ]; then
+            OVERLAY="$candidate"
+            return 0
+        fi
+    done
+}
+
 # ============= PBS Functions =============
 
 # spec_line <label> <VAR_NAME>

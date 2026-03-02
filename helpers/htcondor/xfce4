@@ -182,6 +182,7 @@ check_condatainer
 
 check_and_install_overlays xfce4 $OVERLAYS
 
+resolve_env_overlay
 if [ ! -f "$OVERLAY" ]; then
     print_info "Overlay ${BLUE}$OVERLAY${NC} not found. Continuing without it."
     countdown 3
@@ -342,7 +343,7 @@ PORT=$PORT
 CWD=$CWD
 VNC_PASSWD="$VNC_PASSWD"
 BASE_IMAGE="$BASE_IMAGE"
-OVERLAY="$OVERLAY"
+OVERLAY="${_OVERLAY_ORIGINAL:-$OVERLAY}"
 OVERLAYS="$OVERLAYS"
 RUNSTATE
 
