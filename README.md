@@ -1,4 +1,4 @@
-# cnt-scripts
+# CondaTainer Scripts
 
 Build scripts and helper scripts for [CondaTainer](https://github.com/Justype/condatainer).
 

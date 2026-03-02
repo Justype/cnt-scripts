@@ -229,6 +229,7 @@ fi
 
 check_and_install_overlays $OVERLAYS
 
+resolve_env_overlay
 if [ ! -f "$OVERLAY" ]; then
     print_warn "Overlay ${BLUE}$OVERLAY${NC} not found. Continuing without it."
     countdown 3
@@ -304,7 +305,7 @@ CWD=$CWD
 AUTH=$AUTH
 MACHINE_NAME=$MACHINE_NAME
 BASE_IMAGE="$BASE_IMAGE"
-OVERLAY="$OVERLAY"
+OVERLAY="${_OVERLAY_ORIGINAL:-$OVERLAY}"
 OVERLAYS="$OVERLAYS"
 RUNSTATE
 

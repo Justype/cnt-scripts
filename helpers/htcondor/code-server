@@ -197,6 +197,7 @@ check_condatainer
 
 check_and_install_overlays code-server $OVERLAYS
 
+resolve_env_overlay
 if [ ! -f "$OVERLAY" ]; then
     print_warn "Overlay ${BLUE}$OVERLAY${NC} not found. Continuing without it."
     countdown 3
@@ -276,7 +277,7 @@ PORT=$PORT
 CWD=$CWD
 AUTH=$AUTH
 BASE_IMAGE="$BASE_IMAGE"
-OVERLAY="$OVERLAY"
+OVERLAY="${_OVERLAY_ORIGINAL:-$OVERLAY}"
 OVERLAYS="$OVERLAYS"
 RUNSTATE
 
