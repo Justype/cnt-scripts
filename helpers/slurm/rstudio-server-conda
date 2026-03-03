@@ -213,14 +213,14 @@ if [ -n "$GPU" ]; then
         PART2="${GPU#*:}"
         if [[ "$PART1" =~ ^[0-9]+$ ]]; then
             # Format: 2:h100 → h100:2
-            GPU_SBATCH="#SBATCH --gres=gpu:${PART2}:${PART1}"
+            GPU_SBATCH="#SBATCH --gpus-per-node=${PART2}:${PART1}"
         else
             # Format: h100:2 → h100:2
-            GPU_SBATCH="#SBATCH --gres=gpu:${PART1}:${PART2}"
+            GPU_SBATCH="#SBATCH --gpus-per-node=${PART1}:${PART2}"
         fi
     else
         # Format: 2 → 2
-        GPU_SBATCH="#SBATCH --gres=gpu:$GPU"
+        GPU_SBATCH="#SBATCH --gpus-per-node=$GPU"
     fi
 fi
 
