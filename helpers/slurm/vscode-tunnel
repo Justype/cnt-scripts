@@ -36,7 +36,7 @@ print_help() {
     echo "  -n <name>       Machine name for the tunnel (default: $MACHINE_NAME)"
     echo ""
     echo "  -c <number>     Number of CPUs to allocate (default: $NCPUS)"
-    echo "  -m <memory>     Amount of memory to allocate (default: $MEM)"
+    echo "  -m <memory>     Total amount of memory to allocate (default: $MEM)"
     echo "  -t <time>       Time limit for the job (default: $TIME)"
     echo "  -g <gpu>        GPU resources (e.g., 1, a100:2). Use -g '' to clear"
     echo "  -v              View Mode NCPUS:1 MEM:4G TIME:02:00:00, GPU cleared"
@@ -249,14 +249,14 @@ if [ -n "$GPU" ]; then
         PART2="${GPU#*:}"
         if [[ "$PART1" =~ ^[0-9]+$ ]]; then
             # Format: 2:h100 → h100:2
-            GPU_SBATCH="#SBATCH --gres=gpu:${PART2}:${PART1}"
+            GPU_SBATCH="#SBATCH --gpus-per-node=${PART2}:${PART1}"
         else
             # Format: h100:2 → h100:2
-            GPU_SBATCH="#SBATCH --gres=gpu:${PART1}:${PART2}"
+            GPU_SBATCH="#SBATCH --gpus-per-node=${PART1}:${PART2}"
         fi
     else
         # Format: 2 → 2
-        GPU_SBATCH="#SBATCH --gres=gpu:$GPU"
+        GPU_SBATCH="#SBATCH --gpus-per-node=$GPU"
     fi
 fi
 
