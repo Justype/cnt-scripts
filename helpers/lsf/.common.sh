@@ -337,6 +337,20 @@ check_and_install_overlays() {
     fi
 }
 
+calc_lsf_mem_per_slot() {
+    local mem="$1" cpus="$2"
+    
+    # If mem is not a number with unit, return it as-is (e.g., "4G" or "4000M")
+    [[ "$cpus" =~ ^[0-9]+$ ]] && [ "$cpus" -gt 0 ] || { printf '%s' "$mem"; return; }
+
+    local num=$(echo "$mem" | grep -oE '^[0-9]+')
+    local unit=$(echo "$mem" | grep -oE '[A-Za-z]+$')
+
+    local per_slot=$(( (num + cpus - 1) / cpus )) # Ceiling division
+
+    printf '%s%s\n' "$per_slot" "$unit"
+}
+
 # resolve_env_overlay
 #   If OVERLAY is exactly "env.img", searches for the file in order:
 #     1. env.img         (current directory)

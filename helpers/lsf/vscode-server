@@ -32,7 +32,7 @@ print_help() {
     echo "  -a <token>      Connection token for the web UI (if empty, one is generated)"
     echo ""
     echo "  -c <number>     Number of CPUs to allocate (default: $NCPUS)"
-    echo "  -m <memory>     Amount of memory to allocate (default: $MEM)"
+    echo "  -m <memory>     Total amount of memory to allocate (default: $MEM)"
     echo "  -t <time>       Time limit for the job (default: $TIME)"
     echo "  -g <gpu>        GPU resources (e.g., 1, a100:2). Use -g '' to clear"
     echo "  -v              View Mode NCPUS:1 MEM:4G TIME:02:00:00, GPU cleared"
@@ -215,7 +215,8 @@ if [ "${AUTH_FLAG_SET:-false}" = "false" ] && [ "${AUTH_CONFIG_SET:-false}" = "f
     TOKEN=$(openssl rand -hex 8 2>/dev/null || tr -dc 'a-zA-Z0-9' </dev/urandom | head -c 16 || echo "$(date +%s)-$RANDOM")
 fi
 
-LSF_RUSAGE="rusage[mem=${MEM}]"
+PER_SLOT_MEM=$(calc_lsf_mem_per_slot "$MEM" "$NCPUS")
+LSF_RUSAGE="rusage[mem=${PER_SLOT_MEM}]"
 if [ -n "$GPU" ]; then
     if [[ "$GPU" == *":"* ]]; then
         PART1="${GPU%:*}"

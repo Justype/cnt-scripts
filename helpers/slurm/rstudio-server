@@ -41,7 +41,7 @@ print_help() {
     echo "  -p <port>       Port for $HELPER_NAME (default: ${PORT:-randomly picked}). Valid range: 1024-65535"
     echo ""
     echo "  -c <number>     Number of CPUs to allocate (default: $NCPUS)"
-    echo "  -m <memory>     Amount of memory to allocate (default: $MEM)"
+    echo "  -m <memory>     Total amount of memory to allocate (default: $MEM)"
     echo "  -t <time>       Time limit for the job (default: $TIME)"
     echo "  -g <gpu>        GPU resources (e.g., 1, a100:2). Use -g '' to clear"
     echo "  -v              View Mode NCPUS:1 MEM:8G TIME:02:00:00, GPU cleared"
