@@ -249,6 +249,7 @@ check_and_install_overlays rstudio-server build-essential $OVERLAYS
 resolve_env_overlay
 if [ ! -f "$OVERLAY" ]; then
     print_error "Overlay ${BLUE}$OVERLAY${NC} not found."
+    print_info "Workspace overlay is required for $HELPER_NAME to store R packages. Please use ${YELLOW}condatainer o${NC} to create one."
     exit 1
 else
     check_overlay_integrity "$OVERLAY"
