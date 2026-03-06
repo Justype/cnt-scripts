@@ -145,12 +145,14 @@ check_and_install_overlays rstudio-server build-essential $OVERLAYS
 resolve_env_overlay
 if [ ! -f "$OVERLAY" ]; then
     print_error "Overlay ${BLUE}$OVERLAY${NC} not found."
+    print_info "Workspace overlay is required for $HELPER_NAME to store R conda environment. Please use ${YELLOW}condatainer o${NC} to create one."
+    print_info "  Then install R with ${YELLOW}mm-install r-base${NC} inside the overlay shell."
     exit 1
 else
     if ! debugfs -R "stat upper/ext3/env/bin/R" $OVERLAY 2>&1 | grep -q 'Inode'; then
         ABS_OVERLAY_PATH=$(readlink -f "$OVERLAY")
         print_error "Overlay ${BLUE}$ABS_OVERLAY_PATH${NC} does not contain R installation."
-        print_info "Please go into the overlay shell and run 'mm-install r-base' to install R."
+        print_info "Please go into the overlay shell and run ${YELLOW}mm-install r-base${NC} to install R."
         exit 1
     fi
     check_overlay_integrity "$OVERLAY"

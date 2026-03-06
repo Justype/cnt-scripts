@@ -185,7 +185,6 @@ check_and_install_overlays xfce4 igv $OVERLAYS
 resolve_env_overlay
 if [ ! -f "$OVERLAY" ]; then
     print_info "Overlay ${BLUE}$OVERLAY${NC} not found. Continuing without it."
-    countdown 3
 else
     check_overlay_integrity "$OVERLAY"
 fi
