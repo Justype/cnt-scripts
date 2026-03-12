@@ -24,9 +24,23 @@ trap 'echo; exit 130' INT # Add a newline on Ctrl+C and exit with code 130
 CONDATAINER_CONFIG_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/condatainer"
 HELPER_DEFAULTS_DIR="$CONDATAINER_CONFIG_DIR/helper"
 HELPER_STATE_DIR="${XDG_STATE_HOME:-$HOME/.local/state}/condatainer/helper"
-LOG_DIR="$HOME/logs"
-mkdir -p "$CONDATAINER_CONFIG_DIR" "$HELPER_DEFAULTS_DIR" "$HELPER_STATE_DIR" "$LOG_DIR"
 _ORIGINAL_CWD=$(readlink -f .) # Capture user's pwd before any cd
+
+# Check condatainer is available
+if ! command -v condatainer &> /dev/null; then
+    print_error "CondaTainer is not installed or not in PATH."
+    print_info "Please go to https://github.com/Justype/condatainer to install CondaTainer."
+    exit 1
+fi
+
+# Read log directory and scheduler timeout from condatainer config
+LOG_DIR=$(condatainer config get logs_dir -q --local 2>/dev/null)
+LOG_DIR="${LOG_DIR:-$HOME/logs}"
+SCHEDULER_TIMEOUT=$(condatainer config get scheduler_timeout -q --local 2>/dev/null)
+SCHEDULER_TIMEOUT="${SCHEDULER_TIMEOUT:-5}"
+
+mkdir -p "$CONDATAINER_CONFIG_DIR" "$HELPER_DEFAULTS_DIR" "$HELPER_STATE_DIR" "$LOG_DIR"
+
 # Ensure SCRATCH is set up
 if [ -z "$SCRATCH" ]; then
     print_info "SCRATCH environment variable is not set. Falling back to HOME directory."
@@ -233,18 +247,6 @@ check_port_available() {
     if lsof -i :$port &> /dev/null; then
         print_error "Port ${BLUE}$port${NC} is already in use."
         print_info "Please choose a different port using the ${YELLOW}-p${NC} option."
-        exit 1
-    fi
-}
-
-# ============= Condatainer Checks =============
-
-# check_condatainer
-#   Exits if condatainer is not in PATH.
-check_condatainer() {
-    if ! command -v condatainer &> /dev/null; then
-        print_error "CondaTainer is not installed or not in PATH."
-        print_info "Please go to https://github.com/Justype/condatainer to install CondaTainer."
         exit 1
     fi
 }

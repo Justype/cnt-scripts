@@ -138,7 +138,6 @@ if [ $ID -eq 1000 ]; then
     exit 1
 fi
 
-check_condatainer
 
 check_and_install_overlays rstudio-server build-essential $OVERLAYS
 

@@ -206,7 +206,6 @@ if [ "$_SPECS_SHOWN" != true ]; then
 fi
 
 #region Sanity Checks
-check_condatainer
 
 if [ "$AUTH" != "microsoft" ] && [ "$AUTH" != "github" ]; then
     print_error "Unsupported authentication provider: $AUTH. Use 'microsoft' or 'github'."

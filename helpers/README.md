@@ -155,11 +155,6 @@ Scheduler job logs are written to `~/logs/`:
 | `print_error` | Print `[ERR] message` to stderr. |
 | `print_pass` | Print `[PASS] message`. |
 
-### Misc
-| Function | Description |
-|---|---|
-| `check_condatainer` | Exit if `condatainer` is not in PATH. |
-
 ## Scheduler helpers (`helpers/*/.common.sh`)
 
 ### Display & reuse

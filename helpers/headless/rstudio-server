@@ -200,7 +200,6 @@ if [ $ID -eq 1000 ]; then
     exit 1
 fi
 
-check_condatainer
 
 if ! condatainer list -e r${R_VERSION} > /dev/null 2>&1; then
     print_info "Installing R ${R_VERSION} overlay."
