@@ -117,7 +117,6 @@ if [ "$_SPECS_SHOWN" != true ]; then
 fi
 
 #region Sanity Checks
-check_condatainer
 
 # Ensure VSCode CLI
 CODE_BIN="$HOME/.local/bin/code"

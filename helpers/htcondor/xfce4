@@ -178,7 +178,6 @@ fi
 
 #region Sanity Checks
 check_port_available "$PORT"
-check_condatainer
 
 check_and_install_overlays xfce4 $OVERLAYS
 

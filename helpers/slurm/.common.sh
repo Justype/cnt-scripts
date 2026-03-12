@@ -24,9 +24,24 @@ trap 'echo; exit 130' INT # Add a newline on Ctrl+C and exit with code 130
 CONDATAINER_CONFIG_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/condatainer"
 HELPER_DEFAULTS_DIR="$CONDATAINER_CONFIG_DIR/helper"
 HELPER_STATE_DIR="${XDG_STATE_HOME:-$HOME/.local/state}/condatainer/helper"
-LOG_DIR="$HOME/logs"
-mkdir -p "$CONDATAINER_CONFIG_DIR" "$HELPER_DEFAULTS_DIR" "$HELPER_STATE_DIR" "$LOG_DIR"
 _ORIGINAL_CWD=$(readlink -f .) # Capture user's pwd before any cd
+
+# Check condatainer is available
+if ! command -v condatainer &> /dev/null; then
+    print_error "CondaTainer is not installed or not in PATH."
+    print_info "Please go to https://github.com/Justype/condatainer to install CondaTainer."
+    exit 1
+fi
+
+# Read log directory and scheduler timeout from condatainer config
+# Use -q --local to skip scheduler init and suppress warnings
+LOG_DIR=$(condatainer config get logs_dir -q --local 2>/dev/null)
+LOG_DIR="${LOG_DIR:-$HOME/logs}"
+SCHEDULER_TIMEOUT=$(condatainer config get scheduler_timeout -q --local 2>/dev/null)
+SCHEDULER_TIMEOUT="${SCHEDULER_TIMEOUT:-5}"
+
+mkdir -p "$CONDATAINER_CONFIG_DIR" "$HELPER_DEFAULTS_DIR" "$HELPER_STATE_DIR" "$LOG_DIR"
+
 # Ensure SCRATCH is set up
 if [ -z "$SCRATCH" ]; then
     print_info "SCRATCH environment variable is not set. Falling back to HOME directory."
@@ -233,18 +248,6 @@ check_port_available() {
     if lsof -i :$port &> /dev/null; then
         print_error "Port ${BLUE}$port${NC} is already in use."
         print_info "Please choose a different port using the ${YELLOW}-p${NC} option."
-        exit 1
-    fi
-}
-
-# ============= Condatainer Checks =============
-
-# check_condatainer
-#   Exits if condatainer is not in PATH.
-check_condatainer() {
-    if ! command -v condatainer &> /dev/null; then
-        print_error "CondaTainer is not installed or not in PATH."
-        print_info "Please go to https://github.com/Justype/condatainer to install CondaTainer."
         exit 1
     fi
 }
@@ -474,6 +477,7 @@ handle_reuse_mode() {
 # read_job_state <state_file>
 #   Sources state file and checks SLURM job status.
 #   Returns: 0 = no state file, 1 = PENDING, 2 = RUNNING, 3 = not running
+#   Exits with error if the scheduler query times out.
 #   Sets globals from state file: JOB_ID, NODE, PORT, CWD, OVERLAY, OVERLAYS
 read_job_state() {
     local state_file="$1"
@@ -481,12 +485,20 @@ read_job_state() {
 
     source "$state_file"
 
-    local status=$(squeue -j $JOB_ID -h -o "%T" 2>/dev/null)
+    local output exit_code
+    output=$(timeout "${SCHEDULER_TIMEOUT:-5}" squeue -j $JOB_ID -h -o "%T" 2>/dev/null); exit_code=$?
+    if [ $exit_code -eq 124 ]; then
+        print_error "Scheduler query timed out after ${SCHEDULER_TIMEOUT:-5}s."
+        print_info "The scheduler may be slow to respond. Increase the timeout with:"
+        print_info "  ${YELLOW}condatainer config set scheduler_timeout 30${NC}  (or 0 to disable)"
+        exit 1
+    fi
+    local status="$output"
 
     case "$status" in
         PENDING) return 1 ;;
         RUNNING)
-            [ -z "$NODE" ] && NODE=$(squeue -j $JOB_ID -h -o "%N" 2>/dev/null)
+            [ -z "$NODE" ] && NODE=$(timeout "${SCHEDULER_TIMEOUT:-5}" squeue -j $JOB_ID -h -o "%N" 2>/dev/null)
             return 2 ;;
         *) return 3 ;;
     esac
@@ -508,7 +520,14 @@ wait_for_job() {
     JOB_LOG=""
 
     while true; do
-        local status=$(squeue -j $job_id -h -o "%T" 2>/dev/null)
+        local output exit_code
+        output=$(timeout "${SCHEDULER_TIMEOUT:-5}" squeue -j $job_id -h -o "%T" 2>/dev/null); exit_code=$?
+        if [ $exit_code -eq 124 ]; then
+            printf "\r[${YELLOW}WARN${NC}] Scheduler query timed out, retrying..."
+            sleep 5
+            continue
+        fi
+        local status="$output"
         if [ "$status" == "RUNNING" ]; then
             sleep 2 # Give some time for job initialization
             printf "\r\033[K"
@@ -533,7 +552,7 @@ wait_for_job() {
         sleep 5
     done
 
-    NODE=$(squeue -j $job_id -h -o "%N")
+    NODE=$(timeout "${SCHEDULER_TIMEOUT:-5}" squeue -j $job_id -h -o "%N" 2>/dev/null)
     if [ -z "$NODE" ]; then
         print_error "Failed to retrieve node for job $job_id."
         local matches=()

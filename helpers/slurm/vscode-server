@@ -173,7 +173,6 @@ fi
 
 #region Sanity Checks
 check_port_available "$PORT"
-check_condatainer
 
 # Ensure VSCode CLI
 CODE_BIN="$HOME/.local/bin/code"
