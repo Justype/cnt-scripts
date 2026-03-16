@@ -57,63 +57,128 @@ From: ubuntu:22.04
     # Add helper scripts for create/install/update/remove $CNT_CONDA_PREFIX will be set to the .img overlay path
     cat << 'EOT' > /usr/bin/mm-create
 #!/usr/bin/bash
+set -e
 if [[ -z "$CNT_CONDA_PREFIX" ]]; then
     echo "ERROR: CNT_CONDA_PREFIX is not set!"
     exit 1
 fi
 
 yaml_file=""
+channels=()
 args=("$@")
 for ((i=0; i<${#args[@]}; i++)); do
     if [[ "${args[i]}" == "-f" ]] || [[ "${args[i]}" == "--file" ]]; then
         yaml_file="${args[i+1]}"
-        break
+    elif [[ "${args[i]}" == "-c" ]] || [[ "${args[i]}" == "--channel" ]]; then
+        channels+=("${args[i+1]}")
     fi
 done
 
 if [[ -n "$yaml_file" && -f "$yaml_file" ]]; then
     echo "Detected Environment File: $yaml_file"
-    /usr/bin/micromamba -r "$CNT_CONDA_PREFIX" create -n base "$@"
-    # Extract 'channels' to .condarc
+    /usr/bin/micromamba -r "$CNT_CONDA_PREFIX" create --no-rc -n base "$@"
+    # Extract 'channels' to .condarc; fall back to conda-forge+bioconda if yaml has none.
     awk '/^channels:/ {flag=1; print; next} /^[a-zA-Z0-9]/ {flag=0} flag {print}' "$yaml_file" > "$CNT_CONDA_PREFIX/.condarc"
+    if [[ ! -s "$CNT_CONDA_PREFIX/.condarc" ]]; then
+        printf "channels:\n  - conda-forge\n  - bioconda\n" > "$CNT_CONDA_PREFIX/.condarc"
+    fi
 else
-    /usr/bin/micromamba -r "$CNT_CONDA_PREFIX" create -c conda-forge -c bioconda -n base "$@"
-    cat << EOF > "$CNT_CONDA_PREFIX/.condarc"
-channels:
-  - conda-forge
-  - bioconda
-EOF
+    if [[ ${#channels[@]} -eq 0 ]]; then
+        channels=("conda-forge" "bioconda")
+    else
+        # Always include conda-forge for base dependencies unless already listed.
+        has_cf=0
+        for c in "${channels[@]}"; do [[ "$c" == "conda-forge" ]] && has_cf=1 && break; done
+        [[ $has_cf -eq 0 ]] && channels+=("conda-forge")
+    fi
+    channel_args=()
+    for c in "${channels[@]}"; do
+        channel_args+=("-c" "$c")
+    done
+    /usr/bin/micromamba -r "$CNT_CONDA_PREFIX" create --no-rc "${channel_args[@]}" -n base "$@"
+    # Write .condarc after install for mm-install/mm-update/mm-channels.
+    printf "channels:\n" > "$CNT_CONDA_PREFIX/.condarc"
+    for c in "${channels[@]}"; do
+        printf "  - %s\n" "$c" >> "$CNT_CONDA_PREFIX/.condarc"
+    done
 fi
 EOT
     chmod +x /usr/bin/mm-create
 
-    cat << 'EOT' > /usr/bin/mm-install
+    cat << 'EOT' > /usr/bin/mm-channels
 #!/usr/bin/bash
 if [[ -z "$CNT_CONDA_PREFIX" ]]; then
     echo "ERROR: CNT_CONDA_PREFIX is not set!"
     exit 1
 fi
-/usr/bin/micromamba -r $CNT_CONDA_PREFIX install -c conda-forge -c bioconda "$@"
+CONDARC="$CNT_CONDA_PREFIX/.condarc"
+
+_get_channels() {
+    [[ -f "$CONDARC" ]] || { echo "No .condarc at $CONDARC"; return 1; }
+    awk '/^channels:/{flag=1;next} /^[a-zA-Z0-9]/{flag=0} flag && /^ *- /{sub(/^ *- /,"");print}' "$CONDARC"
+}
+
+_write_channels() {
+    printf "channels:\n" > "$CONDARC"
+    for c in "$@"; do printf "  - %s\n" "$c" >> "$CONDARC"; done
+}
+
+case "$1" in
+  get|"")
+    _get_channels ;;
+  append|prepend)
+    [[ -z "$2" ]] && { echo "Usage: mm-channels $1 <channel>"; exit 1; }
+    mapfile -t ch < <(_get_channels)
+    new=(); found=0
+    for c in "${ch[@]}"; do [[ "$c" == "$2" ]] && found=1 || new+=("$c"); done
+    [[ "$1" == "append" ]] && new+=("$2") || new=("$2" "${new[@]}")
+    _write_channels "${new[@]}"
+    [[ $found -eq 1 ]] && echo "Moved '$2' to $1" || echo "$1: '$2'" ;;
+  remove)
+    [[ -z "$2" ]] && { echo "Usage: mm-channels remove <channel>"; exit 1; }
+    mapfile -t ch < <(_get_channels)
+    new=(); found=0
+    for c in "${ch[@]}"; do [[ "$c" == "$2" ]] && found=1 || new+=("$c"); done
+    [[ $found -eq 0 ]] && { echo "Channel '$2' not found"; exit 1; }
+    _write_channels "${new[@]}"
+    echo "Removed '$2'" ;;
+  *)
+    echo "Usage: mm-channels [get|append|prepend|remove] [channel]"
+    exit 1 ;;
+esac
+EOT
+    chmod +x /usr/bin/mm-channels
+
+    cat << 'EOT' > /usr/bin/mm-install
+#!/usr/bin/bash
+set -e
+if [[ -z "$CNT_CONDA_PREFIX" ]]; then
+    echo "ERROR: CNT_CONDA_PREFIX is not set!"
+    exit 1
+fi
+/usr/bin/micromamba -r "$CNT_CONDA_PREFIX" install --rc-file "$CNT_CONDA_PREFIX/.condarc" -n base "$@"
 EOT
     chmod +x /usr/bin/mm-install
 
     cat << 'EOT' > /usr/bin/mm-update
 #!/usr/bin/bash
+set -e
 if [[ -z "$CNT_CONDA_PREFIX" ]]; then
     echo "ERROR: CNT_CONDA_PREFIX is not set!"
     exit 1
 fi
-/usr/bin/micromamba -r $CNT_CONDA_PREFIX update -c conda-forge -c bioconda "$@"
+/usr/bin/micromamba -r "$CNT_CONDA_PREFIX" update --rc-file "$CNT_CONDA_PREFIX/.condarc" -n base "$@"
 EOT
     chmod +x /usr/bin/mm-update
 
     cat << 'EOT' > /usr/bin/mm-remove
 #!/usr/bin/bash
+set -e
 if [[ -z "$CNT_CONDA_PREFIX" ]]; then
     echo "ERROR: CNT_CONDA_PREFIX is not set!"
     exit 1
 fi
-/usr/bin/micromamba -r $CNT_CONDA_PREFIX remove "$@"
+/usr/bin/micromamba -r "$CNT_CONDA_PREFIX" remove -n base "$@"
 EOT
     chmod +x /usr/bin/mm-remove
 
@@ -123,7 +188,7 @@ if [[ -z "$CNT_CONDA_PREFIX" ]]; then
     echo "ERROR: CNT_CONDA_PREFIX is not set!"
     exit 1
 fi
-/usr/bin/micromamba -r $CNT_CONDA_PREFIX list "$@"
+/usr/bin/micromamba -r "$CNT_CONDA_PREFIX" list -n base "$@"
 EOT
     chmod +x /usr/bin/mm-list
 
@@ -133,7 +198,7 @@ if [[ -z "$CNT_CONDA_PREFIX" ]]; then
     echo "ERROR: CNT_CONDA_PREFIX is not set!"
     exit 1
 fi
-/usr/bin/micromamba -r $CNT_CONDA_PREFIX env export "$@"
+/usr/bin/micromamba -r "$CNT_CONDA_PREFIX" env export -n base "$@"
 EOT
     chmod +x /usr/bin/mm-export
 
@@ -143,7 +208,7 @@ if [[ -z "$CNT_CONDA_PREFIX" ]]; then
     echo "ERROR: CNT_CONDA_PREFIX is not set!"
     exit 1
 fi
-/usr/bin/micromamba -r $CNT_CONDA_PREFIX search -c conda-forge -c bioconda "$@"
+/usr/bin/micromamba -r "$CNT_CONDA_PREFIX" search --rc-file "$CNT_CONDA_PREFIX/.condarc" "$@"
 EOT
     chmod +x /usr/bin/mm-search
 
@@ -153,7 +218,7 @@ if [[ -z "$CNT_CONDA_PREFIX" ]]; then
     echo "ERROR: CNT_CONDA_PREFIX is not set!"
     exit 1
 fi
-/usr/bin/micromamba -r $CNT_CONDA_PREFIX clean "$@"
+/usr/bin/micromamba -r "$CNT_CONDA_PREFIX" clean "$@"
 EOT
     chmod +x /usr/bin/mm-clean
 
