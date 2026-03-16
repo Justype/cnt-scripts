@@ -48,13 +48,21 @@ Clone this repo next to the **CondaTainer** binary and it is auto-detected:
 
 You just need to have the same structure as this repo and you can host it anywhere (e.g., GitHub, GitLab, S3).
 
-Point `scripts_link` to any raw-content URL:
+Point `extra_scripts_links` to any raw-content URL:
 
 ```bash
-condatainer config set scripts_link https://somewhere.com/custom-cnt-scripts/
+condatainer config prepend extra_scripts_links https://somewhere.com/custom-cnt-scripts/
 ```
 
-Or set the env `CNT_SCRIPTS_LINK` to override the config value.
+Or set the env `CNT_EXTRA_SCRIPTS_LINKS` to override the config value. (`|` seprated if multiple)
+
+If your repo also ships **prebuilt** OS overlay images, create `metadata/prebuilt_link` — a plain-text file with the base download URL (one line, no trailing slash):
+
+```
+https://somewhere.com/custom-cnt-scripts/download
+```
+
+**CondaTainer** fetches this file automatically and uses it as the base URL when downloading prebuilt overlays for scripts from that source.
 
 ## Building OS overlays locally
 
@@ -76,9 +84,9 @@ make clean      # remove build/ directory
 
 See [CONTRIBUTING.md](./CONTRIBUTING.md) for how to add build scripts or helper scripts.
 
-You can overwrite the `CNT_SCRIPTS_LINK` env to point to your own repo for testing.
+You can overwrite the `CNT_EXTRA_SCRIPTS_LINKS` env to point to your own repo for testing.
 
 ```
-CNT_SCRIPTS_LINK=https://raw.githubusercontent.com/Justype/cnt-scripts/refs/heads/helper/add-headless-state \
+CNT_EXTRA_SCRIPTS_LINKS=https://raw.githubusercontent.com/Justype/cnt-scripts/refs/heads/helper/add-headless-state \
     condatainer helper --update
 ```
