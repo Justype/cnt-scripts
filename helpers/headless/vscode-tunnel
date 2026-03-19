@@ -140,8 +140,8 @@ check_and_install_overlays $OVERLAYS
 
 resolve_env_overlay
 if [ ! -f "$OVERLAY" ]; then
-    print_warn "Overlay ${BLUE}$OVERLAY${NC} not found, which is required for conda environment. Continuing without it."
-    print_info "If you forget to create the overlay, you can exit now and use ${YELLOW}condatainer o${NC} to create it."
+    print_warn "Overlay ${BLUE}$OVERLAY${NC} not found, which is required for the Conda env. Continuing without it."
+    print_info "If you forgot to create the overlay, exit now and use ${YELLOW}condatainer o${NC} to create one."
     countdown 4
 else
     check_overlay_integrity "$OVERLAY"

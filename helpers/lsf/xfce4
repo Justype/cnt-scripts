@@ -180,7 +180,7 @@ check_and_install_overlays xfce4 $OVERLAYS
 resolve_env_overlay
 if [ ! -f "$OVERLAY" ]; then
     print_info "Overlay ${BLUE}$OVERLAY${NC} not found. Continuing without it."
-    print_info "If you want to add other softwares, please use ${YELLOW}condatainer o${NC} to create one."
+    print_info "If you want to add other apps later, please use ${YELLOW}condatainer o${NC} to create one."
     countdown 4
 else
     check_overlay_integrity "$OVERLAY"

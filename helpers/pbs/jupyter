@@ -203,8 +203,8 @@ check_and_install_overlays $OVERLAYS
 resolve_env_overlay
 if [ ! -f "$OVERLAY" ]; then
     print_error "Overlay ${BLUE}$OVERLAY${NC} not found."
-    print_info "Workspace overlay is required for $HELPER_NAME to store jupyter conda environment. Please use ${YELLOW}condatainer o${NC} to create one."
-    print_info "  Then install Jupyter with ${YELLOW}mm-install notebook${NC} or ${YELLOW}mm-install jupyterlab${NC} inside the overlay shell."
+    print_info "A workspace overlay is required for $HELPER_NAME to store the Jupyter Conda env. Use ${YELLOW}condatainer o -- notebook jupyterlab python=<version>${NC} to create one."
+    print_info "    Include all packages you need first — this creates the Conda env on local SSD, which is significantly faster than the network filesystem."
     exit 1
 else
     # Verify overlay contains the required Jupyter executable for the selected mode
