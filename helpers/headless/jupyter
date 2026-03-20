@@ -156,7 +156,6 @@ resolve_env_overlay
 if [ ! -f "$OVERLAY" ]; then
     print_error "Overlay ${BLUE}$OVERLAY${NC} not found."
     print_info "A workspace overlay is required for $HELPER_NAME to store the Jupyter Conda env. Use ${YELLOW}condatainer o -- notebook jupyterlab python=<version>${NC} to create one."
-    print_info "    Include all packages you need first — this creates the Conda env on local SSD, which is significantly faster than the network filesystem."
     exit 1
 else
     # Verify overlay contains the required Jupyter executable for the selected mode
@@ -164,14 +163,14 @@ else
         if ! debugfs -R "stat upper/ext3/env/bin/jupyter-notebook" $OVERLAY 2>&1 | grep -q 'Inode'; then
             ABS_OVERLAY_PATH=$(readlink -f "$OVERLAY")
             print_error "Overlay ${BLUE}$ABS_OVERLAY_PATH${NC} does not contain jupyter-notebook."
-            print_info "Please go into the overlay shell and run ${YELLOW}mm-install notebook${NC} to install jupyter-notebook."
+            print_info "Please run ${YELLOW}condatainer e -- mm-install notebook${NC} to install jupyter-notebook."
             exit 1
         fi
     else
         if ! debugfs -R "stat upper/ext3/env/bin/jupyter-lab" $OVERLAY 2>&1 | grep -q 'Inode'; then
             ABS_OVERLAY_PATH=$(readlink -f "$OVERLAY")
             print_error "Overlay ${BLUE}$ABS_OVERLAY_PATH${NC} does not contain jupyter-lab."
-            print_info "Please go into the overlay shell and run ${YELLOW}mm-install jupyterlab${NC} to install jupyter-lab."
+            print_info "Please run ${YELLOW}condatainer e -- mm-install jupyterlab${NC} to install jupyter-lab."
             exit 1
         fi
     fi

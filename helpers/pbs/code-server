@@ -200,8 +200,6 @@ resolve_env_overlay
 if [ ! -f "$OVERLAY" ]; then
     print_warn "Overlay ${BLUE}$OVERLAY${NC} not found, which is required for the Conda env. Continuing without it."
     print_info "If you forgot to create the overlay, exit now and use ${YELLOW}condatainer o${NC} to create one."
-    print_info "    First, initialize the environment with the required packages: ${YELLOW}condatainer o -- python=3.10 pandas scipy seaborn scikit-learn${NC}"
-    print_info "    This creates the Conda env on local SSD instead of the network filesystem, which is significantly faster."
     countdown 4
 else
     check_overlay_integrity "$OVERLAY"
