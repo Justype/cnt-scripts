@@ -31,7 +31,7 @@ Scripts are discovered automatically by **CondaTainer** — no manual configurat
 
 **CondaTainer** fetches scripts directly from this repo at runtime.
 
-### Local clone (portable install)
+### Local clone (standalone install)
 
 Clone this repo next to the **CondaTainer** binary and it is auto-detected:
 
