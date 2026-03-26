@@ -271,7 +271,7 @@ exec &> "\$CUSTOM_LOG"
 while ! grep -q "^JOB_ID=" "$STATE_FILE" 2>/dev/null; do sleep 1; done
 echo "NODE=\$(hostname)" >> "$STATE_FILE"
 
-$CODE_BIN tunnel logout
+# $CODE_BIN tunnel user logout
 $CODE_BIN tunnel user login --provider $AUTH 2>&1 | tee "$AUTH_STATUS_FILE"
 printf "LOGIN" > "$AUTH_STATUS_FILE"
 
