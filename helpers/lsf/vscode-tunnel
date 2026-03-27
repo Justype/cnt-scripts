@@ -297,8 +297,14 @@ exec &> "\$CUSTOM_LOG"
 while ! grep -q "^JOB_ID=" "$STATE_FILE" 2>/dev/null; do sleep 1; done
 echo "NODE=\$(hostname)" >> "$STATE_FILE"
 
-# $CODE_BIN tunnel user logout
-$CODE_BIN tunnel user login --provider $AUTH 2>&1 | tee "$AUTH_STATUS_FILE"
+# Check if already logged in with the same provider before attempting login
+_SHOW_OUTPUT=\$($CODE_BIN tunnel user show 2>&1)
+if echo "\$_SHOW_OUTPUT" | grep -qi "^logged in with provider $AUTH"; then
+    echo "\$_SHOW_OUTPUT" > "$AUTH_STATUS_FILE"
+else
+    $CODE_BIN tunnel user logout
+    $CODE_BIN tunnel user login --provider $AUTH 2>&1 | tee "$AUTH_STATUS_FILE"
+fi
 printf "LOGIN" > "$AUTH_STATUS_FILE"
 
 condatainer exec \
