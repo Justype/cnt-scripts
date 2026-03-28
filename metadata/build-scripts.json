@@ -1,12 +1,12 @@
 {
   "cellranger/8.0.1": {
     "deps": [],
-    "relative_path": "cellranger/8.0.1",
+    "path": "cellranger/8.0.1",
     "whatis": "10X Genomics Single Cell Software Suite"
   },
   "cellranger/9.0.1": {
     "deps": [],
-    "relative_path": "cellranger/9.0.1",
+    "path": "cellranger/9.0.1",
     "whatis": "10X Genomics Single Cell Software Suite"
   },
   "grch38/bowtie2/ucsc_no_alt": {
@@ -14,7 +14,7 @@
       "bowtie2/2.5.4",
       "grch38/genome/ucsc_no_alt"
     ],
-    "relative_path": "grch38/bowtie2/ucsc_no_alt",
+    "path": "grch38/bowtie2/ucsc_no_alt",
     "whatis": "bowtie2 index for GRCh38 UCSC no alt reference genome"
   },
   "grch38/bwa-mem2/2.3/ucsc_no_alt": {
@@ -22,7 +22,7 @@
       "bwa-mem2/2.3",
       "grch38/genome/ucsc_no_alt"
     ],
-    "relative_path": "grch38/bwa-mem2/2.3/ucsc_no_alt",
+    "path": "grch38/bwa-mem2/2.3/ucsc_no_alt",
     "whatis": "bwa-mem2 index for GRCh38 UCSC no alt reference genome"
   },
   "grch38/bwa/0.7.19/ucsc_no_alt": {
@@ -30,171 +30,171 @@
       "bwa/0.7.19",
       "grch38/genome/ucsc_no_alt"
     ],
-    "relative_path": "grch38/bwa/0.7.19/ucsc_no_alt",
+    "path": "grch38/bwa/0.7.19/ucsc_no_alt",
     "whatis": "bwa index for GRCh38 UCSC no alt reference genome"
   },
   "grch38/cellranger/2024-A": {
     "deps": [],
-    "relative_path": "grch38/cellranger/2024-A",
+    "path": "grch38/cellranger/2024-A",
     "whatis": "Cell Ranger GRCh38 2024-A index"
   },
   "grch38/genome/gencode": {
     "deps": [
       "samtools/1.22.1"
     ],
-    "relative_path": "grch38/genome/gencode",
+    "path": "grch38/genome/gencode",
     "whatis": "GRCh38 reference genome FASTA"
   },
   "grch38/genome/ucsc_no_alt": {
     "deps": [
       "samtools/1.22.1"
     ],
-    "relative_path": "grch38/genome/ucsc_no_alt",
+    "path": "grch38/genome/ucsc_no_alt",
     "whatis": "GRCh38 reference genome FASTA"
   },
   "grch38/gtf-gencode/22": {
     "deps": [],
-    "relative_path": "grch38/gtf-gencode/22",
+    "path": "grch38/gtf-gencode/22",
     "whatis": "GRCh38 reference genome GTF for GENCODE 22"
   },
   "grch38/gtf-gencode/23": {
     "deps": [],
-    "relative_path": "grch38/gtf-gencode/23",
+    "path": "grch38/gtf-gencode/23",
     "whatis": "GRCh38 reference genome GTF for GENCODE 23"
   },
   "grch38/gtf-gencode/24": {
     "deps": [],
-    "relative_path": "grch38/gtf-gencode/24",
+    "path": "grch38/gtf-gencode/24",
     "whatis": "GRCh38 reference genome GTF for GENCODE 24"
   },
   "grch38/gtf-gencode/25": {
     "deps": [],
-    "relative_path": "grch38/gtf-gencode/25",
+    "path": "grch38/gtf-gencode/25",
     "whatis": "GRCh38 reference genome GTF for GENCODE 25"
   },
   "grch38/gtf-gencode/26": {
     "deps": [],
-    "relative_path": "grch38/gtf-gencode/26",
+    "path": "grch38/gtf-gencode/26",
     "whatis": "GRCh38 reference genome GTF for GENCODE 26"
   },
   "grch38/gtf-gencode/27": {
     "deps": [],
-    "relative_path": "grch38/gtf-gencode/27",
+    "path": "grch38/gtf-gencode/27",
     "whatis": "GRCh38 reference genome GTF for GENCODE 27"
   },
   "grch38/gtf-gencode/28": {
     "deps": [],
-    "relative_path": "grch38/gtf-gencode/28",
+    "path": "grch38/gtf-gencode/28",
     "whatis": "GRCh38 reference genome GTF for GENCODE 28"
   },
   "grch38/gtf-gencode/29": {
     "deps": [],
-    "relative_path": "grch38/gtf-gencode/29",
+    "path": "grch38/gtf-gencode/29",
     "whatis": "GRCh38 reference genome GTF for GENCODE 29"
   },
   "grch38/gtf-gencode/30": {
     "deps": [],
-    "relative_path": "grch38/gtf-gencode/30",
+    "path": "grch38/gtf-gencode/30",
     "whatis": "GRCh38 reference genome GTF for GENCODE 30"
   },
   "grch38/gtf-gencode/31": {
     "deps": [],
-    "relative_path": "grch38/gtf-gencode/31",
+    "path": "grch38/gtf-gencode/31",
     "whatis": "GRCh38 reference genome GTF for GENCODE 31"
   },
   "grch38/gtf-gencode/32": {
     "deps": [],
-    "relative_path": "grch38/gtf-gencode/32",
+    "path": "grch38/gtf-gencode/32",
     "whatis": "GRCh38 reference genome GTF for GENCODE 32"
   },
   "grch38/gtf-gencode/33": {
     "deps": [],
-    "relative_path": "grch38/gtf-gencode/33",
+    "path": "grch38/gtf-gencode/33",
     "whatis": "GRCh38 reference genome GTF for GENCODE 33"
   },
   "grch38/gtf-gencode/34": {
     "deps": [],
-    "relative_path": "grch38/gtf-gencode/34",
+    "path": "grch38/gtf-gencode/34",
     "whatis": "GRCh38 reference genome GTF for GENCODE 34"
   },
   "grch38/gtf-gencode/35": {
     "deps": [],
-    "relative_path": "grch38/gtf-gencode/35",
+    "path": "grch38/gtf-gencode/35",
     "whatis": "GRCh38 reference genome GTF for GENCODE 35"
   },
   "grch38/gtf-gencode/36": {
     "deps": [],
-    "relative_path": "grch38/gtf-gencode/36",
+    "path": "grch38/gtf-gencode/36",
     "whatis": "GRCh38 reference genome GTF for GENCODE 36"
   },
   "grch38/gtf-gencode/37": {
     "deps": [],
-    "relative_path": "grch38/gtf-gencode/37",
+    "path": "grch38/gtf-gencode/37",
     "whatis": "GRCh38 reference genome GTF for GENCODE 37"
   },
   "grch38/gtf-gencode/38": {
     "deps": [],
-    "relative_path": "grch38/gtf-gencode/38",
+    "path": "grch38/gtf-gencode/38",
     "whatis": "GRCh38 reference genome GTF for GENCODE 38"
   },
   "grch38/gtf-gencode/39": {
     "deps": [],
-    "relative_path": "grch38/gtf-gencode/39",
+    "path": "grch38/gtf-gencode/39",
     "whatis": "GRCh38 reference genome GTF for GENCODE 39"
   },
   "grch38/gtf-gencode/40": {
     "deps": [],
-    "relative_path": "grch38/gtf-gencode/40",
+    "path": "grch38/gtf-gencode/40",
     "whatis": "GRCh38 reference genome GTF for GENCODE 40"
   },
   "grch38/gtf-gencode/41": {
     "deps": [],
-    "relative_path": "grch38/gtf-gencode/41",
+    "path": "grch38/gtf-gencode/41",
     "whatis": "GRCh38 reference genome GTF for GENCODE 41"
   },
   "grch38/gtf-gencode/42": {
     "deps": [],
-    "relative_path": "grch38/gtf-gencode/42",
+    "path": "grch38/gtf-gencode/42",
     "whatis": "GRCh38 reference genome GTF for GENCODE 42"
   },
   "grch38/gtf-gencode/43": {
     "deps": [],
-    "relative_path": "grch38/gtf-gencode/43",
+    "path": "grch38/gtf-gencode/43",
     "whatis": "GRCh38 reference genome GTF for GENCODE 43"
   },
   "grch38/gtf-gencode/44": {
     "deps": [],
-    "relative_path": "grch38/gtf-gencode/44",
+    "path": "grch38/gtf-gencode/44",
     "whatis": "GRCh38 reference genome GTF for GENCODE 44"
   },
   "grch38/gtf-gencode/45": {
     "deps": [],
-    "relative_path": "grch38/gtf-gencode/45",
+    "path": "grch38/gtf-gencode/45",
     "whatis": "GRCh38 reference genome GTF for GENCODE 45"
   },
   "grch38/gtf-gencode/46": {
     "deps": [],
-    "relative_path": "grch38/gtf-gencode/46",
+    "path": "grch38/gtf-gencode/46",
     "whatis": "GRCh38 reference genome GTF for GENCODE 46"
   },
   "grch38/gtf-gencode/47": {
     "deps": [],
-    "relative_path": "grch38/gtf-gencode/47",
+    "path": "grch38/gtf-gencode/47",
     "whatis": "GRCh38 reference genome GTF for GENCODE 47"
   },
   "grch38/gtf-gencode/48": {
     "deps": [],
-    "relative_path": "grch38/gtf-gencode/48",
+    "path": "grch38/gtf-gencode/48",
     "whatis": "GRCh38 reference genome GTF for GENCODE 48"
   },
   "grch38/gtf-gencode/49": {
     "deps": [],
-    "relative_path": "grch38/gtf-gencode/49",
+    "path": "grch38/gtf-gencode/49",
     "whatis": "GRCh38 reference genome GTF for GENCODE 49"
   },
   "grch38/rmsk/ucsc": {
     "deps": [],
-    "relative_path": "grch38/rmsk/ucsc",
+    "path": "grch38/rmsk/ucsc",
     "whatis": "GRCh38 RepeatMasker GTF"
   },
   "grch38/salmon/1.10.2/gencode23": {
@@ -203,7 +203,7 @@
       "grch38/transcript-gencode/23",
       "salmon/1.10.2"
     ],
-    "relative_path": "grch38/salmon/1.10.2/gencode23",
+    "path": "grch38/salmon/1.10.2/gencode23",
     "whatis": "Salmon grch38 GENCODE 23 index for transcript quantification"
   },
   "grch38/salmon/1.10.2/gencode24": {
@@ -212,7 +212,7 @@
       "grch38/transcript-gencode/24",
       "salmon/1.10.2"
     ],
-    "relative_path": "grch38/salmon/1.10.2/gencode24",
+    "path": "grch38/salmon/1.10.2/gencode24",
     "whatis": "Salmon grch38 GENCODE 24 index for transcript quantification"
   },
   "grch38/salmon/1.10.2/gencode25": {
@@ -221,7 +221,7 @@
       "grch38/transcript-gencode/25",
       "salmon/1.10.2"
     ],
-    "relative_path": "grch38/salmon/1.10.2/gencode25",
+    "path": "grch38/salmon/1.10.2/gencode25",
     "whatis": "Salmon grch38 GENCODE 25 index for transcript quantification"
   },
   "grch38/salmon/1.10.2/gencode26": {
@@ -230,7 +230,7 @@
       "grch38/transcript-gencode/26",
       "salmon/1.10.2"
     ],
-    "relative_path": "grch38/salmon/1.10.2/gencode26",
+    "path": "grch38/salmon/1.10.2/gencode26",
     "whatis": "Salmon grch38 GENCODE 26 index for transcript quantification"
   },
   "grch38/salmon/1.10.2/gencode27": {
@@ -239,7 +239,7 @@
       "grch38/transcript-gencode/27",
       "salmon/1.10.2"
     ],
-    "relative_path": "grch38/salmon/1.10.2/gencode27",
+    "path": "grch38/salmon/1.10.2/gencode27",
     "whatis": "Salmon grch38 GENCODE 27 index for transcript quantification"
   },
   "grch38/salmon/1.10.2/gencode28": {
@@ -248,7 +248,7 @@
       "grch38/transcript-gencode/28",
       "salmon/1.10.2"
     ],
-    "relative_path": "grch38/salmon/1.10.2/gencode28",
+    "path": "grch38/salmon/1.10.2/gencode28",
     "whatis": "Salmon grch38 GENCODE 28 index for transcript quantification"
   },
   "grch38/salmon/1.10.2/gencode29": {
@@ -257,7 +257,7 @@
       "grch38/transcript-gencode/29",
       "salmon/1.10.2"
     ],
-    "relative_path": "grch38/salmon/1.10.2/gencode29",
+    "path": "grch38/salmon/1.10.2/gencode29",
     "whatis": "Salmon grch38 GENCODE 29 index for transcript quantification"
   },
   "grch38/salmon/1.10.2/gencode30": {
@@ -266,7 +266,7 @@
       "grch38/transcript-gencode/30",
       "salmon/1.10.2"
     ],
-    "relative_path": "grch38/salmon/1.10.2/gencode30",
+    "path": "grch38/salmon/1.10.2/gencode30",
     "whatis": "Salmon grch38 GENCODE 30 index for transcript quantification"
   },
   "grch38/salmon/1.10.2/gencode31": {
@@ -275,7 +275,7 @@
       "grch38/transcript-gencode/31",
       "salmon/1.10.2"
     ],
-    "relative_path": "grch38/salmon/1.10.2/gencode31",
+    "path": "grch38/salmon/1.10.2/gencode31",
     "whatis": "Salmon grch38 GENCODE 31 index for transcript quantification"
   },
   "grch38/salmon/1.10.2/gencode32": {
@@ -284,7 +284,7 @@
       "grch38/transcript-gencode/32",
       "salmon/1.10.2"
     ],
-    "relative_path": "grch38/salmon/1.10.2/gencode32",
+    "path": "grch38/salmon/1.10.2/gencode32",
     "whatis": "Salmon grch38 GENCODE 32 index for transcript quantification"
   },
   "grch38/salmon/1.10.2/gencode33": {
@@ -293,7 +293,7 @@
       "grch38/transcript-gencode/33",
       "salmon/1.10.2"
     ],
-    "relative_path": "grch38/salmon/1.10.2/gencode33",
+    "path": "grch38/salmon/1.10.2/gencode33",
     "whatis": "Salmon grch38 GENCODE 33 index for transcript quantification"
   },
   "grch38/salmon/1.10.2/gencode34": {
@@ -302,7 +302,7 @@
       "grch38/transcript-gencode/34",
       "salmon/1.10.2"
     ],
-    "relative_path": "grch38/salmon/1.10.2/gencode34",
+    "path": "grch38/salmon/1.10.2/gencode34",
     "whatis": "Salmon grch38 GENCODE 34 index for transcript quantification"
   },
   "grch38/salmon/1.10.2/gencode35": {
@@ -311,7 +311,7 @@
       "grch38/transcript-gencode/35",
       "salmon/1.10.2"
     ],
-    "relative_path": "grch38/salmon/1.10.2/gencode35",
+    "path": "grch38/salmon/1.10.2/gencode35",
     "whatis": "Salmon grch38 GENCODE 35 index for transcript quantification"
   },
   "grch38/salmon/1.10.2/gencode36": {
@@ -320,7 +320,7 @@
       "grch38/transcript-gencode/36",
       "salmon/1.10.2"
     ],
-    "relative_path": "grch38/salmon/1.10.2/gencode36",
+    "path": "grch38/salmon/1.10.2/gencode36",
     "whatis": "Salmon grch38 GENCODE 36 index for transcript quantification"
   },
   "grch38/salmon/1.10.2/gencode37": {
@@ -329,7 +329,7 @@
       "grch38/transcript-gencode/37",
       "salmon/1.10.2"
     ],
-    "relative_path": "grch38/salmon/1.10.2/gencode37",
+    "path": "grch38/salmon/1.10.2/gencode37",
     "whatis": "Salmon grch38 GENCODE 37 index for transcript quantification"
   },
   "grch38/salmon/1.10.2/gencode38": {
@@ -338,7 +338,7 @@
       "grch38/transcript-gencode/38",
       "salmon/1.10.2"
     ],
-    "relative_path": "grch38/salmon/1.10.2/gencode38",
+    "path": "grch38/salmon/1.10.2/gencode38",
     "whatis": "Salmon grch38 GENCODE 38 index for transcript quantification"
   },
   "grch38/salmon/1.10.2/gencode39": {
@@ -347,7 +347,7 @@
       "grch38/transcript-gencode/39",
       "salmon/1.10.2"
     ],
-    "relative_path": "grch38/salmon/1.10.2/gencode39",
+    "path": "grch38/salmon/1.10.2/gencode39",
     "whatis": "Salmon grch38 GENCODE 39 index for transcript quantification"
   },
   "grch38/salmon/1.10.2/gencode40": {
@@ -356,7 +356,7 @@
       "grch38/transcript-gencode/40",
       "salmon/1.10.2"
     ],
-    "relative_path": "grch38/salmon/1.10.2/gencode40",
+    "path": "grch38/salmon/1.10.2/gencode40",
     "whatis": "Salmon grch38 GENCODE 40 index for transcript quantification"
   },
   "grch38/salmon/1.10.2/gencode41": {
@@ -365,7 +365,7 @@
       "grch38/transcript-gencode/41",
       "salmon/1.10.2"
     ],
-    "relative_path": "grch38/salmon/1.10.2/gencode41",
+    "path": "grch38/salmon/1.10.2/gencode41",
     "whatis": "Salmon grch38 GENCODE 41 index for transcript quantification"
   },
   "grch38/salmon/1.10.2/gencode42": {
@@ -374,7 +374,7 @@
       "grch38/transcript-gencode/42",
       "salmon/1.10.2"
     ],
-    "relative_path": "grch38/salmon/1.10.2/gencode42",
+    "path": "grch38/salmon/1.10.2/gencode42",
     "whatis": "Salmon grch38 GENCODE 42 index for transcript quantification"
   },
   "grch38/salmon/1.10.2/gencode43": {
@@ -383,7 +383,7 @@
       "grch38/transcript-gencode/43",
       "salmon/1.10.2"
     ],
-    "relative_path": "grch38/salmon/1.10.2/gencode43",
+    "path": "grch38/salmon/1.10.2/gencode43",
     "whatis": "Salmon grch38 GENCODE 43 index for transcript quantification"
   },
   "grch38/salmon/1.10.2/gencode44": {
@@ -392,7 +392,7 @@
       "grch38/transcript-gencode/44",
       "salmon/1.10.2"
     ],
-    "relative_path": "grch38/salmon/1.10.2/gencode44",
+    "path": "grch38/salmon/1.10.2/gencode44",
     "whatis": "Salmon grch38 GENCODE 44 index for transcript quantification"
   },
   "grch38/salmon/1.10.2/gencode45": {
@@ -401,7 +401,7 @@
       "grch38/transcript-gencode/45",
       "salmon/1.10.2"
     ],
-    "relative_path": "grch38/salmon/1.10.2/gencode45",
+    "path": "grch38/salmon/1.10.2/gencode45",
     "whatis": "Salmon grch38 GENCODE 45 index for transcript quantification"
   },
   "grch38/salmon/1.10.2/gencode46": {
@@ -410,7 +410,7 @@
       "grch38/transcript-gencode/46",
       "salmon/1.10.2"
     ],
-    "relative_path": "grch38/salmon/1.10.2/gencode46",
+    "path": "grch38/salmon/1.10.2/gencode46",
     "whatis": "Salmon grch38 GENCODE 46 index for transcript quantification"
   },
   "grch38/salmon/1.10.2/gencode47": {
@@ -419,7 +419,7 @@
       "grch38/transcript-gencode/47",
       "salmon/1.10.2"
     ],
-    "relative_path": "grch38/salmon/1.10.2/gencode47",
+    "path": "grch38/salmon/1.10.2/gencode47",
     "whatis": "Salmon grch38 GENCODE 47 index for transcript quantification"
   },
   "grch38/salmon/1.10.2/gencode48": {
@@ -428,7 +428,7 @@
       "grch38/transcript-gencode/48",
       "salmon/1.10.2"
     ],
-    "relative_path": "grch38/salmon/1.10.2/gencode48",
+    "path": "grch38/salmon/1.10.2/gencode48",
     "whatis": "Salmon grch38 GENCODE 48 index for transcript quantification"
   },
   "grch38/salmon/1.10.2/gencode49": {
@@ -437,7 +437,7 @@
       "grch38/transcript-gencode/49",
       "salmon/1.10.2"
     ],
-    "relative_path": "grch38/salmon/1.10.2/gencode49",
+    "path": "grch38/salmon/1.10.2/gencode49",
     "whatis": "Salmon grch38 GENCODE 49 index for transcript quantification"
   },
   "grch38/star/2.7.11b/cellranger-2024-A": {
@@ -445,7 +445,7 @@
       "grch38/cellranger/2024-A",
       "star/2.7.11b"
     ],
-    "relative_path": "grch38/star/2.7.11b/cellranger-2024-A",
+    "path": "grch38/star/2.7.11b/cellranger-2024-A",
     "whatis": "STAR GRCh38 10X Genomics 2024-A index"
   },
   "grch38/star/2.7.11b/gencode22-101": {
@@ -454,7 +454,7 @@
       "grch38/gtf-gencode/22",
       "star/2.7.11b"
     ],
-    "relative_path": "grch38/star/2.7.11b/gencode22-101",
+    "path": "grch38/star/2.7.11b/gencode22-101",
     "whatis": "STAR grch38 GENCODE22 index for read length 101"
   },
   "grch38/star/2.7.11b/gencode22-151": {
@@ -463,7 +463,7 @@
       "grch38/gtf-gencode/22",
       "star/2.7.11b"
     ],
-    "relative_path": "grch38/star/2.7.11b/gencode22-151",
+    "path": "grch38/star/2.7.11b/gencode22-151",
     "whatis": "STAR grch38 GENCODE22 index for read length 151"
   },
   "grch38/star/2.7.11b/gencode23-101": {
@@ -472,7 +472,7 @@
       "grch38/gtf-gencode/23",
       "star/2.7.11b"
     ],
-    "relative_path": "grch38/star/2.7.11b/gencode23-101",
+    "path": "grch38/star/2.7.11b/gencode23-101",
     "whatis": "STAR grch38 GENCODE23 index for read length 101"
   },
   "grch38/star/2.7.11b/gencode23-151": {
@@ -481,7 +481,7 @@
       "grch38/gtf-gencode/23",
       "star/2.7.11b"
     ],
-    "relative_path": "grch38/star/2.7.11b/gencode23-151",
+    "path": "grch38/star/2.7.11b/gencode23-151",
     "whatis": "STAR grch38 GENCODE23 index for read length 151"
   },
   "grch38/star/2.7.11b/gencode24-101": {
@@ -490,7 +490,7 @@
       "grch38/gtf-gencode/24",
       "star/2.7.11b"
     ],
-    "relative_path": "grch38/star/2.7.11b/gencode24-101",
+    "path": "grch38/star/2.7.11b/gencode24-101",
     "whatis": "STAR grch38 GENCODE24 index for read length 101"
   },
   "grch38/star/2.7.11b/gencode24-151": {
@@ -499,7 +499,7 @@
       "grch38/gtf-gencode/24",
       "star/2.7.11b"
     ],
-    "relative_path": "grch38/star/2.7.11b/gencode24-151",
+    "path": "grch38/star/2.7.11b/gencode24-151",
     "whatis": "STAR grch38 GENCODE24 index for read length 151"
   },
   "grch38/star/2.7.11b/gencode25-101": {
@@ -508,7 +508,7 @@
       "grch38/gtf-gencode/25",
       "star/2.7.11b"
     ],
-    "relative_path": "grch38/star/2.7.11b/gencode25-101",
+    "path": "grch38/star/2.7.11b/gencode25-101",
     "whatis": "STAR grch38 GENCODE25 index for read length 101"
   },
   "grch38/star/2.7.11b/gencode25-151": {
@@ -517,7 +517,7 @@
       "grch38/gtf-gencode/25",
       "star/2.7.11b"
     ],
-    "relative_path": "grch38/star/2.7.11b/gencode25-151",
+    "path": "grch38/star/2.7.11b/gencode25-151",
     "whatis": "STAR grch38 GENCODE25 index for read length 151"
   },
   "grch38/star/2.7.11b/gencode26-101": {
@@ -526,7 +526,7 @@
       "grch38/gtf-gencode/26",
       "star/2.7.11b"
     ],
-    "relative_path": "grch38/star/2.7.11b/gencode26-101",
+    "path": "grch38/star/2.7.11b/gencode26-101",
     "whatis": "STAR grch38 GENCODE26 index for read length 101"
   },
   "grch38/star/2.7.11b/gencode26-151": {
@@ -535,7 +535,7 @@
       "grch38/gtf-gencode/26",
       "star/2.7.11b"
     ],
-    "relative_path": "grch38/star/2.7.11b/gencode26-151",
+    "path": "grch38/star/2.7.11b/gencode26-151",
     "whatis": "STAR grch38 GENCODE26 index for read length 151"
   },
   "grch38/star/2.7.11b/gencode27-101": {
@@ -544,7 +544,7 @@
       "grch38/gtf-gencode/27",
       "star/2.7.11b"
     ],
-    "relative_path": "grch38/star/2.7.11b/gencode27-101",
+    "path": "grch38/star/2.7.11b/gencode27-101",
     "whatis": "STAR grch38 GENCODE27 index for read length 101"
   },
   "grch38/star/2.7.11b/gencode27-151": {
@@ -553,7 +553,7 @@
       "grch38/gtf-gencode/27",
       "star/2.7.11b"
     ],
-    "relative_path": "grch38/star/2.7.11b/gencode27-151",
+    "path": "grch38/star/2.7.11b/gencode27-151",
     "whatis": "STAR grch38 GENCODE27 index for read length 151"
   },
   "grch38/star/2.7.11b/gencode28-101": {
@@ -562,7 +562,7 @@
       "grch38/gtf-gencode/28",
       "star/2.7.11b"
     ],
-    "relative_path": "grch38/star/2.7.11b/gencode28-101",
+    "path": "grch38/star/2.7.11b/gencode28-101",
     "whatis": "STAR grch38 GENCODE28 index for read length 101"
   },
   "grch38/star/2.7.11b/gencode28-151": {
@@ -571,7 +571,7 @@
       "grch38/gtf-gencode/28",
       "star/2.7.11b"
     ],
-    "relative_path": "grch38/star/2.7.11b/gencode28-151",
+    "path": "grch38/star/2.7.11b/gencode28-151",
     "whatis": "STAR grch38 GENCODE28 index for read length 151"
   },
   "grch38/star/2.7.11b/gencode29-101": {
@@ -580,7 +580,7 @@
       "grch38/gtf-gencode/29",
       "star/2.7.11b"
     ],
-    "relative_path": "grch38/star/2.7.11b/gencode29-101",
+    "path": "grch38/star/2.7.11b/gencode29-101",
     "whatis": "STAR grch38 GENCODE29 index for read length 101"
   },
   "grch38/star/2.7.11b/gencode29-151": {
@@ -589,7 +589,7 @@
       "grch38/gtf-gencode/29",
       "star/2.7.11b"
     ],
-    "relative_path": "grch38/star/2.7.11b/gencode29-151",
+    "path": "grch38/star/2.7.11b/gencode29-151",
     "whatis": "STAR grch38 GENCODE29 index for read length 151"
   },
   "grch38/star/2.7.11b/gencode30-101": {
@@ -598,7 +598,7 @@
       "grch38/gtf-gencode/30",
       "star/2.7.11b"
     ],
-    "relative_path": "grch38/star/2.7.11b/gencode30-101",
+    "path": "grch38/star/2.7.11b/gencode30-101",
     "whatis": "STAR grch38 GENCODE30 index for read length 101"
   },
   "grch38/star/2.7.11b/gencode30-151": {
@@ -607,7 +607,7 @@
       "grch38/gtf-gencode/30",
       "star/2.7.11b"
     ],
-    "relative_path": "grch38/star/2.7.11b/gencode30-151",
+    "path": "grch38/star/2.7.11b/gencode30-151",
     "whatis": "STAR grch38 GENCODE30 index for read length 151"
   },
   "grch38/star/2.7.11b/gencode31-101": {
@@ -616,7 +616,7 @@
       "grch38/gtf-gencode/31",
       "star/2.7.11b"
     ],
-    "relative_path": "grch38/star/2.7.11b/gencode31-101",
+    "path": "grch38/star/2.7.11b/gencode31-101",
     "whatis": "STAR grch38 GENCODE31 index for read length 101"
   },
   "grch38/star/2.7.11b/gencode31-151": {
@@ -625,7 +625,7 @@
       "grch38/gtf-gencode/31",
       "star/2.7.11b"
     ],
-    "relative_path": "grch38/star/2.7.11b/gencode31-151",
+    "path": "grch38/star/2.7.11b/gencode31-151",
     "whatis": "STAR grch38 GENCODE31 index for read length 151"
   },
   "grch38/star/2.7.11b/gencode32-101": {
@@ -634,7 +634,7 @@
       "grch38/gtf-gencode/32",
       "star/2.7.11b"
     ],
-    "relative_path": "grch38/star/2.7.11b/gencode32-101",
+    "path": "grch38/star/2.7.11b/gencode32-101",
     "whatis": "STAR grch38 GENCODE32 index for read length 101"
   },
   "grch38/star/2.7.11b/gencode32-151": {
@@ -643,7 +643,7 @@
       "grch38/gtf-gencode/32",
       "star/2.7.11b"
     ],
-    "relative_path": "grch38/star/2.7.11b/gencode32-151",
+    "path": "grch38/star/2.7.11b/gencode32-151",
     "whatis": "STAR grch38 GENCODE32 index for read length 151"
   },
   "grch38/star/2.7.11b/gencode33-101": {
@@ -652,7 +652,7 @@
       "grch38/gtf-gencode/33",
       "star/2.7.11b"
     ],
-    "relative_path": "grch38/star/2.7.11b/gencode33-101",
+    "path": "grch38/star/2.7.11b/gencode33-101",
     "whatis": "STAR grch38 GENCODE33 index for read length 101"
   },
   "grch38/star/2.7.11b/gencode33-151": {
@@ -661,7 +661,7 @@
       "grch38/gtf-gencode/33",
       "star/2.7.11b"
     ],
-    "relative_path": "grch38/star/2.7.11b/gencode33-151",
+    "path": "grch38/star/2.7.11b/gencode33-151",
     "whatis": "STAR grch38 GENCODE33 index for read length 151"
   },
   "grch38/star/2.7.11b/gencode34-101": {
@@ -670,7 +670,7 @@
       "grch38/gtf-gencode/34",
       "star/2.7.11b"
     ],
-    "relative_path": "grch38/star/2.7.11b/gencode34-101",
+    "path": "grch38/star/2.7.11b/gencode34-101",
     "whatis": "STAR grch38 GENCODE34 index for read length 101"
   },
   "grch38/star/2.7.11b/gencode34-151": {
@@ -679,7 +679,7 @@
       "grch38/gtf-gencode/34",
       "star/2.7.11b"
     ],
-    "relative_path": "grch38/star/2.7.11b/gencode34-151",
+    "path": "grch38/star/2.7.11b/gencode34-151",
     "whatis": "STAR grch38 GENCODE34 index for read length 151"
   },
   "grch38/star/2.7.11b/gencode35-101": {
@@ -688,7 +688,7 @@
       "grch38/gtf-gencode/35",
       "star/2.7.11b"
     ],
-    "relative_path": "grch38/star/2.7.11b/gencode35-101",
+    "path": "grch38/star/2.7.11b/gencode35-101",
     "whatis": "STAR grch38 GENCODE35 index for read length 101"
   },
   "grch38/star/2.7.11b/gencode35-151": {
@@ -697,7 +697,7 @@
       "grch38/gtf-gencode/35",
       "star/2.7.11b"
     ],
-    "relative_path": "grch38/star/2.7.11b/gencode35-151",
+    "path": "grch38/star/2.7.11b/gencode35-151",
     "whatis": "STAR grch38 GENCODE35 index for read length 151"
   },
   "grch38/star/2.7.11b/gencode36-101": {
@@ -706,7 +706,7 @@
       "grch38/gtf-gencode/36",
       "star/2.7.11b"
     ],
-    "relative_path": "grch38/star/2.7.11b/gencode36-101",
+    "path": "grch38/star/2.7.11b/gencode36-101",
     "whatis": "STAR grch38 GENCODE36 index for read length 101"
   },
   "grch38/star/2.7.11b/gencode36-151": {
@@ -715,7 +715,7 @@
       "grch38/gtf-gencode/36",
       "star/2.7.11b"
     ],
-    "relative_path": "grch38/star/2.7.11b/gencode36-151",
+    "path": "grch38/star/2.7.11b/gencode36-151",
     "whatis": "STAR grch38 GENCODE36 index for read length 151"
   },
   "grch38/star/2.7.11b/gencode37-101": {
@@ -724,7 +724,7 @@
       "grch38/gtf-gencode/37",
       "star/2.7.11b"
     ],
-    "relative_path": "grch38/star/2.7.11b/gencode37-101",
+    "path": "grch38/star/2.7.11b/gencode37-101",
     "whatis": "STAR grch38 GENCODE37 index for read length 101"
   },
   "grch38/star/2.7.11b/gencode37-151": {
@@ -733,7 +733,7 @@
       "grch38/gtf-gencode/37",
       "star/2.7.11b"
     ],
-    "relative_path": "grch38/star/2.7.11b/gencode37-151",
+    "path": "grch38/star/2.7.11b/gencode37-151",
     "whatis": "STAR grch38 GENCODE37 index for read length 151"
   },
   "grch38/star/2.7.11b/gencode38-101": {
@@ -742,7 +742,7 @@
       "grch38/gtf-gencode/38",
       "star/2.7.11b"
     ],
-    "relative_path": "grch38/star/2.7.11b/gencode38-101",
+    "path": "grch38/star/2.7.11b/gencode38-101",
     "whatis": "STAR grch38 GENCODE38 index for read length 101"
   },
   "grch38/star/2.7.11b/gencode38-151": {
@@ -751,7 +751,7 @@
       "grch38/gtf-gencode/38",
       "star/2.7.11b"
     ],
-    "relative_path": "grch38/star/2.7.11b/gencode38-151",
+    "path": "grch38/star/2.7.11b/gencode38-151",
     "whatis": "STAR grch38 GENCODE38 index for read length 151"
   },
   "grch38/star/2.7.11b/gencode39-101": {
@@ -760,7 +760,7 @@
       "grch38/gtf-gencode/39",
       "star/2.7.11b"
     ],
-    "relative_path": "grch38/star/2.7.11b/gencode39-101",
+    "path": "grch38/star/2.7.11b/gencode39-101",
     "whatis": "STAR grch38 GENCODE39 index for read length 101"
   },
   "grch38/star/2.7.11b/gencode39-151": {
@@ -769,7 +769,7 @@
       "grch38/gtf-gencode/39",
       "star/2.7.11b"
     ],
-    "relative_path": "grch38/star/2.7.11b/gencode39-151",
+    "path": "grch38/star/2.7.11b/gencode39-151",
     "whatis": "STAR grch38 GENCODE39 index for read length 151"
   },
   "grch38/star/2.7.11b/gencode40-101": {
@@ -778,7 +778,7 @@
       "grch38/gtf-gencode/40",
       "star/2.7.11b"
     ],
-    "relative_path": "grch38/star/2.7.11b/gencode40-101",
+    "path": "grch38/star/2.7.11b/gencode40-101",
     "whatis": "STAR grch38 GENCODE40 index for read length 101"
   },
   "grch38/star/2.7.11b/gencode40-151": {
@@ -787,7 +787,7 @@
       "grch38/gtf-gencode/40",
       "star/2.7.11b"
     ],
-    "relative_path": "grch38/star/2.7.11b/gencode40-151",
+    "path": "grch38/star/2.7.11b/gencode40-151",
     "whatis": "STAR grch38 GENCODE40 index for read length 151"
   },
   "grch38/star/2.7.11b/gencode41-101": {
@@ -796,7 +796,7 @@
       "grch38/gtf-gencode/41",
       "star/2.7.11b"
     ],
-    "relative_path": "grch38/star/2.7.11b/gencode41-101",
+    "path": "grch38/star/2.7.11b/gencode41-101",
     "whatis": "STAR grch38 GENCODE41 index for read length 101"
   },
   "grch38/star/2.7.11b/gencode41-151": {
@@ -805,7 +805,7 @@
       "grch38/gtf-gencode/41",
       "star/2.7.11b"
     ],
-    "relative_path": "grch38/star/2.7.11b/gencode41-151",
+    "path": "grch38/star/2.7.11b/gencode41-151",
     "whatis": "STAR grch38 GENCODE41 index for read length 151"
   },
   "grch38/star/2.7.11b/gencode42-101": {
@@ -814,7 +814,7 @@
       "grch38/gtf-gencode/42",
       "star/2.7.11b"
     ],
-    "relative_path": "grch38/star/2.7.11b/gencode42-101",
+    "path": "grch38/star/2.7.11b/gencode42-101",
     "whatis": "STAR grch38 GENCODE42 index for read length 101"
   },
   "grch38/star/2.7.11b/gencode42-151": {
@@ -823,7 +823,7 @@
       "grch38/gtf-gencode/42",
       "star/2.7.11b"
     ],
-    "relative_path": "grch38/star/2.7.11b/gencode42-151",
+    "path": "grch38/star/2.7.11b/gencode42-151",
     "whatis": "STAR grch38 GENCODE42 index for read length 151"
   },
   "grch38/star/2.7.11b/gencode43-101": {
@@ -832,7 +832,7 @@
       "grch38/gtf-gencode/43",
       "star/2.7.11b"
     ],
-    "relative_path": "grch38/star/2.7.11b/gencode43-101",
+    "path": "grch38/star/2.7.11b/gencode43-101",
     "whatis": "STAR grch38 GENCODE43 index for read length 101"
   },
   "grch38/star/2.7.11b/gencode43-151": {
@@ -841,7 +841,7 @@
       "grch38/gtf-gencode/43",
       "star/2.7.11b"
     ],
-    "relative_path": "grch38/star/2.7.11b/gencode43-151",
+    "path": "grch38/star/2.7.11b/gencode43-151",
     "whatis": "STAR grch38 GENCODE43 index for read length 151"
   },
   "grch38/star/2.7.11b/gencode44-101": {
@@ -850,7 +850,7 @@
       "grch38/gtf-gencode/44",
       "star/2.7.11b"
     ],
-    "relative_path": "grch38/star/2.7.11b/gencode44-101",
+    "path": "grch38/star/2.7.11b/gencode44-101",
     "whatis": "STAR grch38 GENCODE44 index for read length 101"
   },
   "grch38/star/2.7.11b/gencode44-151": {
@@ -859,7 +859,7 @@
       "grch38/gtf-gencode/44",
       "star/2.7.11b"
     ],
-    "relative_path": "grch38/star/2.7.11b/gencode44-151",
+    "path": "grch38/star/2.7.11b/gencode44-151",
     "whatis": "STAR grch38 GENCODE44 index for read length 151"
   },
   "grch38/star/2.7.11b/gencode45-101": {
@@ -868,7 +868,7 @@
       "grch38/gtf-gencode/45",
       "star/2.7.11b"
     ],
-    "relative_path": "grch38/star/2.7.11b/gencode45-101",
+    "path": "grch38/star/2.7.11b/gencode45-101",
     "whatis": "STAR grch38 GENCODE45 index for read length 101"
   },
   "grch38/star/2.7.11b/gencode45-151": {
@@ -877,7 +877,7 @@
       "grch38/gtf-gencode/45",
       "star/2.7.11b"
     ],
-    "relative_path": "grch38/star/2.7.11b/gencode45-151",
+    "path": "grch38/star/2.7.11b/gencode45-151",
     "whatis": "STAR grch38 GENCODE45 index for read length 151"
   },
   "grch38/star/2.7.11b/gencode46-101": {
@@ -886,7 +886,7 @@
       "grch38/gtf-gencode/46",
       "star/2.7.11b"
     ],
-    "relative_path": "grch38/star/2.7.11b/gencode46-101",
+    "path": "grch38/star/2.7.11b/gencode46-101",
     "whatis": "STAR grch38 GENCODE46 index for read length 101"
   },
   "grch38/star/2.7.11b/gencode46-151": {
@@ -895,7 +895,7 @@
       "grch38/gtf-gencode/46",
       "star/2.7.11b"
     ],
-    "relative_path": "grch38/star/2.7.11b/gencode46-151",
+    "path": "grch38/star/2.7.11b/gencode46-151",
     "whatis": "STAR grch38 GENCODE46 index for read length 151"
   },
   "grch38/star/2.7.11b/gencode47-101": {
@@ -904,7 +904,7 @@
       "grch38/gtf-gencode/47",
       "star/2.7.11b"
     ],
-    "relative_path": "grch38/star/2.7.11b/gencode47-101",
+    "path": "grch38/star/2.7.11b/gencode47-101",
     "whatis": "STAR grch38 GENCODE47 index for read length 101"
   },
   "grch38/star/2.7.11b/gencode47-151": {
@@ -913,7 +913,7 @@
       "grch38/gtf-gencode/47",
       "star/2.7.11b"
     ],
-    "relative_path": "grch38/star/2.7.11b/gencode47-151",
+    "path": "grch38/star/2.7.11b/gencode47-151",
     "whatis": "STAR grch38 GENCODE47 index for read length 151"
   },
   "grch38/star/2.7.11b/gencode48-101": {
@@ -922,7 +922,7 @@
       "grch38/gtf-gencode/48",
       "star/2.7.11b"
     ],
-    "relative_path": "grch38/star/2.7.11b/gencode48-101",
+    "path": "grch38/star/2.7.11b/gencode48-101",
     "whatis": "STAR grch38 GENCODE48 index for read length 101"
   },
   "grch38/star/2.7.11b/gencode48-151": {
@@ -931,7 +931,7 @@
       "grch38/gtf-gencode/48",
       "star/2.7.11b"
     ],
-    "relative_path": "grch38/star/2.7.11b/gencode48-151",
+    "path": "grch38/star/2.7.11b/gencode48-151",
     "whatis": "STAR grch38 GENCODE48 index for read length 151"
   },
   "grch38/star/2.7.11b/gencode49-101": {
@@ -940,7 +940,7 @@
       "grch38/gtf-gencode/49",
       "star/2.7.11b"
     ],
-    "relative_path": "grch38/star/2.7.11b/gencode49-101",
+    "path": "grch38/star/2.7.11b/gencode49-101",
     "whatis": "STAR grch38 GENCODE49 index for read length 101"
   },
   "grch38/star/2.7.11b/gencode49-151": {
@@ -949,201 +949,201 @@
       "grch38/gtf-gencode/49",
       "star/2.7.11b"
     ],
-    "relative_path": "grch38/star/2.7.11b/gencode49-151",
+    "path": "grch38/star/2.7.11b/gencode49-151",
     "whatis": "STAR grch38 GENCODE49 index for read length 151"
   },
   "grch38/transcript-gencode/23": {
     "deps": [
       "samtools/1.22.1"
     ],
-    "relative_path": "grch38/transcript-gencode/23",
+    "path": "grch38/transcript-gencode/23",
     "whatis": "GRCh38 GENCODE 23 transcript FASTA"
   },
   "grch38/transcript-gencode/24": {
     "deps": [
       "samtools/1.22.1"
     ],
-    "relative_path": "grch38/transcript-gencode/24",
+    "path": "grch38/transcript-gencode/24",
     "whatis": "GRCh38 GENCODE 24 transcript FASTA"
   },
   "grch38/transcript-gencode/25": {
     "deps": [
       "samtools/1.22.1"
     ],
-    "relative_path": "grch38/transcript-gencode/25",
+    "path": "grch38/transcript-gencode/25",
     "whatis": "GRCh38 GENCODE 25 transcript FASTA"
   },
   "grch38/transcript-gencode/26": {
     "deps": [
       "samtools/1.22.1"
     ],
-    "relative_path": "grch38/transcript-gencode/26",
+    "path": "grch38/transcript-gencode/26",
     "whatis": "GRCh38 GENCODE 26 transcript FASTA"
   },
   "grch38/transcript-gencode/27": {
     "deps": [
       "samtools/1.22.1"
     ],
-    "relative_path": "grch38/transcript-gencode/27",
+    "path": "grch38/transcript-gencode/27",
     "whatis": "GRCh38 GENCODE 27 transcript FASTA"
   },
   "grch38/transcript-gencode/28": {
     "deps": [
       "samtools/1.22.1"
     ],
-    "relative_path": "grch38/transcript-gencode/28",
+    "path": "grch38/transcript-gencode/28",
     "whatis": "GRCh38 GENCODE 28 transcript FASTA"
   },
   "grch38/transcript-gencode/29": {
     "deps": [
       "samtools/1.22.1"
     ],
-    "relative_path": "grch38/transcript-gencode/29",
+    "path": "grch38/transcript-gencode/29",
     "whatis": "GRCh38 GENCODE 29 transcript FASTA"
   },
   "grch38/transcript-gencode/30": {
     "deps": [
       "samtools/1.22.1"
     ],
-    "relative_path": "grch38/transcript-gencode/30",
+    "path": "grch38/transcript-gencode/30",
     "whatis": "GRCh38 GENCODE 30 transcript FASTA"
   },
   "grch38/transcript-gencode/31": {
     "deps": [
       "samtools/1.22.1"
     ],
-    "relative_path": "grch38/transcript-gencode/31",
+    "path": "grch38/transcript-gencode/31",
     "whatis": "GRCh38 GENCODE 31 transcript FASTA"
   },
   "grch38/transcript-gencode/32": {
     "deps": [
       "samtools/1.22.1"
     ],
-    "relative_path": "grch38/transcript-gencode/32",
+    "path": "grch38/transcript-gencode/32",
     "whatis": "GRCh38 GENCODE 32 transcript FASTA"
   },
   "grch38/transcript-gencode/33": {
     "deps": [
       "samtools/1.22.1"
     ],
-    "relative_path": "grch38/transcript-gencode/33",
+    "path": "grch38/transcript-gencode/33",
     "whatis": "GRCh38 GENCODE 33 transcript FASTA"
   },
   "grch38/transcript-gencode/34": {
     "deps": [
       "samtools/1.22.1"
     ],
-    "relative_path": "grch38/transcript-gencode/34",
+    "path": "grch38/transcript-gencode/34",
     "whatis": "GRCh38 GENCODE 34 transcript FASTA"
   },
   "grch38/transcript-gencode/35": {
     "deps": [
       "samtools/1.22.1"
     ],
-    "relative_path": "grch38/transcript-gencode/35",
+    "path": "grch38/transcript-gencode/35",
     "whatis": "GRCh38 GENCODE 35 transcript FASTA"
   },
   "grch38/transcript-gencode/36": {
     "deps": [
       "samtools/1.22.1"
     ],
-    "relative_path": "grch38/transcript-gencode/36",
+    "path": "grch38/transcript-gencode/36",
     "whatis": "GRCh38 GENCODE 36 transcript FASTA"
   },
   "grch38/transcript-gencode/37": {
     "deps": [
       "samtools/1.22.1"
     ],
-    "relative_path": "grch38/transcript-gencode/37",
+    "path": "grch38/transcript-gencode/37",
     "whatis": "GRCh38 GENCODE 37 transcript FASTA"
   },
   "grch38/transcript-gencode/38": {
     "deps": [
       "samtools/1.22.1"
     ],
-    "relative_path": "grch38/transcript-gencode/38",
+    "path": "grch38/transcript-gencode/38",
     "whatis": "GRCh38 GENCODE 38 transcript FASTA"
   },
   "grch38/transcript-gencode/39": {
     "deps": [
       "samtools/1.22.1"
     ],
-    "relative_path": "grch38/transcript-gencode/39",
+    "path": "grch38/transcript-gencode/39",
     "whatis": "GRCh38 GENCODE 39 transcript FASTA"
   },
   "grch38/transcript-gencode/40": {
     "deps": [
       "samtools/1.22.1"
     ],
-    "relative_path": "grch38/transcript-gencode/40",
+    "path": "grch38/transcript-gencode/40",
     "whatis": "GRCh38 GENCODE 40 transcript FASTA"
   },
   "grch38/transcript-gencode/41": {
     "deps": [
       "samtools/1.22.1"
     ],
-    "relative_path": "grch38/transcript-gencode/41",
+    "path": "grch38/transcript-gencode/41",
     "whatis": "GRCh38 GENCODE 41 transcript FASTA"
   },
   "grch38/transcript-gencode/42": {
     "deps": [
       "samtools/1.22.1"
     ],
-    "relative_path": "grch38/transcript-gencode/42",
+    "path": "grch38/transcript-gencode/42",
     "whatis": "GRCh38 GENCODE 42 transcript FASTA"
   },
   "grch38/transcript-gencode/43": {
     "deps": [
       "samtools/1.22.1"
     ],
-    "relative_path": "grch38/transcript-gencode/43",
+    "path": "grch38/transcript-gencode/43",
     "whatis": "GRCh38 GENCODE 43 transcript FASTA"
   },
   "grch38/transcript-gencode/44": {
     "deps": [
       "samtools/1.22.1"
     ],
-    "relative_path": "grch38/transcript-gencode/44",
+    "path": "grch38/transcript-gencode/44",
     "whatis": "GRCh38 GENCODE 44 transcript FASTA"
   },
   "grch38/transcript-gencode/45": {
     "deps": [
       "samtools/1.22.1"
     ],
-    "relative_path": "grch38/transcript-gencode/45",
+    "path": "grch38/transcript-gencode/45",
     "whatis": "GRCh38 GENCODE 45 transcript FASTA"
   },
   "grch38/transcript-gencode/46": {
     "deps": [
       "samtools/1.22.1"
     ],
-    "relative_path": "grch38/transcript-gencode/46",
+    "path": "grch38/transcript-gencode/46",
     "whatis": "GRCh38 GENCODE 46 transcript FASTA"
   },
   "grch38/transcript-gencode/47": {
     "deps": [
       "samtools/1.22.1"
     ],
-    "relative_path": "grch38/transcript-gencode/47",
+    "path": "grch38/transcript-gencode/47",
     "whatis": "GRCh38 GENCODE 47 transcript FASTA"
   },
   "grch38/transcript-gencode/48": {
     "deps": [
       "samtools/1.22.1"
     ],
-    "relative_path": "grch38/transcript-gencode/48",
+    "path": "grch38/transcript-gencode/48",
     "whatis": "GRCh38 GENCODE 48 transcript FASTA"
   },
   "grch38/transcript-gencode/49": {
     "deps": [
       "samtools/1.22.1"
     ],
-    "relative_path": "grch38/transcript-gencode/49",
+    "path": "grch38/transcript-gencode/49",
     "whatis": "GRCh38 GENCODE 49 transcript FASTA"
   },
   "grch38/vcf/hprc-v1.1-decomposed": {
     "deps": [],
-    "relative_path": "grch38/vcf/hprc-v1.1-decomposed",
+    "path": "grch38/vcf/hprc-v1.1-decomposed",
     "whatis": "HPRC v1.1 GRCh38 Decomposed VCF"
   },
   "grch38/vcf/hprc-v1.1-decomposed-gencode": {
@@ -1152,7 +1152,7 @@
       "bcftools/1.22",
       "htslib/1.22"
     ],
-    "relative_path": "grch38/vcf/hprc-v1.1-decomposed-gencode",
+    "path": "grch38/vcf/hprc-v1.1-decomposed-gencode",
     "whatis": "HPRC v1.1 GRCh38 Decomposed VCF with chromosome names matching GENCODE"
   },
   "grch38/vg/transcript/hprc-gencode47": {
@@ -1162,262 +1162,262 @@
       "grch38/vcf/hprc-v1.1-decomposed-gencode",
       "vg/1.61.0"
     ],
-    "relative_path": "grch38/vg/transcript/hprc-gencode47",
+    "path": "grch38/vg/transcript/hprc-gencode47",
     "whatis": "VG pan-transcriptome with GRCh38 and GENCODE47"
   },
   "grcm39/cellranger/2024-A": {
     "deps": [],
-    "relative_path": "grcm39/cellranger/2024-A",
+    "path": "grcm39/cellranger/2024-A",
     "whatis": "Cell Ranger GRCm39 2024-A index"
   },
   "grcm39/genome/gencode": {
     "deps": [
       "samtools/1.22.1"
     ],
-    "relative_path": "grcm39/genome/gencode",
+    "path": "grcm39/genome/gencode",
     "whatis": "GRCm39 reference genome FASTA"
   },
   "grcm39/gtf-gencode/M10": {
     "deps": [
       "samtools/1.22.1"
     ],
-    "relative_path": "grcm39/gtf-gencode/M10",
+    "path": "grcm39/gtf-gencode/M10",
     "whatis": "GRCm39 reference genome GTF for GENCODE M10"
   },
   "grcm39/gtf-gencode/M11": {
     "deps": [
       "samtools/1.22.1"
     ],
-    "relative_path": "grcm39/gtf-gencode/M11",
+    "path": "grcm39/gtf-gencode/M11",
     "whatis": "GRCm39 reference genome GTF for GENCODE M11"
   },
   "grcm39/gtf-gencode/M12": {
     "deps": [
       "samtools/1.22.1"
     ],
-    "relative_path": "grcm39/gtf-gencode/M12",
+    "path": "grcm39/gtf-gencode/M12",
     "whatis": "GRCm39 reference genome GTF for GENCODE M12"
   },
   "grcm39/gtf-gencode/M13": {
     "deps": [
       "samtools/1.22.1"
     ],
-    "relative_path": "grcm39/gtf-gencode/M13",
+    "path": "grcm39/gtf-gencode/M13",
     "whatis": "GRCm39 reference genome GTF for GENCODE M13"
   },
   "grcm39/gtf-gencode/M14": {
     "deps": [
       "samtools/1.22.1"
     ],
-    "relative_path": "grcm39/gtf-gencode/M14",
+    "path": "grcm39/gtf-gencode/M14",
     "whatis": "GRCm39 reference genome GTF for GENCODE M14"
   },
   "grcm39/gtf-gencode/M15": {
     "deps": [
       "samtools/1.22.1"
     ],
-    "relative_path": "grcm39/gtf-gencode/M15",
+    "path": "grcm39/gtf-gencode/M15",
     "whatis": "GRCm39 reference genome GTF for GENCODE M15"
   },
   "grcm39/gtf-gencode/M16": {
     "deps": [
       "samtools/1.22.1"
     ],
-    "relative_path": "grcm39/gtf-gencode/M16",
+    "path": "grcm39/gtf-gencode/M16",
     "whatis": "GRCm39 reference genome GTF for GENCODE M16"
   },
   "grcm39/gtf-gencode/M17": {
     "deps": [
       "samtools/1.22.1"
     ],
-    "relative_path": "grcm39/gtf-gencode/M17",
+    "path": "grcm39/gtf-gencode/M17",
     "whatis": "GRCm39 reference genome GTF for GENCODE M17"
   },
   "grcm39/gtf-gencode/M18": {
     "deps": [
       "samtools/1.22.1"
     ],
-    "relative_path": "grcm39/gtf-gencode/M18",
+    "path": "grcm39/gtf-gencode/M18",
     "whatis": "GRCm39 reference genome GTF for GENCODE M18"
   },
   "grcm39/gtf-gencode/M19": {
     "deps": [
       "samtools/1.22.1"
     ],
-    "relative_path": "grcm39/gtf-gencode/M19",
+    "path": "grcm39/gtf-gencode/M19",
     "whatis": "GRCm39 reference genome GTF for GENCODE M19"
   },
   "grcm39/gtf-gencode/M20": {
     "deps": [
       "samtools/1.22.1"
     ],
-    "relative_path": "grcm39/gtf-gencode/M20",
+    "path": "grcm39/gtf-gencode/M20",
     "whatis": "GRCm39 reference genome GTF for GENCODE M20"
   },
   "grcm39/gtf-gencode/M21": {
     "deps": [
       "samtools/1.22.1"
     ],
-    "relative_path": "grcm39/gtf-gencode/M21",
+    "path": "grcm39/gtf-gencode/M21",
     "whatis": "GRCm39 reference genome GTF for GENCODE M21"
   },
   "grcm39/gtf-gencode/M22": {
     "deps": [
       "samtools/1.22.1"
     ],
-    "relative_path": "grcm39/gtf-gencode/M22",
+    "path": "grcm39/gtf-gencode/M22",
     "whatis": "GRCm39 reference genome GTF for GENCODE M22"
   },
   "grcm39/gtf-gencode/M23": {
     "deps": [
       "samtools/1.22.1"
     ],
-    "relative_path": "grcm39/gtf-gencode/M23",
+    "path": "grcm39/gtf-gencode/M23",
     "whatis": "GRCm39 reference genome GTF for GENCODE M23"
   },
   "grcm39/gtf-gencode/M24": {
     "deps": [
       "samtools/1.22.1"
     ],
-    "relative_path": "grcm39/gtf-gencode/M24",
+    "path": "grcm39/gtf-gencode/M24",
     "whatis": "GRCm39 reference genome GTF for GENCODE M24"
   },
   "grcm39/gtf-gencode/M25": {
     "deps": [
       "samtools/1.22.1"
     ],
-    "relative_path": "grcm39/gtf-gencode/M25",
+    "path": "grcm39/gtf-gencode/M25",
     "whatis": "GRCm39 reference genome GTF for GENCODE M25"
   },
   "grcm39/gtf-gencode/M26": {
     "deps": [
       "samtools/1.22.1"
     ],
-    "relative_path": "grcm39/gtf-gencode/M26",
+    "path": "grcm39/gtf-gencode/M26",
     "whatis": "GRCm39 reference genome GTF for GENCODE M26"
   },
   "grcm39/gtf-gencode/M27": {
     "deps": [
       "samtools/1.22.1"
     ],
-    "relative_path": "grcm39/gtf-gencode/M27",
+    "path": "grcm39/gtf-gencode/M27",
     "whatis": "GRCm39 reference genome GTF for GENCODE M27"
   },
   "grcm39/gtf-gencode/M28": {
     "deps": [
       "samtools/1.22.1"
     ],
-    "relative_path": "grcm39/gtf-gencode/M28",
+    "path": "grcm39/gtf-gencode/M28",
     "whatis": "GRCm39 reference genome GTF for GENCODE M28"
   },
   "grcm39/gtf-gencode/M29": {
     "deps": [
       "samtools/1.22.1"
     ],
-    "relative_path": "grcm39/gtf-gencode/M29",
+    "path": "grcm39/gtf-gencode/M29",
     "whatis": "GRCm39 reference genome GTF for GENCODE M29"
   },
   "grcm39/gtf-gencode/M30": {
     "deps": [
       "samtools/1.22.1"
     ],
-    "relative_path": "grcm39/gtf-gencode/M30",
+    "path": "grcm39/gtf-gencode/M30",
     "whatis": "GRCm39 reference genome GTF for GENCODE M30"
   },
   "grcm39/gtf-gencode/M31": {
     "deps": [
       "samtools/1.22.1"
     ],
-    "relative_path": "grcm39/gtf-gencode/M31",
+    "path": "grcm39/gtf-gencode/M31",
     "whatis": "GRCm39 reference genome GTF for GENCODE M31"
   },
   "grcm39/gtf-gencode/M32": {
     "deps": [
       "samtools/1.22.1"
     ],
-    "relative_path": "grcm39/gtf-gencode/M32",
+    "path": "grcm39/gtf-gencode/M32",
     "whatis": "GRCm39 reference genome GTF for GENCODE M32"
   },
   "grcm39/gtf-gencode/M33": {
     "deps": [
       "samtools/1.22.1"
     ],
-    "relative_path": "grcm39/gtf-gencode/M33",
+    "path": "grcm39/gtf-gencode/M33",
     "whatis": "GRCm39 reference genome GTF for GENCODE M33"
   },
   "grcm39/gtf-gencode/M34": {
     "deps": [
       "samtools/1.22.1"
     ],
-    "relative_path": "grcm39/gtf-gencode/M34",
+    "path": "grcm39/gtf-gencode/M34",
     "whatis": "GRCm39 reference genome GTF for GENCODE M34"
   },
   "grcm39/gtf-gencode/M35": {
     "deps": [
       "samtools/1.22.1"
     ],
-    "relative_path": "grcm39/gtf-gencode/M35",
+    "path": "grcm39/gtf-gencode/M35",
     "whatis": "GRCm39 reference genome GTF for GENCODE M35"
   },
   "grcm39/gtf-gencode/M36": {
     "deps": [
       "samtools/1.22.1"
     ],
-    "relative_path": "grcm39/gtf-gencode/M36",
+    "path": "grcm39/gtf-gencode/M36",
     "whatis": "GRCm39 reference genome GTF for GENCODE M36"
   },
   "grcm39/gtf-gencode/M37": {
     "deps": [
       "samtools/1.22.1"
     ],
-    "relative_path": "grcm39/gtf-gencode/M37",
+    "path": "grcm39/gtf-gencode/M37",
     "whatis": "GRCm39 reference genome GTF for GENCODE M37"
   },
   "grcm39/gtf-gencode/M38": {
     "deps": [
       "samtools/1.22.1"
     ],
-    "relative_path": "grcm39/gtf-gencode/M38",
+    "path": "grcm39/gtf-gencode/M38",
     "whatis": "GRCm39 reference genome GTF for GENCODE M38"
   },
   "grcm39/gtf-gencode/M5": {
     "deps": [
       "samtools/1.22.1"
     ],
-    "relative_path": "grcm39/gtf-gencode/M5",
+    "path": "grcm39/gtf-gencode/M5",
     "whatis": "GRCm39 reference genome GTF for GENCODE M5"
   },
   "grcm39/gtf-gencode/M6": {
     "deps": [
       "samtools/1.22.1"
     ],
-    "relative_path": "grcm39/gtf-gencode/M6",
+    "path": "grcm39/gtf-gencode/M6",
     "whatis": "GRCm39 reference genome GTF for GENCODE M6"
   },
   "grcm39/gtf-gencode/M7": {
     "deps": [
       "samtools/1.22.1"
     ],
-    "relative_path": "grcm39/gtf-gencode/M7",
+    "path": "grcm39/gtf-gencode/M7",
     "whatis": "GRCm39 reference genome GTF for GENCODE M7"
   },
   "grcm39/gtf-gencode/M8": {
     "deps": [
       "samtools/1.22.1"
     ],
-    "relative_path": "grcm39/gtf-gencode/M8",
+    "path": "grcm39/gtf-gencode/M8",
     "whatis": "GRCm39 reference genome GTF for GENCODE M8"
   },
   "grcm39/gtf-gencode/M9": {
     "deps": [
       "samtools/1.22.1"
     ],
-    "relative_path": "grcm39/gtf-gencode/M9",
+    "path": "grcm39/gtf-gencode/M9",
     "whatis": "GRCm39 reference genome GTF for GENCODE M9"
   },
   "grcm39/rmsk/ucsc": {
     "deps": [],
-    "relative_path": "grcm39/rmsk/ucsc",
+    "path": "grcm39/rmsk/ucsc",
     "whatis": "GRCm39 RepeatMasker GTF"
   },
   "grcm39/salmon/1.10.2/gencodeM10": {
@@ -1426,7 +1426,7 @@
       "grcm39/transcript-gencode/M10",
       "salmon/1.10.2"
     ],
-    "relative_path": "grcm39/salmon/1.10.2/gencodeM10",
+    "path": "grcm39/salmon/1.10.2/gencodeM10",
     "whatis": "Salmon grcm39 GENCODE M10 index for transcript quantification"
   },
   "grcm39/salmon/1.10.2/gencodeM11": {
@@ -1435,7 +1435,7 @@
       "grcm39/transcript-gencode/M11",
       "salmon/1.10.2"
     ],
-    "relative_path": "grcm39/salmon/1.10.2/gencodeM11",
+    "path": "grcm39/salmon/1.10.2/gencodeM11",
     "whatis": "Salmon grcm39 GENCODE M11 index for transcript quantification"
   },
   "grcm39/salmon/1.10.2/gencodeM12": {
@@ -1444,7 +1444,7 @@
       "grcm39/transcript-gencode/M12",
       "salmon/1.10.2"
     ],
-    "relative_path": "grcm39/salmon/1.10.2/gencodeM12",
+    "path": "grcm39/salmon/1.10.2/gencodeM12",
     "whatis": "Salmon grcm39 GENCODE M12 index for transcript quantification"
   },
   "grcm39/salmon/1.10.2/gencodeM13": {
@@ -1453,7 +1453,7 @@
       "grcm39/transcript-gencode/M13",
       "salmon/1.10.2"
     ],
-    "relative_path": "grcm39/salmon/1.10.2/gencodeM13",
+    "path": "grcm39/salmon/1.10.2/gencodeM13",
     "whatis": "Salmon grcm39 GENCODE M13 index for transcript quantification"
   },
   "grcm39/salmon/1.10.2/gencodeM14": {
@@ -1462,7 +1462,7 @@
       "grcm39/transcript-gencode/M14",
       "salmon/1.10.2"
     ],
-    "relative_path": "grcm39/salmon/1.10.2/gencodeM14",
+    "path": "grcm39/salmon/1.10.2/gencodeM14",
     "whatis": "Salmon grcm39 GENCODE M14 index for transcript quantification"
   },
   "grcm39/salmon/1.10.2/gencodeM15": {
@@ -1471,7 +1471,7 @@
       "grcm39/transcript-gencode/M15",
       "salmon/1.10.2"
     ],
-    "relative_path": "grcm39/salmon/1.10.2/gencodeM15",
+    "path": "grcm39/salmon/1.10.2/gencodeM15",
     "whatis": "Salmon grcm39 GENCODE M15 index for transcript quantification"
   },
   "grcm39/salmon/1.10.2/gencodeM16": {
@@ -1480,7 +1480,7 @@
       "grcm39/transcript-gencode/M16",
       "salmon/1.10.2"
     ],
-    "relative_path": "grcm39/salmon/1.10.2/gencodeM16",
+    "path": "grcm39/salmon/1.10.2/gencodeM16",
     "whatis": "Salmon grcm39 GENCODE M16 index for transcript quantification"
   },
   "grcm39/salmon/1.10.2/gencodeM17": {
@@ -1489,7 +1489,7 @@
       "grcm39/transcript-gencode/M17",
       "salmon/1.10.2"
     ],
-    "relative_path": "grcm39/salmon/1.10.2/gencodeM17",
+    "path": "grcm39/salmon/1.10.2/gencodeM17",
     "whatis": "Salmon grcm39 GENCODE M17 index for transcript quantification"
   },
   "grcm39/salmon/1.10.2/gencodeM18": {
@@ -1498,7 +1498,7 @@
       "grcm39/transcript-gencode/M18",
       "salmon/1.10.2"
     ],
-    "relative_path": "grcm39/salmon/1.10.2/gencodeM18",
+    "path": "grcm39/salmon/1.10.2/gencodeM18",
     "whatis": "Salmon grcm39 GENCODE M18 index for transcript quantification"
   },
   "grcm39/salmon/1.10.2/gencodeM19": {
@@ -1507,7 +1507,7 @@
       "grcm39/transcript-gencode/M19",
       "salmon/1.10.2"
     ],
-    "relative_path": "grcm39/salmon/1.10.2/gencodeM19",
+    "path": "grcm39/salmon/1.10.2/gencodeM19",
     "whatis": "Salmon grcm39 GENCODE M19 index for transcript quantification"
   },
   "grcm39/salmon/1.10.2/gencodeM20": {
@@ -1516,7 +1516,7 @@
       "grcm39/transcript-gencode/M20",
       "salmon/1.10.2"
     ],
-    "relative_path": "grcm39/salmon/1.10.2/gencodeM20",
+    "path": "grcm39/salmon/1.10.2/gencodeM20",
     "whatis": "Salmon grcm39 GENCODE M20 index for transcript quantification"
   },
   "grcm39/salmon/1.10.2/gencodeM21": {
@@ -1525,7 +1525,7 @@
       "grcm39/transcript-gencode/M21",
       "salmon/1.10.2"
     ],
-    "relative_path": "grcm39/salmon/1.10.2/gencodeM21",
+    "path": "grcm39/salmon/1.10.2/gencodeM21",
     "whatis": "Salmon grcm39 GENCODE M21 index for transcript quantification"
   },
   "grcm39/salmon/1.10.2/gencodeM22": {
@@ -1534,7 +1534,7 @@
       "grcm39/transcript-gencode/M22",
       "salmon/1.10.2"
     ],
-    "relative_path": "grcm39/salmon/1.10.2/gencodeM22",
+    "path": "grcm39/salmon/1.10.2/gencodeM22",
     "whatis": "Salmon grcm39 GENCODE M22 index for transcript quantification"
   },
   "grcm39/salmon/1.10.2/gencodeM23": {
@@ -1543,7 +1543,7 @@
       "grcm39/transcript-gencode/M23",
       "salmon/1.10.2"
     ],
-    "relative_path": "grcm39/salmon/1.10.2/gencodeM23",
+    "path": "grcm39/salmon/1.10.2/gencodeM23",
     "whatis": "Salmon grcm39 GENCODE M23 index for transcript quantification"
   },
   "grcm39/salmon/1.10.2/gencodeM24": {
@@ -1552,7 +1552,7 @@
       "grcm39/transcript-gencode/M24",
       "salmon/1.10.2"
     ],
-    "relative_path": "grcm39/salmon/1.10.2/gencodeM24",
+    "path": "grcm39/salmon/1.10.2/gencodeM24",
     "whatis": "Salmon grcm39 GENCODE M24 index for transcript quantification"
   },
   "grcm39/salmon/1.10.2/gencodeM25": {
@@ -1561,7 +1561,7 @@
       "grcm39/transcript-gencode/M25",
       "salmon/1.10.2"
     ],
-    "relative_path": "grcm39/salmon/1.10.2/gencodeM25",
+    "path": "grcm39/salmon/1.10.2/gencodeM25",
     "whatis": "Salmon grcm39 GENCODE M25 index for transcript quantification"
   },
   "grcm39/salmon/1.10.2/gencodeM26": {
@@ -1570,7 +1570,7 @@
       "grcm39/transcript-gencode/M26",
       "salmon/1.10.2"
     ],
-    "relative_path": "grcm39/salmon/1.10.2/gencodeM26",
+    "path": "grcm39/salmon/1.10.2/gencodeM26",
     "whatis": "Salmon grcm39 GENCODE M26 index for transcript quantification"
   },
   "grcm39/salmon/1.10.2/gencodeM27": {
@@ -1579,7 +1579,7 @@
       "grcm39/transcript-gencode/M27",
       "salmon/1.10.2"
     ],
-    "relative_path": "grcm39/salmon/1.10.2/gencodeM27",
+    "path": "grcm39/salmon/1.10.2/gencodeM27",
     "whatis": "Salmon grcm39 GENCODE M27 index for transcript quantification"
   },
   "grcm39/salmon/1.10.2/gencodeM28": {
@@ -1588,7 +1588,7 @@
       "grcm39/transcript-gencode/M28",
       "salmon/1.10.2"
     ],
-    "relative_path": "grcm39/salmon/1.10.2/gencodeM28",
+    "path": "grcm39/salmon/1.10.2/gencodeM28",
     "whatis": "Salmon grcm39 GENCODE M28 index for transcript quantification"
   },
   "grcm39/salmon/1.10.2/gencodeM29": {
@@ -1597,7 +1597,7 @@
       "grcm39/transcript-gencode/M29",
       "salmon/1.10.2"
     ],
-    "relative_path": "grcm39/salmon/1.10.2/gencodeM29",
+    "path": "grcm39/salmon/1.10.2/gencodeM29",
     "whatis": "Salmon grcm39 GENCODE M29 index for transcript quantification"
   },
   "grcm39/salmon/1.10.2/gencodeM30": {
@@ -1606,7 +1606,7 @@
       "grcm39/transcript-gencode/M30",
       "salmon/1.10.2"
     ],
-    "relative_path": "grcm39/salmon/1.10.2/gencodeM30",
+    "path": "grcm39/salmon/1.10.2/gencodeM30",
     "whatis": "Salmon grcm39 GENCODE M30 index for transcript quantification"
   },
   "grcm39/salmon/1.10.2/gencodeM31": {
@@ -1615,7 +1615,7 @@
       "grcm39/transcript-gencode/M31",
       "salmon/1.10.2"
     ],
-    "relative_path": "grcm39/salmon/1.10.2/gencodeM31",
+    "path": "grcm39/salmon/1.10.2/gencodeM31",
     "whatis": "Salmon grcm39 GENCODE M31 index for transcript quantification"
   },
   "grcm39/salmon/1.10.2/gencodeM32": {
@@ -1624,7 +1624,7 @@
       "grcm39/transcript-gencode/M32",
       "salmon/1.10.2"
     ],
-    "relative_path": "grcm39/salmon/1.10.2/gencodeM32",
+    "path": "grcm39/salmon/1.10.2/gencodeM32",
     "whatis": "Salmon grcm39 GENCODE M32 index for transcript quantification"
   },
   "grcm39/salmon/1.10.2/gencodeM33": {
@@ -1633,7 +1633,7 @@
       "grcm39/transcript-gencode/M33",
       "salmon/1.10.2"
     ],
-    "relative_path": "grcm39/salmon/1.10.2/gencodeM33",
+    "path": "grcm39/salmon/1.10.2/gencodeM33",
     "whatis": "Salmon grcm39 GENCODE M33 index for transcript quantification"
   },
   "grcm39/salmon/1.10.2/gencodeM34": {
@@ -1642,7 +1642,7 @@
       "grcm39/transcript-gencode/M34",
       "salmon/1.10.2"
     ],
-    "relative_path": "grcm39/salmon/1.10.2/gencodeM34",
+    "path": "grcm39/salmon/1.10.2/gencodeM34",
     "whatis": "Salmon grcm39 GENCODE M34 index for transcript quantification"
   },
   "grcm39/salmon/1.10.2/gencodeM35": {
@@ -1651,7 +1651,7 @@
       "grcm39/transcript-gencode/M35",
       "salmon/1.10.2"
     ],
-    "relative_path": "grcm39/salmon/1.10.2/gencodeM35",
+    "path": "grcm39/salmon/1.10.2/gencodeM35",
     "whatis": "Salmon grcm39 GENCODE M35 index for transcript quantification"
   },
   "grcm39/salmon/1.10.2/gencodeM36": {
@@ -1660,7 +1660,7 @@
       "grcm39/transcript-gencode/M36",
       "salmon/1.10.2"
     ],
-    "relative_path": "grcm39/salmon/1.10.2/gencodeM36",
+    "path": "grcm39/salmon/1.10.2/gencodeM36",
     "whatis": "Salmon grcm39 GENCODE M36 index for transcript quantification"
   },
   "grcm39/salmon/1.10.2/gencodeM37": {
@@ -1669,7 +1669,7 @@
       "grcm39/transcript-gencode/M37",
       "salmon/1.10.2"
     ],
-    "relative_path": "grcm39/salmon/1.10.2/gencodeM37",
+    "path": "grcm39/salmon/1.10.2/gencodeM37",
     "whatis": "Salmon grcm39 GENCODE M37 index for transcript quantification"
   },
   "grcm39/salmon/1.10.2/gencodeM38": {
@@ -1678,7 +1678,7 @@
       "grcm39/transcript-gencode/M38",
       "salmon/1.10.2"
     ],
-    "relative_path": "grcm39/salmon/1.10.2/gencodeM38",
+    "path": "grcm39/salmon/1.10.2/gencodeM38",
     "whatis": "Salmon grcm39 GENCODE M38 index for transcript quantification"
   },
   "grcm39/salmon/1.10.2/gencodeM6": {
@@ -1687,7 +1687,7 @@
       "grcm39/transcript-gencode/M6",
       "salmon/1.10.2"
     ],
-    "relative_path": "grcm39/salmon/1.10.2/gencodeM6",
+    "path": "grcm39/salmon/1.10.2/gencodeM6",
     "whatis": "Salmon grcm39 GENCODE M6 index for transcript quantification"
   },
   "grcm39/salmon/1.10.2/gencodeM7": {
@@ -1696,7 +1696,7 @@
       "grcm39/transcript-gencode/M7",
       "salmon/1.10.2"
     ],
-    "relative_path": "grcm39/salmon/1.10.2/gencodeM7",
+    "path": "grcm39/salmon/1.10.2/gencodeM7",
     "whatis": "Salmon grcm39 GENCODE M7 index for transcript quantification"
   },
   "grcm39/salmon/1.10.2/gencodeM8": {
@@ -1705,7 +1705,7 @@
       "grcm39/transcript-gencode/M8",
       "salmon/1.10.2"
     ],
-    "relative_path": "grcm39/salmon/1.10.2/gencodeM8",
+    "path": "grcm39/salmon/1.10.2/gencodeM8",
     "whatis": "Salmon grcm39 GENCODE M8 index for transcript quantification"
   },
   "grcm39/salmon/1.10.2/gencodeM9": {
@@ -1714,7 +1714,7 @@
       "grcm39/transcript-gencode/M9",
       "salmon/1.10.2"
     ],
-    "relative_path": "grcm39/salmon/1.10.2/gencodeM9",
+    "path": "grcm39/salmon/1.10.2/gencodeM9",
     "whatis": "Salmon grcm39 GENCODE M9 index for transcript quantification"
   },
   "grcm39/star/2.7.11b/cellranger-2024-A": {
@@ -1722,7 +1722,7 @@
       "grcm39/cellranger/2024-A",
       "star/2.7.11b"
     ],
-    "relative_path": "grcm39/star/2.7.11b/cellranger-2024-A",
+    "path": "grcm39/star/2.7.11b/cellranger-2024-A",
     "whatis": "STAR GRCm39 10X Genomics 2024-A index"
   },
   "grcm39/star/2.7.11b/gencodeM10-101": {
@@ -1731,7 +1731,7 @@
       "grcm39/gtf-gencode/M10",
       "star/2.7.11b"
     ],
-    "relative_path": "grcm39/star/2.7.11b/gencodeM10-101",
+    "path": "grcm39/star/2.7.11b/gencodeM10-101",
     "whatis": "STAR grcm39 GENCODEM10 index for read length 101"
   },
   "grcm39/star/2.7.11b/gencodeM10-151": {
@@ -1740,7 +1740,7 @@
       "grcm39/gtf-gencode/M10",
       "star/2.7.11b"
     ],
-    "relative_path": "grcm39/star/2.7.11b/gencodeM10-151",
+    "path": "grcm39/star/2.7.11b/gencodeM10-151",
     "whatis": "STAR grcm39 GENCODEM10 index for read length 151"
   },
   "grcm39/star/2.7.11b/gencodeM11-101": {
@@ -1749,7 +1749,7 @@
       "grcm39/gtf-gencode/M11",
       "star/2.7.11b"
     ],
-    "relative_path": "grcm39/star/2.7.11b/gencodeM11-101",
+    "path": "grcm39/star/2.7.11b/gencodeM11-101",
     "whatis": "STAR grcm39 GENCODEM11 index for read length 101"
   },
   "grcm39/star/2.7.11b/gencodeM11-151": {
@@ -1758,7 +1758,7 @@
       "grcm39/gtf-gencode/M11",
       "star/2.7.11b"
     ],
-    "relative_path": "grcm39/star/2.7.11b/gencodeM11-151",
+    "path": "grcm39/star/2.7.11b/gencodeM11-151",
     "whatis": "STAR grcm39 GENCODEM11 index for read length 151"
   },
   "grcm39/star/2.7.11b/gencodeM12-101": {
@@ -1767,7 +1767,7 @@
       "grcm39/gtf-gencode/M12",
       "star/2.7.11b"
     ],
-    "relative_path": "grcm39/star/2.7.11b/gencodeM12-101",
+    "path": "grcm39/star/2.7.11b/gencodeM12-101",
     "whatis": "STAR grcm39 GENCODEM12 index for read length 101"
   },
   "grcm39/star/2.7.11b/gencodeM12-151": {
@@ -1776,7 +1776,7 @@
       "grcm39/gtf-gencode/M12",
       "star/2.7.11b"
     ],
-    "relative_path": "grcm39/star/2.7.11b/gencodeM12-151",
+    "path": "grcm39/star/2.7.11b/gencodeM12-151",
     "whatis": "STAR grcm39 GENCODEM12 index for read length 151"
   },
   "grcm39/star/2.7.11b/gencodeM13-101": {
@@ -1785,7 +1785,7 @@
       "grcm39/gtf-gencode/M13",
       "star/2.7.11b"
     ],
-    "relative_path": "grcm39/star/2.7.11b/gencodeM13-101",
+    "path": "grcm39/star/2.7.11b/gencodeM13-101",
     "whatis": "STAR grcm39 GENCODEM13 index for read length 101"
   },
   "grcm39/star/2.7.11b/gencodeM13-151": {
@@ -1794,7 +1794,7 @@
       "grcm39/gtf-gencode/M13",
       "star/2.7.11b"
     ],
-    "relative_path": "grcm39/star/2.7.11b/gencodeM13-151",
+    "path": "grcm39/star/2.7.11b/gencodeM13-151",
     "whatis": "STAR grcm39 GENCODEM13 index for read length 151"
   },
   "grcm39/star/2.7.11b/gencodeM14-101": {
@@ -1803,7 +1803,7 @@
       "grcm39/gtf-gencode/M14",
       "star/2.7.11b"
     ],
-    "relative_path": "grcm39/star/2.7.11b/gencodeM14-101",
+    "path": "grcm39/star/2.7.11b/gencodeM14-101",
     "whatis": "STAR grcm39 GENCODEM14 index for read length 101"
   },
   "grcm39/star/2.7.11b/gencodeM14-151": {
@@ -1812,7 +1812,7 @@
       "grcm39/gtf-gencode/M14",
       "star/2.7.11b"
     ],
-    "relative_path": "grcm39/star/2.7.11b/gencodeM14-151",
+    "path": "grcm39/star/2.7.11b/gencodeM14-151",
     "whatis": "STAR grcm39 GENCODEM14 index for read length 151"
   },
   "grcm39/star/2.7.11b/gencodeM15-101": {
@@ -1821,7 +1821,7 @@
       "grcm39/gtf-gencode/M15",
       "star/2.7.11b"
     ],
-    "relative_path": "grcm39/star/2.7.11b/gencodeM15-101",
+    "path": "grcm39/star/2.7.11b/gencodeM15-101",
     "whatis": "STAR grcm39 GENCODEM15 index for read length 101"
   },
   "grcm39/star/2.7.11b/gencodeM15-151": {
@@ -1830,7 +1830,7 @@
       "grcm39/gtf-gencode/M15",
       "star/2.7.11b"
     ],
-    "relative_path": "grcm39/star/2.7.11b/gencodeM15-151",
+    "path": "grcm39/star/2.7.11b/gencodeM15-151",
     "whatis": "STAR grcm39 GENCODEM15 index for read length 151"
   },
   "grcm39/star/2.7.11b/gencodeM16-101": {
@@ -1839,7 +1839,7 @@
       "grcm39/gtf-gencode/M16",
       "star/2.7.11b"
     ],
-    "relative_path": "grcm39/star/2.7.11b/gencodeM16-101",
+    "path": "grcm39/star/2.7.11b/gencodeM16-101",
     "whatis": "STAR grcm39 GENCODEM16 index for read length 101"
   },
   "grcm39/star/2.7.11b/gencodeM16-151": {
@@ -1848,7 +1848,7 @@
       "grcm39/gtf-gencode/M16",
       "star/2.7.11b"
     ],
-    "relative_path": "grcm39/star/2.7.11b/gencodeM16-151",
+    "path": "grcm39/star/2.7.11b/gencodeM16-151",
     "whatis": "STAR grcm39 GENCODEM16 index for read length 151"
   },
   "grcm39/star/2.7.11b/gencodeM17-101": {
@@ -1857,7 +1857,7 @@
       "grcm39/gtf-gencode/M17",
       "star/2.7.11b"
     ],
-    "relative_path": "grcm39/star/2.7.11b/gencodeM17-101",
+    "path": "grcm39/star/2.7.11b/gencodeM17-101",
     "whatis": "STAR grcm39 GENCODEM17 index for read length 101"
   },
   "grcm39/star/2.7.11b/gencodeM17-151": {
@@ -1866,7 +1866,7 @@
       "grcm39/gtf-gencode/M17",
       "star/2.7.11b"
     ],
-    "relative_path": "grcm39/star/2.7.11b/gencodeM17-151",
+    "path": "grcm39/star/2.7.11b/gencodeM17-151",
     "whatis": "STAR grcm39 GENCODEM17 index for read length 151"
   },
   "grcm39/star/2.7.11b/gencodeM18-101": {
@@ -1875,7 +1875,7 @@
       "grcm39/gtf-gencode/M18",
       "star/2.7.11b"
     ],
-    "relative_path": "grcm39/star/2.7.11b/gencodeM18-101",
+    "path": "grcm39/star/2.7.11b/gencodeM18-101",
     "whatis": "STAR grcm39 GENCODEM18 index for read length 101"
   },
   "grcm39/star/2.7.11b/gencodeM18-151": {
@@ -1884,7 +1884,7 @@
       "grcm39/gtf-gencode/M18",
       "star/2.7.11b"
     ],
-    "relative_path": "grcm39/star/2.7.11b/gencodeM18-151",
+    "path": "grcm39/star/2.7.11b/gencodeM18-151",
     "whatis": "STAR grcm39 GENCODEM18 index for read length 151"
   },
   "grcm39/star/2.7.11b/gencodeM19-101": {
@@ -1893,7 +1893,7 @@
       "grcm39/gtf-gencode/M19",
       "star/2.7.11b"
     ],
-    "relative_path": "grcm39/star/2.7.11b/gencodeM19-101",
+    "path": "grcm39/star/2.7.11b/gencodeM19-101",
     "whatis": "STAR grcm39 GENCODEM19 index for read length 101"
   },
   "grcm39/star/2.7.11b/gencodeM19-151": {
@@ -1902,7 +1902,7 @@
       "grcm39/gtf-gencode/M19",
       "star/2.7.11b"
     ],
-    "relative_path": "grcm39/star/2.7.11b/gencodeM19-151",
+    "path": "grcm39/star/2.7.11b/gencodeM19-151",
     "whatis": "STAR grcm39 GENCODEM19 index for read length 151"
   },
   "grcm39/star/2.7.11b/gencodeM20-101": {
@@ -1911,7 +1911,7 @@
       "grcm39/gtf-gencode/M20",
       "star/2.7.11b"
     ],
-    "relative_path": "grcm39/star/2.7.11b/gencodeM20-101",
+    "path": "grcm39/star/2.7.11b/gencodeM20-101",
     "whatis": "STAR grcm39 GENCODEM20 index for read length 101"
   },
   "grcm39/star/2.7.11b/gencodeM20-151": {
@@ -1920,7 +1920,7 @@
       "grcm39/gtf-gencode/M20",
       "star/2.7.11b"
     ],
-    "relative_path": "grcm39/star/2.7.11b/gencodeM20-151",
+    "path": "grcm39/star/2.7.11b/gencodeM20-151",
     "whatis": "STAR grcm39 GENCODEM20 index for read length 151"
   },
   "grcm39/star/2.7.11b/gencodeM21-101": {
@@ -1929,7 +1929,7 @@
       "grcm39/gtf-gencode/M21",
       "star/2.7.11b"
     ],
-    "relative_path": "grcm39/star/2.7.11b/gencodeM21-101",
+    "path": "grcm39/star/2.7.11b/gencodeM21-101",
     "whatis": "STAR grcm39 GENCODEM21 index for read length 101"
   },
   "grcm39/star/2.7.11b/gencodeM21-151": {
@@ -1938,7 +1938,7 @@
       "grcm39/gtf-gencode/M21",
       "star/2.7.11b"
     ],
-    "relative_path": "grcm39/star/2.7.11b/gencodeM21-151",
+    "path": "grcm39/star/2.7.11b/gencodeM21-151",
     "whatis": "STAR grcm39 GENCODEM21 index for read length 151"
   },
   "grcm39/star/2.7.11b/gencodeM22-101": {
@@ -1947,7 +1947,7 @@
       "grcm39/gtf-gencode/M22",
       "star/2.7.11b"
     ],
-    "relative_path": "grcm39/star/2.7.11b/gencodeM22-101",
+    "path": "grcm39/star/2.7.11b/gencodeM22-101",
     "whatis": "STAR grcm39 GENCODEM22 index for read length 101"
   },
   "grcm39/star/2.7.11b/gencodeM22-151": {
@@ -1956,7 +1956,7 @@
       "grcm39/gtf-gencode/M22",
       "star/2.7.11b"
     ],
-    "relative_path": "grcm39/star/2.7.11b/gencodeM22-151",
+    "path": "grcm39/star/2.7.11b/gencodeM22-151",
     "whatis": "STAR grcm39 GENCODEM22 index for read length 151"
   },
   "grcm39/star/2.7.11b/gencodeM23-101": {
@@ -1965,7 +1965,7 @@
       "grcm39/gtf-gencode/M23",
       "star/2.7.11b"
     ],
-    "relative_path": "grcm39/star/2.7.11b/gencodeM23-101",
+    "path": "grcm39/star/2.7.11b/gencodeM23-101",
     "whatis": "STAR grcm39 GENCODEM23 index for read length 101"
   },
   "grcm39/star/2.7.11b/gencodeM23-151": {
@@ -1974,7 +1974,7 @@
       "grcm39/gtf-gencode/M23",
       "star/2.7.11b"
     ],
-    "relative_path": "grcm39/star/2.7.11b/gencodeM23-151",
+    "path": "grcm39/star/2.7.11b/gencodeM23-151",
     "whatis": "STAR grcm39 GENCODEM23 index for read length 151"
   },
   "grcm39/star/2.7.11b/gencodeM24-101": {
@@ -1983,7 +1983,7 @@
       "grcm39/gtf-gencode/M24",
       "star/2.7.11b"
     ],
-    "relative_path": "grcm39/star/2.7.11b/gencodeM24-101",
+    "path": "grcm39/star/2.7.11b/gencodeM24-101",
     "whatis": "STAR grcm39 GENCODEM24 index for read length 101"
   },
   "grcm39/star/2.7.11b/gencodeM24-151": {
@@ -1992,7 +1992,7 @@
       "grcm39/gtf-gencode/M24",
       "star/2.7.11b"
     ],
-    "relative_path": "grcm39/star/2.7.11b/gencodeM24-151",
+    "path": "grcm39/star/2.7.11b/gencodeM24-151",
     "whatis": "STAR grcm39 GENCODEM24 index for read length 151"
   },
   "grcm39/star/2.7.11b/gencodeM25-101": {
@@ -2001,7 +2001,7 @@
       "grcm39/gtf-gencode/M25",
       "star/2.7.11b"
     ],
-    "relative_path": "grcm39/star/2.7.11b/gencodeM25-101",
+    "path": "grcm39/star/2.7.11b/gencodeM25-101",
     "whatis": "STAR grcm39 GENCODEM25 index for read length 101"
   },
   "grcm39/star/2.7.11b/gencodeM25-151": {
@@ -2010,7 +2010,7 @@
       "grcm39/gtf-gencode/M25",
       "star/2.7.11b"
     ],
-    "relative_path": "grcm39/star/2.7.11b/gencodeM25-151",
+    "path": "grcm39/star/2.7.11b/gencodeM25-151",
     "whatis": "STAR grcm39 GENCODEM25 index for read length 151"
   },
   "grcm39/star/2.7.11b/gencodeM26-101": {
@@ -2019,7 +2019,7 @@
       "grcm39/gtf-gencode/M26",
       "star/2.7.11b"
     ],
-    "relative_path": "grcm39/star/2.7.11b/gencodeM26-101",
+    "path": "grcm39/star/2.7.11b/gencodeM26-101",
     "whatis": "STAR grcm39 GENCODEM26 index for read length 101"
   },
   "grcm39/star/2.7.11b/gencodeM26-151": {
@@ -2028,7 +2028,7 @@
       "grcm39/gtf-gencode/M26",
       "star/2.7.11b"
     ],
-    "relative_path": "grcm39/star/2.7.11b/gencodeM26-151",
+    "path": "grcm39/star/2.7.11b/gencodeM26-151",
     "whatis": "STAR grcm39 GENCODEM26 index for read length 151"
   },
   "grcm39/star/2.7.11b/gencodeM27-101": {
@@ -2037,7 +2037,7 @@
       "grcm39/gtf-gencode/M27",
       "star/2.7.11b"
     ],
-    "relative_path": "grcm39/star/2.7.11b/gencodeM27-101",
+    "path": "grcm39/star/2.7.11b/gencodeM27-101",
     "whatis": "STAR grcm39 GENCODEM27 index for read length 101"
   },
   "grcm39/star/2.7.11b/gencodeM27-151": {
@@ -2046,7 +2046,7 @@
       "grcm39/gtf-gencode/M27",
       "star/2.7.11b"
     ],
-    "relative_path": "grcm39/star/2.7.11b/gencodeM27-151",
+    "path": "grcm39/star/2.7.11b/gencodeM27-151",
     "whatis": "STAR grcm39 GENCODEM27 index for read length 151"
   },
   "grcm39/star/2.7.11b/gencodeM28-101": {
@@ -2055,7 +2055,7 @@
       "grcm39/gtf-gencode/M28",
       "star/2.7.11b"
     ],
-    "relative_path": "grcm39/star/2.7.11b/gencodeM28-101",
+    "path": "grcm39/star/2.7.11b/gencodeM28-101",
     "whatis": "STAR grcm39 GENCODEM28 index for read length 101"
   },
   "grcm39/star/2.7.11b/gencodeM28-151": {
@@ -2064,7 +2064,7 @@
       "grcm39/gtf-gencode/M28",
       "star/2.7.11b"
     ],
-    "relative_path": "grcm39/star/2.7.11b/gencodeM28-151",
+    "path": "grcm39/star/2.7.11b/gencodeM28-151",
     "whatis": "STAR grcm39 GENCODEM28 index for read length 151"
   },
   "grcm39/star/2.7.11b/gencodeM29-101": {
@@ -2073,7 +2073,7 @@
       "grcm39/gtf-gencode/M29",
       "star/2.7.11b"
     ],
-    "relative_path": "grcm39/star/2.7.11b/gencodeM29-101",
+    "path": "grcm39/star/2.7.11b/gencodeM29-101",
     "whatis": "STAR grcm39 GENCODEM29 index for read length 101"
   },
   "grcm39/star/2.7.11b/gencodeM29-151": {
@@ -2082,7 +2082,7 @@
       "grcm39/gtf-gencode/M29",
       "star/2.7.11b"
     ],
-    "relative_path": "grcm39/star/2.7.11b/gencodeM29-151",
+    "path": "grcm39/star/2.7.11b/gencodeM29-151",
     "whatis": "STAR grcm39 GENCODEM29 index for read length 151"
   },
   "grcm39/star/2.7.11b/gencodeM30-101": {
@@ -2091,7 +2091,7 @@
       "grcm39/gtf-gencode/M30",
       "star/2.7.11b"
     ],
-    "relative_path": "grcm39/star/2.7.11b/gencodeM30-101",
+    "path": "grcm39/star/2.7.11b/gencodeM30-101",
     "whatis": "STAR grcm39 GENCODEM30 index for read length 101"
   },
   "grcm39/star/2.7.11b/gencodeM30-151": {
@@ -2100,7 +2100,7 @@
       "grcm39/gtf-gencode/M30",
       "star/2.7.11b"
     ],
-    "relative_path": "grcm39/star/2.7.11b/gencodeM30-151",
+    "path": "grcm39/star/2.7.11b/gencodeM30-151",
     "whatis": "STAR grcm39 GENCODEM30 index for read length 151"
   },
   "grcm39/star/2.7.11b/gencodeM31-101": {
@@ -2109,7 +2109,7 @@
       "grcm39/gtf-gencode/M31",
       "star/2.7.11b"
     ],
-    "relative_path": "grcm39/star/2.7.11b/gencodeM31-101",
+    "path": "grcm39/star/2.7.11b/gencodeM31-101",
     "whatis": "STAR grcm39 GENCODEM31 index for read length 101"
   },
   "grcm39/star/2.7.11b/gencodeM31-151": {
@@ -2118,7 +2118,7 @@
       "grcm39/gtf-gencode/M31",
       "star/2.7.11b"
     ],
-    "relative_path": "grcm39/star/2.7.11b/gencodeM31-151",
+    "path": "grcm39/star/2.7.11b/gencodeM31-151",
     "whatis": "STAR grcm39 GENCODEM31 index for read length 151"
   },
   "grcm39/star/2.7.11b/gencodeM32-101": {
@@ -2127,7 +2127,7 @@
       "grcm39/gtf-gencode/M32",
       "star/2.7.11b"
     ],
-    "relative_path": "grcm39/star/2.7.11b/gencodeM32-101",
+    "path": "grcm39/star/2.7.11b/gencodeM32-101",
     "whatis": "STAR grcm39 GENCODEM32 index for read length 101"
   },
   "grcm39/star/2.7.11b/gencodeM32-151": {
@@ -2136,7 +2136,7 @@
       "grcm39/gtf-gencode/M32",
       "star/2.7.11b"
     ],
-    "relative_path": "grcm39/star/2.7.11b/gencodeM32-151",
+    "path": "grcm39/star/2.7.11b/gencodeM32-151",
     "whatis": "STAR grcm39 GENCODEM32 index for read length 151"
   },
   "grcm39/star/2.7.11b/gencodeM33-101": {
@@ -2145,7 +2145,7 @@
       "grcm39/gtf-gencode/M33",
       "star/2.7.11b"
     ],
-    "relative_path": "grcm39/star/2.7.11b/gencodeM33-101",
+    "path": "grcm39/star/2.7.11b/gencodeM33-101",
     "whatis": "STAR grcm39 GENCODEM33 index for read length 101"
   },
   "grcm39/star/2.7.11b/gencodeM33-151": {
@@ -2154,7 +2154,7 @@
       "grcm39/gtf-gencode/M33",
       "star/2.7.11b"
     ],
-    "relative_path": "grcm39/star/2.7.11b/gencodeM33-151",
+    "path": "grcm39/star/2.7.11b/gencodeM33-151",
     "whatis": "STAR grcm39 GENCODEM33 index for read length 151"
   },
   "grcm39/star/2.7.11b/gencodeM34-101": {
@@ -2163,7 +2163,7 @@
       "grcm39/gtf-gencode/M34",
       "star/2.7.11b"
     ],
-    "relative_path": "grcm39/star/2.7.11b/gencodeM34-101",
+    "path": "grcm39/star/2.7.11b/gencodeM34-101",
     "whatis": "STAR grcm39 GENCODEM34 index for read length 101"
   },
   "grcm39/star/2.7.11b/gencodeM34-151": {
@@ -2172,7 +2172,7 @@
       "grcm39/gtf-gencode/M34",
       "star/2.7.11b"
     ],
-    "relative_path": "grcm39/star/2.7.11b/gencodeM34-151",
+    "path": "grcm39/star/2.7.11b/gencodeM34-151",
     "whatis": "STAR grcm39 GENCODEM34 index for read length 151"
   },
   "grcm39/star/2.7.11b/gencodeM35-101": {
@@ -2181,7 +2181,7 @@
       "grcm39/gtf-gencode/M35",
       "star/2.7.11b"
     ],
-    "relative_path": "grcm39/star/2.7.11b/gencodeM35-101",
+    "path": "grcm39/star/2.7.11b/gencodeM35-101",
     "whatis": "STAR grcm39 GENCODEM35 index for read length 101"
   },
   "grcm39/star/2.7.11b/gencodeM35-151": {
@@ -2190,7 +2190,7 @@
       "grcm39/gtf-gencode/M35",
       "star/2.7.11b"
     ],
-    "relative_path": "grcm39/star/2.7.11b/gencodeM35-151",
+    "path": "grcm39/star/2.7.11b/gencodeM35-151",
     "whatis": "STAR grcm39 GENCODEM35 index for read length 151"
   },
   "grcm39/star/2.7.11b/gencodeM36-101": {
@@ -2199,7 +2199,7 @@
       "grcm39/gtf-gencode/M36",
       "star/2.7.11b"
     ],
-    "relative_path": "grcm39/star/2.7.11b/gencodeM36-101",
+    "path": "grcm39/star/2.7.11b/gencodeM36-101",
     "whatis": "STAR grcm39 GENCODEM36 index for read length 101"
   },
   "grcm39/star/2.7.11b/gencodeM36-151": {
@@ -2208,7 +2208,7 @@
       "grcm39/gtf-gencode/M36",
       "star/2.7.11b"
     ],
-    "relative_path": "grcm39/star/2.7.11b/gencodeM36-151",
+    "path": "grcm39/star/2.7.11b/gencodeM36-151",
     "whatis": "STAR grcm39 GENCODEM36 index for read length 151"
   },
   "grcm39/star/2.7.11b/gencodeM37-101": {
@@ -2217,7 +2217,7 @@
       "grcm39/gtf-gencode/M37",
       "star/2.7.11b"
     ],
-    "relative_path": "grcm39/star/2.7.11b/gencodeM37-101",
+    "path": "grcm39/star/2.7.11b/gencodeM37-101",
     "whatis": "STAR grcm39 GENCODEM37 index for read length 101"
   },
   "grcm39/star/2.7.11b/gencodeM37-151": {
@@ -2226,7 +2226,7 @@
       "grcm39/gtf-gencode/M37",
       "star/2.7.11b"
     ],
-    "relative_path": "grcm39/star/2.7.11b/gencodeM37-151",
+    "path": "grcm39/star/2.7.11b/gencodeM37-151",
     "whatis": "STAR grcm39 GENCODEM37 index for read length 151"
   },
   "grcm39/star/2.7.11b/gencodeM38-101": {
@@ -2235,7 +2235,7 @@
       "grcm39/gtf-gencode/M38",
       "star/2.7.11b"
     ],
-    "relative_path": "grcm39/star/2.7.11b/gencodeM38-101",
+    "path": "grcm39/star/2.7.11b/gencodeM38-101",
     "whatis": "STAR grcm39 GENCODEM38 index for read length 101"
   },
   "grcm39/star/2.7.11b/gencodeM38-151": {
@@ -2244,7 +2244,7 @@
       "grcm39/gtf-gencode/M38",
       "star/2.7.11b"
     ],
-    "relative_path": "grcm39/star/2.7.11b/gencodeM38-151",
+    "path": "grcm39/star/2.7.11b/gencodeM38-151",
     "whatis": "STAR grcm39 GENCODEM38 index for read length 151"
   },
   "grcm39/star/2.7.11b/gencodeM5-101": {
@@ -2253,7 +2253,7 @@
       "grcm39/gtf-gencode/M5",
       "star/2.7.11b"
     ],
-    "relative_path": "grcm39/star/2.7.11b/gencodeM5-101",
+    "path": "grcm39/star/2.7.11b/gencodeM5-101",
     "whatis": "STAR grcm39 GENCODEM5 index for read length 101"
   },
   "grcm39/star/2.7.11b/gencodeM5-151": {
@@ -2262,7 +2262,7 @@
       "grcm39/gtf-gencode/M5",
       "star/2.7.11b"
     ],
-    "relative_path": "grcm39/star/2.7.11b/gencodeM5-151",
+    "path": "grcm39/star/2.7.11b/gencodeM5-151",
     "whatis": "STAR grcm39 GENCODEM5 index for read length 151"
   },
   "grcm39/star/2.7.11b/gencodeM6-101": {
@@ -2271,7 +2271,7 @@
       "grcm39/gtf-gencode/M6",
       "star/2.7.11b"
     ],
-    "relative_path": "grcm39/star/2.7.11b/gencodeM6-101",
+    "path": "grcm39/star/2.7.11b/gencodeM6-101",
     "whatis": "STAR grcm39 GENCODEM6 index for read length 101"
   },
   "grcm39/star/2.7.11b/gencodeM6-151": {
@@ -2280,7 +2280,7 @@
       "grcm39/gtf-gencode/M6",
       "star/2.7.11b"
     ],
-    "relative_path": "grcm39/star/2.7.11b/gencodeM6-151",
+    "path": "grcm39/star/2.7.11b/gencodeM6-151",
     "whatis": "STAR grcm39 GENCODEM6 index for read length 151"
   },
   "grcm39/star/2.7.11b/gencodeM7-101": {
@@ -2289,7 +2289,7 @@
       "grcm39/gtf-gencode/M7",
       "star/2.7.11b"
     ],
-    "relative_path": "grcm39/star/2.7.11b/gencodeM7-101",
+    "path": "grcm39/star/2.7.11b/gencodeM7-101",
     "whatis": "STAR grcm39 GENCODEM7 index for read length 101"
   },
   "grcm39/star/2.7.11b/gencodeM7-151": {
@@ -2298,7 +2298,7 @@
       "grcm39/gtf-gencode/M7",
       "star/2.7.11b"
     ],
-    "relative_path": "grcm39/star/2.7.11b/gencodeM7-151",
+    "path": "grcm39/star/2.7.11b/gencodeM7-151",
     "whatis": "STAR grcm39 GENCODEM7 index for read length 151"
   },
   "grcm39/star/2.7.11b/gencodeM8-101": {
@@ -2307,7 +2307,7 @@
       "grcm39/gtf-gencode/M8",
       "star/2.7.11b"
     ],
-    "relative_path": "grcm39/star/2.7.11b/gencodeM8-101",
+    "path": "grcm39/star/2.7.11b/gencodeM8-101",
     "whatis": "STAR grcm39 GENCODEM8 index for read length 101"
   },
   "grcm39/star/2.7.11b/gencodeM8-151": {
@@ -2316,7 +2316,7 @@
       "grcm39/gtf-gencode/M8",
       "star/2.7.11b"
     ],
-    "relative_path": "grcm39/star/2.7.11b/gencodeM8-151",
+    "path": "grcm39/star/2.7.11b/gencodeM8-151",
     "whatis": "STAR grcm39 GENCODEM8 index for read length 151"
   },
   "grcm39/star/2.7.11b/gencodeM9-101": {
@@ -2325,7 +2325,7 @@
       "grcm39/gtf-gencode/M9",
       "star/2.7.11b"
     ],
-    "relative_path": "grcm39/star/2.7.11b/gencodeM9-101",
+    "path": "grcm39/star/2.7.11b/gencodeM9-101",
     "whatis": "STAR grcm39 GENCODEM9 index for read length 101"
   },
   "grcm39/star/2.7.11b/gencodeM9-151": {
@@ -2334,843 +2334,480 @@
       "grcm39/gtf-gencode/M9",
       "star/2.7.11b"
     ],
-    "relative_path": "grcm39/star/2.7.11b/gencodeM9-151",
+    "path": "grcm39/star/2.7.11b/gencodeM9-151",
     "whatis": "STAR grcm39 GENCODEM9 index for read length 151"
   },
   "grcm39/transcript-gencode/M10": {
     "deps": [
       "samtools/1.22.1"
     ],
-    "relative_path": "grcm39/transcript-gencode/M10",
+    "path": "grcm39/transcript-gencode/M10",
     "whatis": "GRCm39 GENCODE M10 transcript FASTA"
   },
   "grcm39/transcript-gencode/M11": {
     "deps": [
       "samtools/1.22.1"
     ],
-    "relative_path": "grcm39/transcript-gencode/M11",
+    "path": "grcm39/transcript-gencode/M11",
     "whatis": "GRCm39 GENCODE M11 transcript FASTA"
   },
   "grcm39/transcript-gencode/M12": {
     "deps": [
       "samtools/1.22.1"
     ],
-    "relative_path": "grcm39/transcript-gencode/M12",
+    "path": "grcm39/transcript-gencode/M12",
     "whatis": "GRCm39 GENCODE M12 transcript FASTA"
   },
   "grcm39/transcript-gencode/M13": {
     "deps": [
       "samtools/1.22.1"
     ],
-    "relative_path": "grcm39/transcript-gencode/M13",
+    "path": "grcm39/transcript-gencode/M13",
     "whatis": "GRCm39 GENCODE M13 transcript FASTA"
   },
   "grcm39/transcript-gencode/M14": {
     "deps": [
       "samtools/1.22.1"
     ],
-    "relative_path": "grcm39/transcript-gencode/M14",
+    "path": "grcm39/transcript-gencode/M14",
     "whatis": "GRCm39 GENCODE M14 transcript FASTA"
   },
   "grcm39/transcript-gencode/M15": {
     "deps": [
       "samtools/1.22.1"
     ],
-    "relative_path": "grcm39/transcript-gencode/M15",
+    "path": "grcm39/transcript-gencode/M15",
     "whatis": "GRCm39 GENCODE M15 transcript FASTA"
   },
   "grcm39/transcript-gencode/M16": {
     "deps": [
       "samtools/1.22.1"
     ],
-    "relative_path": "grcm39/transcript-gencode/M16",
+    "path": "grcm39/transcript-gencode/M16",
     "whatis": "GRCm39 GENCODE M16 transcript FASTA"
   },
   "grcm39/transcript-gencode/M17": {
     "deps": [
       "samtools/1.22.1"
     ],
-    "relative_path": "grcm39/transcript-gencode/M17",
+    "path": "grcm39/transcript-gencode/M17",
     "whatis": "GRCm39 GENCODE M17 transcript FASTA"
   },
   "grcm39/transcript-gencode/M18": {
     "deps": [
       "samtools/1.22.1"
     ],
-    "relative_path": "grcm39/transcript-gencode/M18",
+    "path": "grcm39/transcript-gencode/M18",
     "whatis": "GRCm39 GENCODE M18 transcript FASTA"
   },
   "grcm39/transcript-gencode/M19": {
     "deps": [
       "samtools/1.22.1"
     ],
-    "relative_path": "grcm39/transcript-gencode/M19",
+    "path": "grcm39/transcript-gencode/M19",
     "whatis": "GRCm39 GENCODE M19 transcript FASTA"
   },
   "grcm39/transcript-gencode/M20": {
     "deps": [
       "samtools/1.22.1"
     ],
-    "relative_path": "grcm39/transcript-gencode/M20",
+    "path": "grcm39/transcript-gencode/M20",
     "whatis": "GRCm39 GENCODE M20 transcript FASTA"
   },
   "grcm39/transcript-gencode/M21": {
     "deps": [
       "samtools/1.22.1"
     ],
-    "relative_path": "grcm39/transcript-gencode/M21",
+    "path": "grcm39/transcript-gencode/M21",
     "whatis": "GRCm39 GENCODE M21 transcript FASTA"
   },
   "grcm39/transcript-gencode/M22": {
     "deps": [
       "samtools/1.22.1"
     ],
-    "relative_path": "grcm39/transcript-gencode/M22",
+    "path": "grcm39/transcript-gencode/M22",
     "whatis": "GRCm39 GENCODE M22 transcript FASTA"
   },
   "grcm39/transcript-gencode/M23": {
     "deps": [
       "samtools/1.22.1"
     ],
-    "relative_path": "grcm39/transcript-gencode/M23",
+    "path": "grcm39/transcript-gencode/M23",
     "whatis": "GRCm39 GENCODE M23 transcript FASTA"
   },
   "grcm39/transcript-gencode/M24": {
     "deps": [
       "samtools/1.22.1"
     ],
-    "relative_path": "grcm39/transcript-gencode/M24",
+    "path": "grcm39/transcript-gencode/M24",
     "whatis": "GRCm39 GENCODE M24 transcript FASTA"
   },
   "grcm39/transcript-gencode/M25": {
     "deps": [
       "samtools/1.22.1"
     ],
-    "relative_path": "grcm39/transcript-gencode/M25",
+    "path": "grcm39/transcript-gencode/M25",
     "whatis": "GRCm39 GENCODE M25 transcript FASTA"
   },
   "grcm39/transcript-gencode/M26": {
     "deps": [
       "samtools/1.22.1"
     ],
-    "relative_path": "grcm39/transcript-gencode/M26",
+    "path": "grcm39/transcript-gencode/M26",
     "whatis": "GRCm39 GENCODE M26 transcript FASTA"
   },
   "grcm39/transcript-gencode/M27": {
     "deps": [
       "samtools/1.22.1"
     ],
-    "relative_path": "grcm39/transcript-gencode/M27",
+    "path": "grcm39/transcript-gencode/M27",
     "whatis": "GRCm39 GENCODE M27 transcript FASTA"
   },
   "grcm39/transcript-gencode/M28": {
     "deps": [
       "samtools/1.22.1"
     ],
-    "relative_path": "grcm39/transcript-gencode/M28",
+    "path": "grcm39/transcript-gencode/M28",
     "whatis": "GRCm39 GENCODE M28 transcript FASTA"
   },
   "grcm39/transcript-gencode/M29": {
     "deps": [
       "samtools/1.22.1"
     ],
-    "relative_path": "grcm39/transcript-gencode/M29",
+    "path": "grcm39/transcript-gencode/M29",
     "whatis": "GRCm39 GENCODE M29 transcript FASTA"
   },
   "grcm39/transcript-gencode/M30": {
     "deps": [
       "samtools/1.22.1"
     ],
-    "relative_path": "grcm39/transcript-gencode/M30",
+    "path": "grcm39/transcript-gencode/M30",
     "whatis": "GRCm39 GENCODE M30 transcript FASTA"
   },
   "grcm39/transcript-gencode/M31": {
     "deps": [
       "samtools/1.22.1"
     ],
-    "relative_path": "grcm39/transcript-gencode/M31",
+    "path": "grcm39/transcript-gencode/M31",
     "whatis": "GRCm39 GENCODE M31 transcript FASTA"
   },
   "grcm39/transcript-gencode/M32": {
     "deps": [
       "samtools/1.22.1"
     ],
-    "relative_path": "grcm39/transcript-gencode/M32",
+    "path": "grcm39/transcript-gencode/M32",
     "whatis": "GRCm39 GENCODE M32 transcript FASTA"
   },
   "grcm39/transcript-gencode/M33": {
     "deps": [
       "samtools/1.22.1"
     ],
-    "relative_path": "grcm39/transcript-gencode/M33",
+    "path": "grcm39/transcript-gencode/M33",
     "whatis": "GRCm39 GENCODE M33 transcript FASTA"
   },
   "grcm39/transcript-gencode/M34": {
     "deps": [
       "samtools/1.22.1"
     ],
-    "relative_path": "grcm39/transcript-gencode/M34",
+    "path": "grcm39/transcript-gencode/M34",
     "whatis": "GRCm39 GENCODE M34 transcript FASTA"
   },
   "grcm39/transcript-gencode/M35": {
     "deps": [
       "samtools/1.22.1"
     ],
-    "relative_path": "grcm39/transcript-gencode/M35",
+    "path": "grcm39/transcript-gencode/M35",
     "whatis": "GRCm39 GENCODE M35 transcript FASTA"
   },
   "grcm39/transcript-gencode/M36": {
     "deps": [
       "samtools/1.22.1"
     ],
-    "relative_path": "grcm39/transcript-gencode/M36",
+    "path": "grcm39/transcript-gencode/M36",
     "whatis": "GRCm39 GENCODE M36 transcript FASTA"
   },
   "grcm39/transcript-gencode/M37": {
     "deps": [
       "samtools/1.22.1"
     ],
-    "relative_path": "grcm39/transcript-gencode/M37",
+    "path": "grcm39/transcript-gencode/M37",
     "whatis": "GRCm39 GENCODE M37 transcript FASTA"
   },
   "grcm39/transcript-gencode/M38": {
     "deps": [
       "samtools/1.22.1"
     ],
-    "relative_path": "grcm39/transcript-gencode/M38",
+    "path": "grcm39/transcript-gencode/M38",
     "whatis": "GRCm39 GENCODE M38 transcript FASTA"
   },
   "grcm39/transcript-gencode/M6": {
     "deps": [
       "samtools/1.22.1"
     ],
-    "relative_path": "grcm39/transcript-gencode/M6",
+    "path": "grcm39/transcript-gencode/M6",
     "whatis": "GRCm39 GENCODE M6 transcript FASTA"
   },
   "grcm39/transcript-gencode/M7": {
     "deps": [
       "samtools/1.22.1"
     ],
-    "relative_path": "grcm39/transcript-gencode/M7",
+    "path": "grcm39/transcript-gencode/M7",
     "whatis": "GRCm39 GENCODE M7 transcript FASTA"
   },
   "grcm39/transcript-gencode/M8": {
     "deps": [
       "samtools/1.22.1"
     ],
-    "relative_path": "grcm39/transcript-gencode/M8",
+    "path": "grcm39/transcript-gencode/M8",
     "whatis": "GRCm39 GENCODE M8 transcript FASTA"
   },
   "grcm39/transcript-gencode/M9": {
     "deps": [
       "samtools/1.22.1"
     ],
-    "relative_path": "grcm39/transcript-gencode/M9",
+    "path": "grcm39/transcript-gencode/M9",
     "whatis": "GRCm39 GENCODE M9 transcript FASTA"
   },
   "orad/2.7.0": {
     "deps": [],
-    "relative_path": "orad/2.7.0",
+    "path": "orad/2.7.0",
     "whatis": "Illumina ORA Decompressor"
   },
   "rpvg/1.0": {
     "deps": [],
-    "relative_path": "rpvg/1.0",
+    "path": "rpvg/1.0",
     "whatis": "Inferring the expression VG mpmap results for RNA-seq"
   },
   "ubuntu20/base_image": {
     "deps": [],
-    "relative_path": "ubuntu20/base_image.def",
+    "path": "ubuntu20/base_image.def",
     "whatis": "Missing description"
   },
   "ubuntu20/code-server": {
     "deps": [],
-    "relative_path": "ubuntu20/code-server.def",
+    "path": "ubuntu20/code-server.def",
     "whatis": "Missing description"
   },
   "ubuntu20/igv": {
     "deps": [],
-    "relative_path": "ubuntu20/igv.def",
+    "path": "ubuntu20/igv.def",
     "whatis": "Missing description"
   },
-  "ubuntu20/r3.1.3": {
+  "ubuntu20/posit-r": {
     "deps": [],
-    "relative_path": "ubuntu20/r3.1.3.def",
-    "whatis": "Ubuntu focal R 3.1.3"
-  },
-  "ubuntu20/r3.2.5": {
-    "deps": [],
-    "relative_path": "ubuntu20/r3.2.5.def",
-    "whatis": "Ubuntu focal R 3.2.5"
-  },
-  "ubuntu20/r3.3.3": {
-    "deps": [],
-    "relative_path": "ubuntu20/r3.3.3.def",
-    "whatis": "Ubuntu focal R 3.3.3"
-  },
-  "ubuntu20/r3.4.4": {
-    "deps": [],
-    "relative_path": "ubuntu20/r3.4.4.def",
-    "whatis": "Ubuntu focal R 3.4.4"
-  },
-  "ubuntu20/r3.5.3": {
-    "deps": [],
-    "relative_path": "ubuntu20/r3.5.3.def",
-    "whatis": "Ubuntu focal R 3.5.3"
-  },
-  "ubuntu20/r3.6.0": {
-    "deps": [],
-    "relative_path": "ubuntu20/r3.6.0.def",
-    "whatis": "Ubuntu focal R 3.6.0"
-  },
-  "ubuntu20/r3.6.1": {
-    "deps": [],
-    "relative_path": "ubuntu20/r3.6.1.def",
-    "whatis": "Ubuntu focal R 3.6.1"
-  },
-  "ubuntu20/r3.6.2": {
-    "deps": [],
-    "relative_path": "ubuntu20/r3.6.2.def",
-    "whatis": "Ubuntu focal R 3.6.2"
-  },
-  "ubuntu20/r3.6.3": {
-    "deps": [],
-    "relative_path": "ubuntu20/r3.6.3.def",
-    "whatis": "Ubuntu focal R 3.6.3"
-  },
-  "ubuntu20/r4.0.0": {
-    "deps": [],
-    "relative_path": "ubuntu20/r4.0.0.def",
-    "whatis": "Ubuntu focal R 4.0.0"
-  },
-  "ubuntu20/r4.0.1": {
-    "deps": [],
-    "relative_path": "ubuntu20/r4.0.1.def",
-    "whatis": "Ubuntu focal R 4.0.1"
-  },
-  "ubuntu20/r4.0.2": {
-    "deps": [],
-    "relative_path": "ubuntu20/r4.0.2.def",
-    "whatis": "Ubuntu focal R 4.0.2"
-  },
-  "ubuntu20/r4.0.3": {
-    "deps": [],
-    "relative_path": "ubuntu20/r4.0.3.def",
-    "whatis": "Ubuntu focal R 4.0.3"
-  },
-  "ubuntu20/r4.0.4": {
-    "deps": [],
-    "relative_path": "ubuntu20/r4.0.4.def",
-    "whatis": "Ubuntu focal R 4.0.4"
-  },
-  "ubuntu20/r4.0.5": {
-    "deps": [],
-    "relative_path": "ubuntu20/r4.0.5.def",
-    "whatis": "Ubuntu focal R 4.0.5"
-  },
-  "ubuntu20/r4.1.0": {
-    "deps": [],
-    "relative_path": "ubuntu20/r4.1.0.def",
-    "whatis": "Ubuntu focal R 4.1.0"
-  },
-  "ubuntu20/r4.1.1": {
-    "deps": [],
-    "relative_path": "ubuntu20/r4.1.1.def",
-    "whatis": "Ubuntu focal R 4.1.1"
-  },
-  "ubuntu20/r4.1.2": {
-    "deps": [],
-    "relative_path": "ubuntu20/r4.1.2.def",
-    "whatis": "Ubuntu focal R 4.1.2"
-  },
-  "ubuntu20/r4.1.3": {
-    "deps": [],
-    "relative_path": "ubuntu20/r4.1.3.def",
-    "whatis": "Ubuntu focal R 4.1.3"
-  },
-  "ubuntu20/r4.2.0": {
-    "deps": [],
-    "relative_path": "ubuntu20/r4.2.0.def",
-    "whatis": "Ubuntu focal R 4.2.0"
-  },
-  "ubuntu20/r4.2.1": {
-    "deps": [],
-    "relative_path": "ubuntu20/r4.2.1.def",
-    "whatis": "Ubuntu focal R 4.2.1"
-  },
-  "ubuntu20/r4.2.2": {
-    "deps": [],
-    "relative_path": "ubuntu20/r4.2.2.def",
-    "whatis": "Ubuntu focal R 4.2.2"
-  },
-  "ubuntu20/r4.2.3": {
-    "deps": [],
-    "relative_path": "ubuntu20/r4.2.3.def",
-    "whatis": "Ubuntu focal R 4.2.3"
-  },
-  "ubuntu20/r4.3.0": {
-    "deps": [],
-    "relative_path": "ubuntu20/r4.3.0.def",
-    "whatis": "Ubuntu focal R 4.3.0"
-  },
-  "ubuntu20/r4.3.1": {
-    "deps": [],
-    "relative_path": "ubuntu20/r4.3.1.def",
-    "whatis": "Ubuntu focal R 4.3.1"
-  },
-  "ubuntu20/r4.3.2": {
-    "deps": [],
-    "relative_path": "ubuntu20/r4.3.2.def",
-    "whatis": "Ubuntu focal R 4.3.2"
-  },
-  "ubuntu20/r4.3.3": {
-    "deps": [],
-    "relative_path": "ubuntu20/r4.3.3.def",
-    "whatis": "Ubuntu focal R 4.3.3"
-  },
-  "ubuntu20/r4.4.0": {
-    "deps": [],
-    "relative_path": "ubuntu20/r4.4.0.def",
-    "whatis": "Ubuntu focal R 4.4.0"
-  },
-  "ubuntu20/r4.4.1": {
-    "deps": [],
-    "relative_path": "ubuntu20/r4.4.1.def",
-    "whatis": "Ubuntu focal R 4.4.1"
-  },
-  "ubuntu20/r4.4.2": {
-    "deps": [],
-    "relative_path": "ubuntu20/r4.4.2.def",
-    "whatis": "Ubuntu focal R 4.4.2"
-  },
-  "ubuntu20/r4.4.3": {
-    "deps": [],
-    "relative_path": "ubuntu20/r4.4.3.def",
-    "whatis": "Ubuntu focal R 4.4.3"
-  },
-  "ubuntu20/r4.5.0": {
-    "deps": [],
-    "relative_path": "ubuntu20/r4.5.0.def",
-    "whatis": "Ubuntu focal R 4.5.0"
-  },
-  "ubuntu20/r4.5.1": {
-    "deps": [],
-    "relative_path": "ubuntu20/r4.5.1.def",
-    "whatis": "Ubuntu focal R 4.5.1"
-  },
-  "ubuntu20/r4.5.2": {
-    "deps": [],
-    "relative_path": "ubuntu20/r4.5.2.def",
-    "whatis": "Ubuntu focal R 4.5.2"
+    "is_template": true,
+    "path": "ubuntu20/posit-r.def",
+    "pl": {
+      "version": [
+        "4.5.3",
+        "4.5.2",
+        "4.5.1",
+        "4.5.0",
+        "4.4.3",
+        "4.4.2",
+        "4.4.1",
+        "4.4.0",
+        "4.3.3",
+        "4.3.2",
+        "4.3.1",
+        "4.3.0",
+        "4.2.3",
+        "4.2.2",
+        "4.2.1",
+        "4.2.0",
+        "4.1.3",
+        "4.1.2",
+        "4.1.1",
+        "4.1.0",
+        "4.0.5",
+        "4.0.4",
+        "4.0.3",
+        "4.0.2",
+        "4.0.1",
+        "4.0.0",
+        "3.6.3",
+        "3.6.2",
+        "3.6.1",
+        "3.6.0",
+        "3.5.3",
+        "3.4.4",
+        "3.3.3",
+        "3.2.5",
+        "3.1.3"
+      ]
+    },
+    "pl_order": [
+      "version"
+    ],
+    "target_template": "ubuntu20/r{version}",
+    "whatis": "Ubuntu focal R {version}"
   },
   "ubuntu20/rstudio-server": {
     "deps": [],
-    "relative_path": "ubuntu20/rstudio-server.def",
+    "path": "ubuntu20/rstudio-server.def",
     "whatis": "Missing description"
   },
   "ubuntu20/xfce4": {
     "deps": [],
-    "relative_path": "ubuntu20/xfce4.def",
+    "path": "ubuntu20/xfce4.def",
     "whatis": "Missing description"
   },
   "ubuntu22/base_image": {
     "deps": [],
-    "relative_path": "ubuntu22/base_image.def",
+    "path": "ubuntu22/base_image.def",
     "whatis": "Missing description"
   },
   "ubuntu22/build-essential": {
     "deps": [],
-    "relative_path": "ubuntu22/build-essential.def",
+    "path": "ubuntu22/build-essential.def",
     "whatis": "Missing description"
   },
   "ubuntu22/code-server": {
     "deps": [],
-    "relative_path": "ubuntu22/code-server.def",
+    "path": "ubuntu22/code-server.def",
     "whatis": "Missing description"
   },
   "ubuntu22/igv": {
     "deps": [],
-    "relative_path": "ubuntu22/igv.def",
+    "path": "ubuntu22/igv.def",
     "whatis": "Missing description"
   },
-  "ubuntu22/r3.1.3": {
+  "ubuntu22/posit-r": {
     "deps": [],
-    "relative_path": "ubuntu22/r3.1.3.def",
-    "whatis": "Ubuntu jammy R 3.1.3"
-  },
-  "ubuntu22/r3.2.5": {
-    "deps": [],
-    "relative_path": "ubuntu22/r3.2.5.def",
-    "whatis": "Ubuntu jammy R 3.2.5"
-  },
-  "ubuntu22/r3.3.3": {
-    "deps": [],
-    "relative_path": "ubuntu22/r3.3.3.def",
-    "whatis": "Ubuntu jammy R 3.3.3"
-  },
-  "ubuntu22/r3.4.4": {
-    "deps": [],
-    "relative_path": "ubuntu22/r3.4.4.def",
-    "whatis": "Ubuntu jammy R 3.4.4"
-  },
-  "ubuntu22/r3.5.3": {
-    "deps": [],
-    "relative_path": "ubuntu22/r3.5.3.def",
-    "whatis": "Ubuntu jammy R 3.5.3"
-  },
-  "ubuntu22/r3.6.0": {
-    "deps": [],
-    "relative_path": "ubuntu22/r3.6.0.def",
-    "whatis": "Ubuntu jammy R 3.6.0"
-  },
-  "ubuntu22/r3.6.1": {
-    "deps": [],
-    "relative_path": "ubuntu22/r3.6.1.def",
-    "whatis": "Ubuntu jammy R 3.6.1"
-  },
-  "ubuntu22/r3.6.2": {
-    "deps": [],
-    "relative_path": "ubuntu22/r3.6.2.def",
-    "whatis": "Ubuntu jammy R 3.6.2"
-  },
-  "ubuntu22/r3.6.3": {
-    "deps": [],
-    "relative_path": "ubuntu22/r3.6.3.def",
-    "whatis": "Ubuntu jammy R 3.6.3"
-  },
-  "ubuntu22/r4.0.0": {
-    "deps": [],
-    "relative_path": "ubuntu22/r4.0.0.def",
-    "whatis": "Ubuntu jammy R 4.0.0"
-  },
-  "ubuntu22/r4.0.1": {
-    "deps": [],
-    "relative_path": "ubuntu22/r4.0.1.def",
-    "whatis": "Ubuntu jammy R 4.0.1"
-  },
-  "ubuntu22/r4.0.2": {
-    "deps": [],
-    "relative_path": "ubuntu22/r4.0.2.def",
-    "whatis": "Ubuntu jammy R 4.0.2"
-  },
-  "ubuntu22/r4.0.3": {
-    "deps": [],
-    "relative_path": "ubuntu22/r4.0.3.def",
-    "whatis": "Ubuntu jammy R 4.0.3"
-  },
-  "ubuntu22/r4.0.4": {
-    "deps": [],
-    "relative_path": "ubuntu22/r4.0.4.def",
-    "whatis": "Ubuntu jammy R 4.0.4"
-  },
-  "ubuntu22/r4.0.5": {
-    "deps": [],
-    "relative_path": "ubuntu22/r4.0.5.def",
-    "whatis": "Ubuntu jammy R 4.0.5"
-  },
-  "ubuntu22/r4.1.0": {
-    "deps": [],
-    "relative_path": "ubuntu22/r4.1.0.def",
-    "whatis": "Ubuntu jammy R 4.1.0"
-  },
-  "ubuntu22/r4.1.1": {
-    "deps": [],
-    "relative_path": "ubuntu22/r4.1.1.def",
-    "whatis": "Ubuntu jammy R 4.1.1"
-  },
-  "ubuntu22/r4.1.2": {
-    "deps": [],
-    "relative_path": "ubuntu22/r4.1.2.def",
-    "whatis": "Ubuntu jammy R 4.1.2"
-  },
-  "ubuntu22/r4.1.3": {
-    "deps": [],
-    "relative_path": "ubuntu22/r4.1.3.def",
-    "whatis": "Ubuntu jammy R 4.1.3"
-  },
-  "ubuntu22/r4.2.0": {
-    "deps": [],
-    "relative_path": "ubuntu22/r4.2.0.def",
-    "whatis": "Ubuntu jammy R 4.2.0"
-  },
-  "ubuntu22/r4.2.1": {
-    "deps": [],
-    "relative_path": "ubuntu22/r4.2.1.def",
-    "whatis": "Ubuntu jammy R 4.2.1"
-  },
-  "ubuntu22/r4.2.2": {
-    "deps": [],
-    "relative_path": "ubuntu22/r4.2.2.def",
-    "whatis": "Ubuntu jammy R 4.2.2"
-  },
-  "ubuntu22/r4.2.3": {
-    "deps": [],
-    "relative_path": "ubuntu22/r4.2.3.def",
-    "whatis": "Ubuntu jammy R 4.2.3"
-  },
-  "ubuntu22/r4.3.0": {
-    "deps": [],
-    "relative_path": "ubuntu22/r4.3.0.def",
-    "whatis": "Ubuntu jammy R 4.3.0"
-  },
-  "ubuntu22/r4.3.1": {
-    "deps": [],
-    "relative_path": "ubuntu22/r4.3.1.def",
-    "whatis": "Ubuntu jammy R 4.3.1"
-  },
-  "ubuntu22/r4.3.2": {
-    "deps": [],
-    "relative_path": "ubuntu22/r4.3.2.def",
-    "whatis": "Ubuntu jammy R 4.3.2"
-  },
-  "ubuntu22/r4.3.3": {
-    "deps": [],
-    "relative_path": "ubuntu22/r4.3.3.def",
-    "whatis": "Ubuntu jammy R 4.3.3"
-  },
-  "ubuntu22/r4.4.0": {
-    "deps": [],
-    "relative_path": "ubuntu22/r4.4.0.def",
-    "whatis": "Ubuntu jammy R 4.4.0"
-  },
-  "ubuntu22/r4.4.1": {
-    "deps": [],
-    "relative_path": "ubuntu22/r4.4.1.def",
-    "whatis": "Ubuntu jammy R 4.4.1"
-  },
-  "ubuntu22/r4.4.2": {
-    "deps": [],
-    "relative_path": "ubuntu22/r4.4.2.def",
-    "whatis": "Ubuntu jammy R 4.4.2"
-  },
-  "ubuntu22/r4.4.3": {
-    "deps": [],
-    "relative_path": "ubuntu22/r4.4.3.def",
-    "whatis": "Ubuntu jammy R 4.4.3"
-  },
-  "ubuntu22/r4.5.0": {
-    "deps": [],
-    "relative_path": "ubuntu22/r4.5.0.def",
-    "whatis": "Ubuntu jammy R 4.5.0"
-  },
-  "ubuntu22/r4.5.1": {
-    "deps": [],
-    "relative_path": "ubuntu22/r4.5.1.def",
-    "whatis": "Ubuntu jammy R 4.5.1"
-  },
-  "ubuntu22/r4.5.2": {
-    "deps": [],
-    "relative_path": "ubuntu22/r4.5.2.def",
-    "whatis": "Ubuntu jammy R 4.5.2"
+    "is_template": true,
+    "path": "ubuntu22/posit-r.def",
+    "pl": {
+      "version": [
+        "4.5.3",
+        "4.5.2",
+        "4.5.1",
+        "4.5.0",
+        "4.4.3",
+        "4.4.2",
+        "4.4.1",
+        "4.4.0",
+        "4.3.3",
+        "4.3.2",
+        "4.3.1",
+        "4.3.0",
+        "4.2.3",
+        "4.2.2",
+        "4.2.1",
+        "4.2.0",
+        "4.1.3",
+        "4.1.2",
+        "4.1.1",
+        "4.1.0",
+        "4.0.5",
+        "4.0.4",
+        "4.0.3",
+        "4.0.2",
+        "4.0.1",
+        "4.0.0",
+        "3.6.3",
+        "3.6.2",
+        "3.6.1",
+        "3.6.0",
+        "3.5.3",
+        "3.4.4",
+        "3.3.3",
+        "3.2.5",
+        "3.1.3"
+      ]
+    },
+    "pl_order": [
+      "version"
+    ],
+    "target_template": "ubuntu22/r{version}",
+    "whatis": "Ubuntu jammy R {version}"
   },
   "ubuntu22/rstudio-server": {
     "deps": [],
-    "relative_path": "ubuntu22/rstudio-server.def",
+    "path": "ubuntu22/rstudio-server.def",
     "whatis": "Missing description"
   },
   "ubuntu22/xfce4": {
     "deps": [],
-    "relative_path": "ubuntu22/xfce4.def",
+    "path": "ubuntu22/xfce4.def",
     "whatis": "Missing description"
   },
   "ubuntu24/base_image": {
     "deps": [],
-    "relative_path": "ubuntu24/base_image.def",
+    "path": "ubuntu24/base_image.def",
     "whatis": "Missing description"
   },
   "ubuntu24/build-essential": {
     "deps": [],
-    "relative_path": "ubuntu24/build-essential.def",
+    "path": "ubuntu24/build-essential.def",
     "whatis": "Missing description"
   },
   "ubuntu24/code-server": {
     "deps": [],
-    "relative_path": "ubuntu24/code-server.def",
+    "path": "ubuntu24/code-server.def",
     "whatis": "Missing description"
   },
   "ubuntu24/igv": {
     "deps": [],
-    "relative_path": "ubuntu24/igv.def",
+    "path": "ubuntu24/igv.def",
     "whatis": "Missing description"
   },
-  "ubuntu24/r3.1.3": {
+  "ubuntu24/posit-r": {
     "deps": [],
-    "relative_path": "ubuntu24/r3.1.3.def",
-    "whatis": "Ubuntu noble R 3.1.3"
-  },
-  "ubuntu24/r3.2.5": {
-    "deps": [],
-    "relative_path": "ubuntu24/r3.2.5.def",
-    "whatis": "Ubuntu noble R 3.2.5"
-  },
-  "ubuntu24/r3.3.3": {
-    "deps": [],
-    "relative_path": "ubuntu24/r3.3.3.def",
-    "whatis": "Ubuntu noble R 3.3.3"
-  },
-  "ubuntu24/r3.4.4": {
-    "deps": [],
-    "relative_path": "ubuntu24/r3.4.4.def",
-    "whatis": "Ubuntu noble R 3.4.4"
-  },
-  "ubuntu24/r3.5.3": {
-    "deps": [],
-    "relative_path": "ubuntu24/r3.5.3.def",
-    "whatis": "Ubuntu noble R 3.5.3"
-  },
-  "ubuntu24/r3.6.0": {
-    "deps": [],
-    "relative_path": "ubuntu24/r3.6.0.def",
-    "whatis": "Ubuntu noble R 3.6.0"
-  },
-  "ubuntu24/r3.6.1": {
-    "deps": [],
-    "relative_path": "ubuntu24/r3.6.1.def",
-    "whatis": "Ubuntu noble R 3.6.1"
-  },
-  "ubuntu24/r3.6.2": {
-    "deps": [],
-    "relative_path": "ubuntu24/r3.6.2.def",
-    "whatis": "Ubuntu noble R 3.6.2"
-  },
-  "ubuntu24/r3.6.3": {
-    "deps": [],
-    "relative_path": "ubuntu24/r3.6.3.def",
-    "whatis": "Ubuntu noble R 3.6.3"
-  },
-  "ubuntu24/r4.0.0": {
-    "deps": [],
-    "relative_path": "ubuntu24/r4.0.0.def",
-    "whatis": "Ubuntu noble R 4.0.0"
-  },
-  "ubuntu24/r4.0.1": {
-    "deps": [],
-    "relative_path": "ubuntu24/r4.0.1.def",
-    "whatis": "Ubuntu noble R 4.0.1"
-  },
-  "ubuntu24/r4.0.2": {
-    "deps": [],
-    "relative_path": "ubuntu24/r4.0.2.def",
-    "whatis": "Ubuntu noble R 4.0.2"
-  },
-  "ubuntu24/r4.0.3": {
-    "deps": [],
-    "relative_path": "ubuntu24/r4.0.3.def",
-    "whatis": "Ubuntu noble R 4.0.3"
-  },
-  "ubuntu24/r4.0.4": {
-    "deps": [],
-    "relative_path": "ubuntu24/r4.0.4.def",
-    "whatis": "Ubuntu noble R 4.0.4"
-  },
-  "ubuntu24/r4.0.5": {
-    "deps": [],
-    "relative_path": "ubuntu24/r4.0.5.def",
-    "whatis": "Ubuntu noble R 4.0.5"
-  },
-  "ubuntu24/r4.1.0": {
-    "deps": [],
-    "relative_path": "ubuntu24/r4.1.0.def",
-    "whatis": "Ubuntu noble R 4.1.0"
-  },
-  "ubuntu24/r4.1.1": {
-    "deps": [],
-    "relative_path": "ubuntu24/r4.1.1.def",
-    "whatis": "Ubuntu noble R 4.1.1"
-  },
-  "ubuntu24/r4.1.2": {
-    "deps": [],
-    "relative_path": "ubuntu24/r4.1.2.def",
-    "whatis": "Ubuntu noble R 4.1.2"
-  },
-  "ubuntu24/r4.1.3": {
-    "deps": [],
-    "relative_path": "ubuntu24/r4.1.3.def",
-    "whatis": "Ubuntu noble R 4.1.3"
-  },
-  "ubuntu24/r4.2.0": {
-    "deps": [],
-    "relative_path": "ubuntu24/r4.2.0.def",
-    "whatis": "Ubuntu noble R 4.2.0"
-  },
-  "ubuntu24/r4.2.1": {
-    "deps": [],
-    "relative_path": "ubuntu24/r4.2.1.def",
-    "whatis": "Ubuntu noble R 4.2.1"
-  },
-  "ubuntu24/r4.2.2": {
-    "deps": [],
-    "relative_path": "ubuntu24/r4.2.2.def",
-    "whatis": "Ubuntu noble R 4.2.2"
-  },
-  "ubuntu24/r4.2.3": {
-    "deps": [],
-    "relative_path": "ubuntu24/r4.2.3.def",
-    "whatis": "Ubuntu noble R 4.2.3"
-  },
-  "ubuntu24/r4.3.0": {
-    "deps": [],
-    "relative_path": "ubuntu24/r4.3.0.def",
-    "whatis": "Ubuntu noble R 4.3.0"
-  },
-  "ubuntu24/r4.3.1": {
-    "deps": [],
-    "relative_path": "ubuntu24/r4.3.1.def",
-    "whatis": "Ubuntu noble R 4.3.1"
-  },
-  "ubuntu24/r4.3.2": {
-    "deps": [],
-    "relative_path": "ubuntu24/r4.3.2.def",
-    "whatis": "Ubuntu noble R 4.3.2"
-  },
-  "ubuntu24/r4.3.3": {
-    "deps": [],
-    "relative_path": "ubuntu24/r4.3.3.def",
-    "whatis": "Ubuntu noble R 4.3.3"
-  },
-  "ubuntu24/r4.4.0": {
-    "deps": [],
-    "relative_path": "ubuntu24/r4.4.0.def",
-    "whatis": "Ubuntu noble R 4.4.0"
-  },
-  "ubuntu24/r4.4.1": {
-    "deps": [],
-    "relative_path": "ubuntu24/r4.4.1.def",
-    "whatis": "Ubuntu noble R 4.4.1"
-  },
-  "ubuntu24/r4.4.2": {
-    "deps": [],
-    "relative_path": "ubuntu24/r4.4.2.def",
-    "whatis": "Ubuntu noble R 4.4.2"
-  },
-  "ubuntu24/r4.4.3": {
-    "deps": [],
-    "relative_path": "ubuntu24/r4.4.3.def",
-    "whatis": "Ubuntu noble R 4.4.3"
-  },
-  "ubuntu24/r4.5.0": {
-    "deps": [],
-    "relative_path": "ubuntu24/r4.5.0.def",
-    "whatis": "Ubuntu noble R 4.5.0"
-  },
-  "ubuntu24/r4.5.1": {
-    "deps": [],
-    "relative_path": "ubuntu24/r4.5.1.def",
-    "whatis": "Ubuntu noble R 4.5.1"
-  },
-  "ubuntu24/r4.5.2": {
-    "deps": [],
-    "relative_path": "ubuntu24/r4.5.2.def",
-    "whatis": "Ubuntu noble R 4.5.2"
+    "is_template": true,
+    "path": "ubuntu24/posit-r.def",
+    "pl": {
+      "version": [
+        "4.5.3",
+        "4.5.2",
+        "4.5.1",
+        "4.5.0",
+        "4.4.3",
+        "4.4.2",
+        "4.4.1",
+        "4.4.0",
+        "4.3.3",
+        "4.3.2",
+        "4.3.1",
+        "4.3.0",
+        "4.2.3",
+        "4.2.2",
+        "4.2.1",
+        "4.2.0",
+        "4.1.3",
+        "4.1.2",
+        "4.1.1",
+        "4.1.0",
+        "4.0.5",
+        "4.0.4",
+        "4.0.3",
+        "4.0.2",
+        "4.0.1",
+        "4.0.0",
+        "3.6.3",
+        "3.6.2",
+        "3.6.1",
+        "3.6.0",
+        "3.5.3",
+        "3.4.4",
+        "3.3.3",
+        "3.2.5",
+        "3.1.3"
+      ]
+    },
+    "pl_order": [
+      "version"
+    ],
+    "target_template": "ubuntu24/r{version}",
+    "whatis": "Ubuntu noble R {version}"
   },
   "ubuntu24/rstudio-server": {
     "deps": [],
-    "relative_path": "ubuntu24/rstudio-server.def",
+    "path": "ubuntu24/rstudio-server.def",
     "whatis": "Missing description"
   },
   "ubuntu24/xfce4": {
     "deps": [],
-    "relative_path": "ubuntu24/xfce4.def",
+    "path": "ubuntu24/xfce4.def",
     "whatis": "Missing description"
   }
 }
