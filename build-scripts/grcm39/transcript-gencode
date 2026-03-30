@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 #PL:gencode_version:6-38
-#DEP:samtools/1.22.1
+#DEP:samtools/1.23.1>=1.10
 #TARGET:grcm39/transcript-gencode/M{gencode_version}
 #WHATIS:GRCm39 GENCODE M{gencode_version} transcript FASTA
 #URL:https://www.gencodegenes.org/mouse/

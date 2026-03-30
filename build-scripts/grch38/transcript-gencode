@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 #PL:gencode_version:23-49
-#DEP:samtools/1.23.1
+#DEP:samtools/1.23.1>=1.10
 #TARGET:grch38/transcript-gencode/{gencode_version}
 #WHATIS:GRCh38 GENCODE {gencode_version} transcript FASTA
 #URL:https://www.gencodegenes.org/human/

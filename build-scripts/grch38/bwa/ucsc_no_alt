@@ -1,5 +1,5 @@
 #!/usr/bin/bash
-#DEP:bwa/0.7.19
+#DEP:bwa/0.7.19>=0.7.17
 #DEP:grch38/genome/ucsc_no_alt
 #WHATIS:bwa index for GRCh38 UCSC no alt reference genome
 #URL:https://github.com/lh3/bwa

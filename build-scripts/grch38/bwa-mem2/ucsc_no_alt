@@ -1,5 +1,5 @@
 #!/usr/bin/bash
-#DEP:bwa-mem2/2.3
+#DEP:bwa-mem2/2.3>=2.0
 #DEP:grch38/genome/ucsc_no_alt
 #WHATIS:bwa-mem2 index for GRCh38 UCSC no alt reference genome
 #URL:https://github.com/bwa-mem2/bwa-mem2

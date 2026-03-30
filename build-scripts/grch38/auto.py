@@ -39,19 +39,27 @@ def _versions_to_pl_value(versions: list) -> str:
 
 
 def _update_dep_version(dep_file: str, package: str, new_version: str) -> bool:
-    """Rewrite a #DEP:{package}/X.Y.Z line to use new_version. Returns True if changed."""
+    """Rewrite a #DEP:{package}/X.Y.Z[>=min] line to use new_version, preserving any constraint suffix. Returns True if changed."""
     if not os.path.exists(dep_file):
         print(f"Error: {dep_file} not found.", file=sys.stderr)
         return False
 
     prefix = f"#DEP:{package}/"
-    new_line = f"{prefix}{new_version}\n"
 
     with open(dep_file) as f:
         lines = f.readlines()
 
     for i, line in enumerate(lines):
         if line.startswith(prefix):
+            rest = line[len(prefix):].rstrip("\n")
+            # Preserve any version constraint suffix (e.g. ">=1.10" or ">1.10")
+            constraint = ""
+            for op in (">=", ">"):
+                idx = rest.find(op)
+                if idx >= 0:
+                    constraint = rest[idx:]
+                    break
+            new_line = f"{prefix}{new_version}{constraint}\n"
             if lines[i] == new_line:
                 print(f"No changes to {os.path.basename(dep_file)} #DEP:{package} (up to date).")
                 return False
@@ -63,7 +71,7 @@ def _update_dep_version(dep_file: str, package: str, new_version: str) -> bool:
 
     with open(dep_file, "w") as f:
         f.writelines(lines)
-    print(f"Updated {os.path.basename(dep_file)} #DEP:{package} => {new_version}")
+    print(f"Updated {os.path.basename(dep_file)} #DEP:{package} => {new_version}{constraint}")
     return True
 
 
