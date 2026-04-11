@@ -3,6 +3,10 @@
 # This script helps run an XFCE desktop (VNC / noVNC) on HTCondor clusters.
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]:-$0}")" && pwd)"
+if [ ! -f "$SCRIPT_DIR/.common.sh" ]; then
+    echo "[ERR] .common.sh not found at $SCRIPT_DIR. Please ensure the helper scripts are properly installed." >&2
+    exit 1
+fi
 source "$SCRIPT_DIR/.common.sh"
 HELPER_NAME=xfce4
 
@@ -239,10 +243,16 @@ fi
 JOB_SCRIPT_PATH="$LOG_DIR/$HELPER_NAME.job.sh"
 SUBMIT_PATH="$LOG_DIR/$HELPER_NAME.sub"
 
+NOTIFY_CURL=""
+case "${NOTIFICATION,,}" in
+    ""|none|bell|email) ;;
+    *) NOTIFY_CURL="curl -s -d \"$HELPER_NAME started\" ntfy.sh/$NOTIFICATION >/dev/null 2>&1" ;;
+esac
 cat > "$JOB_SCRIPT_PATH" <<JOBEOF
 #!/bin/bash
 while ! grep -q "^JOB_ID=" "$STATE_FILE" 2>/dev/null; do sleep 1; done
 echo "NODE=\$(hostname)" >> "$STATE_FILE"
+${NOTIFY_CURL:+$NOTIFY_CURL}
 
 DISPLAY_NUM=""
 for i in \$(seq 10 99); do
@@ -327,6 +337,7 @@ if [ -n "$GPU" ]; then
     printf 'request_gpus = %s\n' "$GPU" >> "$SUBMIT_PATH"
 fi
 
+[ "${NOTIFICATION,,}" = "email" ] && printf 'notification = Start\n' >> "$SUBMIT_PATH"
 printf 'queue\n' >> "$SUBMIT_PATH"
 
 rm -f "$STATE_FILE"

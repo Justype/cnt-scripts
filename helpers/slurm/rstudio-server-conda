@@ -3,6 +3,10 @@
 # This script helps run rstudio-server with conda overlay on SLURM clusters.
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]:-$0}")" && pwd)"
+if [ ! -f "$SCRIPT_DIR/.common.sh" ]; then
+    echo "[ERR] .common.sh not found at $SCRIPT_DIR. Please ensure the helper scripts are properly installed." >&2
+    exit 1
+fi
 source "$SCRIPT_DIR/.common.sh"
 HELPER_NAME=rstudio-server-conda
 
@@ -254,6 +258,13 @@ EOT
         print_info "Copied Rprofile to ${BLUE}$CWD/.Rprofile${NC} (overwritten if existed)."
     fi
 fi
+[ "${NOTIFICATION,,}" = "email" ] && NOTIFY_DIRECTIVE="#SBATCH --mail-type=BEGIN"
+NOTIFY_CURL=""
+case "${NOTIFICATION,,}" in
+    ""|none|bell|email) ;;
+    *) NOTIFY_CURL="curl -s -d \"$HELPER_NAME started\" ntfy.sh/$NOTIFICATION >/dev/null 2>&1" ;;
+esac
+
 cat <<EOT > "$HELPER_STATE_DIR/rsession-conda.sh"
 #!/bin/bash
 
@@ -296,10 +307,12 @@ cat <<EOT > "$SBATCH_SCRIPT_PATH"
 #SBATCH --mem=$MEM
 #SBATCH --time=$TIME
 ${GPU_SBATCH:+$GPU_SBATCH}
+${NOTIFY_DIRECTIVE:+$NOTIFY_DIRECTIVE}
 #SBATCH --output=$LOG_DIR/$HELPER_NAME-%j.log
 
 while ! grep -q "^JOB_ID=" "$STATE_FILE" 2>/dev/null; do sleep 1; done
 echo "NODE=\$(hostname)" >> "$STATE_FILE"
+${NOTIFY_CURL:+$NOTIFY_CURL}
 
 condatainer exec \
     -o rstudio-server \
