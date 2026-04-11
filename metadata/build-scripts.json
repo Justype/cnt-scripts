@@ -734,6 +734,11 @@
     "target_template": "ubuntu20/r{version}",
     "whatis": "Ubuntu focal R {version}"
   },
+  "ubuntu20/r4.5.3": {
+    "deps": [],
+    "path": "ubuntu20/r4.5.3.def",
+    "whatis": "Ubuntu focal R 4.5.3"
+  },
   "ubuntu20/rstudio-server": {
     "deps": [],
     "path": "ubuntu20/rstudio-server.def",
@@ -813,6 +818,11 @@
     "target_template": "ubuntu22/r{version}",
     "whatis": "Ubuntu jammy R {version}"
   },
+  "ubuntu22/r4.5.3": {
+    "deps": [],
+    "path": "ubuntu22/r4.5.3.def",
+    "whatis": "Ubuntu jammy R 4.5.3"
+  },
   "ubuntu22/rstudio-server": {
     "deps": [],
     "path": "ubuntu22/rstudio-server.def",
@@ -891,6 +901,11 @@
     ],
     "target_template": "ubuntu24/r{version}",
     "whatis": "Ubuntu noble R {version}"
+  },
+  "ubuntu24/r4.5.3": {
+    "deps": [],
+    "path": "ubuntu24/r4.5.3.def",
+    "whatis": "Ubuntu noble R 4.5.3"
   },
   "ubuntu24/rstudio-server": {
     "deps": [],
