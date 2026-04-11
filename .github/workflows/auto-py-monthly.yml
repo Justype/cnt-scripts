@@ -7,6 +7,7 @@ on:
 
 permissions:
   contents: write
+  pull-requests: write
 
 jobs:
   run-auto-py:
@@ -25,7 +26,7 @@ jobs:
           chmod +x .github/scripts/run_all_auto_py.sh
           .github/scripts/run_all_auto_py.sh
 
-      - name: Commit and push changes if new scripts are added
+      - name: Create PR if new scripts are added
         run: |
           git config user.name "dependabot[bot]"
           git config user.email "dependabot[bot]@users.noreply.github.com"
@@ -34,9 +35,20 @@ jobs:
           git add build-scripts
 
           # Check if there are changes to commit
-          if ! git diff --cached --quiet; then
-            git commit -m "Update build scripts using auto.py via monthly workflow"
-            git push
-          else
+          if git diff --cached --quiet; then
             echo "No changes to commit"
+            exit 0
           fi
+
+          BRANCH="auto-py/$(date +'%Y-%m')"
+          git checkout -b "$BRANCH"
+          git commit -m "Update build scripts using auto.py ($(date +'%Y-%m'))"
+          git push origin "$BRANCH"
+
+          gh pr create \
+            --title "Update build scripts using auto.py ($(date +'%Y-%m'))" \
+            --body "Automated monthly update from \`auto.py\` scripts. Please review the changed build script versions before merging." \
+            --base main \
+            --head "$BRANCH"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
