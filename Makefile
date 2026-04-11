@@ -15,11 +15,14 @@ APPT_FLAGS ?=
 ARCH := $(shell uname -m)
 SUFFIX := _$(ARCH)
 
-# Locate .def files in build-scripts/ubuntu* (skip numeric R releases
-# and code-server.def).  Strip the leading build-scripts/.
+# Locate .def files in build-scripts/ubuntu* (skip numeric R releases,
+# code-server.def, and template scripts with #PL: tags).
+# Strip the leading build-scripts/.
 DEF_SRCS := $(shell find build-scripts/ubuntu* -type f -name '*.def' \
 	-not -name 'r[0-9]*.def' \
-	-not -name 'code-server.def' | sed 's|^build-scripts/||')
+	-not -name 'code-server.def' \
+	| xargs grep -L '#PL:' 2>/dev/null \
+	| sed 's|^build-scripts/||')
 
 # make a SIF for each base_image.def
 BASE_DEFS := $(filter %base_image.def,$(DEF_SRCS))
