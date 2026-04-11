@@ -1,6 +1,6 @@
 #!/usr/bin/bash
-#DEP:samtools/1.22.1
-#WHATIS:GRCh38 reference genome FASTA
+#DEP:samtools/1.23.1>=1.10
+#WHATIS:GRCh38 reference genome ucsc no alt FASTA
 #URL:https://lh3.github.io/2017/11/13/which-human-reference-genome-to-use
 #ENV:GENOME_FASTA=$app_root/GCA_000001405.15_GRCh38_no_alt_analysis_set.fna
 #ENVNOTE:GRCh38 reference genome

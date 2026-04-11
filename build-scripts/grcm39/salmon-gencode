@@ -1,0 +1,101 @@
+#!/usr/bin/bash
+#PL:salmon_version:1.0.0,1.1.0,1.2.0,1.2.1,1.3.0,1.4.0,1.5.0,1.5.1,1.5.2,1.6.0,1.7.0,1.8.0,1.9.0,1.10.0,1.10.1,1.10.2,1.10.3,1.11.4
+#PL:gencode_version:6-38
+#TARGET:grcm39/salmon/{salmon_version}/gencodeM{gencode_version}
+#DEP:grcm39/genome/gencode
+#DEP:grcm39/transcript-gencode/M{gencode_version}
+#DEP:salmon/{salmon_version}
+#WHATIS:Salmon GRCm39 GENCODEM{gencode_version} index for transcript quantification
+#URL:https://combine-lab.github.io/salmon/
+#ENV:SALMON_INDEX_DIR=$app_root
+#ENVNOTE:Salmon index for GRCm39 GENCODE vM{gencode_version}
+
+#SBATCH --cpus-per-task=16
+#SBATCH --mem=20G
+#SBATCH --time=2:00:00
+#SBATCH --job-name=salmon-index
+#SBATCH --output=%x-%j.log
+
+install_app() {
+    print_stderr "Appending genome to transcriptome and generating decoys..."
+
+    cat "$TRANSCRIPT_FASTA" > gentrome.fa
+    cat "$GENOME_FASTA" >> gentrome.fa
+
+    if [ -f "${GENOME_FASTA}.fai" ]; then
+        print_stderr "Using existing ${YELLOW}${GENOME_FASTA}.fai${NC} to generate decoys"
+        cut -f 1 "${GENOME_FASTA}.fai" > decoys.txt
+    else
+        print_stderr "Using FASTA header lines to generate decoys"
+        grep "^>" "$GENOME_FASTA" | cut -d " " -f 1 | sed 's/^>//' > decoys.txt
+    fi
+
+    print_stderr "Building Salmon index for ${YELLOW}${app_name_version}${NC}"
+    salmon index \
+        -p $NCPUS \
+        -t gentrome.fa \
+        -d decoys.txt \
+        -i "$target_dir" \
+        --gencode
+}
+
+# region common_functions
+set -e
+RED='\033[0;91m'
+BLUE='\033[0;94m'
+YELLOW='\033[0;93m'
+NC='\033[0m'
+NCPUS=${SLURM_CPUS_PER_TASK:-16}
+
+install() {
+    print_stderr "Installing the target module: ${YELLOW}${app_name_version}${NC}"
+    print_stderr "🎯 Target directory: $target_dir"
+    if [ -d "$target_dir" ]; then
+        print_stderr "${RED}ERROR${NC}: Target app dir exists!"
+        exit 1
+    fi
+    if [[ -z "$tmp_dir" ]]; then
+        print_stderr "${RED}ERROR${NC}: tmp_dir is not set!"
+        exit 1
+    fi
+    if [[ -z "$target_dir" ]]; then
+        print_stderr "${RED}ERROR${NC}: target_dir is not set!"
+        exit 1
+    fi
+    mkdir -p "$target_dir"
+    mkdir -p "$tmp_dir"
+    cd "$tmp_dir"
+    install_app
+    print_stderr "✅ Installation completed. ${YELLOW}${app_name_version}${NC} is ready to use."
+}
+
+print_stderr() {
+    printf "[$(date +"%Y-%m-%d %T")] $1\n" 1>&2
+}
+
+pigz_or_gunzip() {
+    if command -v pigz &> /dev/null; then
+        pigz -d -p $NCPUS "$1"
+    else
+        gunzip "$1"
+    fi
+}
+
+pigz_or_gunzip_pipe() {
+    if command -v pigz &> /dev/null; then
+        pigz -d -p $NCPUS -c "$1"
+    else
+        gunzip -c "$1"
+    fi
+}
+
+tar_xf_pigz() {
+    if command -v pigz &> /dev/null; then
+        tar --no-same-owner --use-compress-program="pigz -d -p $NCPUS" -xf "$@"
+    else
+        tar --no-same-owner -xzf "$@"
+    fi
+}
+#endregion
+
+install

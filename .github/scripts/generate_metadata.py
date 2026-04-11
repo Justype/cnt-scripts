@@ -1,90 +1,214 @@
 #!/usr/bin/env python3
 """
-Scan `build-scripts/` and generate a JSON metadata file mapping
-normalized spec strings to raw GitHub URLs for the script files.
+Scan `build-scripts/` and generate `metadata/build-scripts.json` (and a
+gzip companion) with template-aware entries.
 
-- App packages: build-scripts/<name>/<version> -> key: "name=version" -> raw URL
-- Reference packages: build-scripts/<assembly|project>/<data_type>/<version> -> key: "assembly=data_type=version" -> raw URL
+Two types of entries are emitted:
 
-The generated file is written to `metadata/build-scripts.json`.
+Non-PL scripts (no #PL: headers):
+    "ubuntu24/igv" -> {"path": "ubuntu24/igv.def", "whatis": "...", "deps": [...]}
+
+PL template scripts (#PL: headers present):
+    Template entry keyed by the script's relative path:
+        "ubuntu24/posit-r" -> {"path": "...", "is_template": true,
+                               "target_template": "...", "pl": {...}, ...}
+    One expanded entry per Cartesian-product combination:
+        "ubuntu24/r4.5.3" -> {"path": "ubuntu24/posit-r.def",
+                               "pl": {"version": ["4.5.3"]}, ...}
 """
-import os
+import gzip
 import json
+import os
+import re
 
 REPO = os.getcwd()
-BUILD_SCRIPTS_DIR = os.path.join(REPO, 'build-scripts')
+BUILD_SCRIPTS_DIR = os.path.join(REPO, "build-scripts")
+OUT_DIR = os.path.join(REPO, "metadata")
+OUT_FILE = os.path.join(OUT_DIR, "build-scripts.json")
 
-github_repo = os.environ.get('GITHUB_REPOSITORY')
-github_sha = os.environ.get('GITHUB_SHA')
-OUT_DIR = os.path.join(REPO, 'metadata')
-OUT_FILE = os.path.join(OUT_DIR, 'build-scripts.json')
 
-def get_local_build_scripts():
+# ---------------------------------------------------------------------------
+# Value parsing helpers
+# ---------------------------------------------------------------------------
+
+def _natural_key(s: str):
+    return [int(c) if c.isdigit() else c for c in re.split(r"(\d+)", s)]
+
+
+def sort_desc(values: list) -> list:
+    return sorted(values, key=_natural_key, reverse=True)
+
+
+def parse_pl_values(raw: str):
     """
-    Get a name-version to local script path mapping dictionary.
+    Parse the value string after the second ':' of a #PL: line.
+    Returns (sorted_desc_concrete_values, is_open).
+    The returned list has all concrete values sorted descending;
+    if open_ended, "*" is appended as the last element.
     """
-    packages = {}
-    if not os.path.isdir(BUILD_SCRIPTS_DIR):
-        return packages
+    tokens = [t.strip() for t in raw.split(",")]
+    open_ended = "*" in tokens
+    tokens = [t for t in tokens if t != "*"]
 
-    # os.walk mimics 'find' by visiting every subdirectory recursively
-    for root, _, files in os.walk(BUILD_SCRIPTS_DIR):
-        for filename in files:
-            # 1. skip non-build-script files
-            if filename.endswith(('.py', '.sh')):
-                continue
+    concrete = []
+    seen = set()
+    range_re = re.compile(r"^(\d+)-(\d+)$")
 
-            full_path = os.path.join(root, filename)
+    for tok in tokens:
+        if not tok:
+            continue
+        m = range_re.fullmatch(tok)
+        if m:
+            a, b = int(m.group(1)), int(m.group(2))
+            for v in range(min(a, b), max(a, b) + 1):
+                s = str(v)
+                if s not in seen:
+                    concrete.append(s)
+                    seen.add(s)
+        else:
+            if tok not in seen:
+                concrete.append(tok)
+                seen.add(tok)
 
-            # 2. skip template files
-            if "template" in full_path:
-                continue
-
-            # 3. generate key (relative path like 'apps/tool/v1')
-            relative_key = os.path.relpath(full_path, BUILD_SCRIPTS_DIR)
-
-            if relative_key.endswith('.def'):
-                if relative_key.startswith(('base_image', 'base-overlay')):
-                    continue  # skip base scripts
-                relative_key = relative_key[:-4]  # remove .def suffix
-
-            packages[relative_key] = full_path
-
-    return packages
+    concrete = sort_desc(concrete)
+    if open_ended:
+        concrete.append("*")
+    return concrete, open_ended
 
 
+# ---------------------------------------------------------------------------
+# Script header parsing
+# ---------------------------------------------------------------------------
+
+def parse_headers(path: str) -> dict:
+    """Parse all relevant metadata headers from a build script."""
+    pl_defs = []
+    pl_seen = set()
+    target = ""
+    whatis = ""
+    deps = []
+
+    try:
+        with open(path, encoding="utf-8", errors="replace") as fh:
+            for line in fh:
+                line = line.rstrip("\n")
+
+                if line.startswith("#PL:"):
+                    rest = line[4:]
+                    idx = rest.find(":")
+                    if idx < 0:
+                        continue
+                    name = rest[:idx].strip()
+                    raw = rest[idx + 1:]
+                    hash_idx = raw.find("#")
+                    if hash_idx >= 0:
+                        raw = raw[:hash_idx]
+                    raw = raw.strip()
+                    if not name or name in pl_seen:
+                        continue
+                    values, is_open = parse_pl_values(raw)
+                    if values or is_open:
+                        pl_defs.append((name, values, is_open))
+                        pl_seen.add(name)
+
+                elif line.startswith("#TARGET:"):
+                    if not target:
+                        target = line[8:].strip()
+
+                elif line.startswith("#WHATIS:"):
+                    if not whatis:
+                        whatis = line[8:].strip()
+
+                elif line.startswith("#DEP:"):
+                    dep = line[5:]
+                    hash_idx = dep.find("#")
+                    if hash_idx >= 0:
+                        dep = dep[:hash_idx]
+                    dep = dep.strip()
+                    if dep:
+                        deps.append(dep)
+
+    except OSError:
+        pass
+
+    return {"pl_defs": pl_defs, "target": target, "whatis": whatis, "deps": deps}
+
+
+# ---------------------------------------------------------------------------
+# Main scan
+# ---------------------------------------------------------------------------
 
 metadata = {}
 
 if not os.path.isdir(BUILD_SCRIPTS_DIR):
-    print('No build-scripts directory found; writing empty metadata file.')
+    print("No build-scripts directory found; writing empty metadata file.")
 
-for script_name, path in get_local_build_scripts().items():
-    script_metadata = {}
-    script_metadata['relative_path'] = os.path.relpath(path, BUILD_SCRIPTS_DIR)
-    script_metadata['whatis'] = "Missing description"
-    script_metadata['deps'] = []
-    try:
-        with open(path, 'r') as sf:
-            for line in sf:
-                if line.startswith('#WHATIS:'):
-                    script_metadata['whatis'] = line[len('#WHATIS:'):].strip()
-                if line.startswith('#DEP:'):
-                    dep = line[len('#DEP:'):].strip()
-                    script_metadata['deps'].append(dep)
-    except Exception:
-        pass
+for root, _, files in os.walk(BUILD_SCRIPTS_DIR):
+    for filename in files:
+        if filename.endswith((".py", ".sh")):
+            continue
 
-    metadata[script_name] = script_metadata
+        full_path = os.path.join(root, filename)
 
-# write metadata
-os.makedirs(os.path.dirname(OUT_FILE), exist_ok=True)
-with open(OUT_FILE, 'w') as f:
+        if "template" in full_path:
+            continue
+
+        rel = os.path.relpath(full_path, BUILD_SCRIPTS_DIR)
+        is_def = rel.endswith(".def")
+        rel_key = rel[:-4] if is_def else rel  # strip .def from key
+
+        if rel_key.startswith(("base_image", "base-overlay")):
+            continue
+
+        headers = parse_headers(full_path)
+
+        if headers["pl_defs"]:
+            # ---- PL template script ----
+            # Only store the template entry; condatainer expands combinations at runtime.
+            target = headers["target"]
+            if not target:
+                print(f"  WARNING: {rel_key} has #PL: but no #TARGET: — skipping")
+                if rel_key not in metadata:
+                    metadata[rel_key] = {
+                        "path": rel,
+                        "whatis": headers["whatis"] or "Missing description",
+                        "deps": headers["deps"],
+                    }
+                continue
+
+            pl_defs = headers["pl_defs"]
+            if rel_key not in metadata:
+                metadata[rel_key] = {
+                    "path": rel,
+                    "is_template": True,
+                    "target_template": target,
+                    "whatis": headers["whatis"],
+                    "pl": {name: values for name, values, _ in pl_defs},
+                    "pl_order": [name for name, _, _ in pl_defs],
+                    "deps": headers["deps"],
+                }
+
+        else:
+            # ---- Regular (non-PL) script ----
+            if rel_key not in metadata:
+                metadata[rel_key] = {
+                    "path": rel,
+                    "whatis": headers["whatis"] or "Missing description",
+                    "deps": headers["deps"],
+                }
+
+# Write output
+os.makedirs(OUT_DIR, exist_ok=True)
+
+with open(OUT_FILE, "w") as f:
     json.dump(metadata, f, indent=2, sort_keys=True)
 
-# write metadata to gzipped version
-import gzip
-with gzip.open(OUT_FILE + '.gz', 'wt') as f:
+with gzip.open(OUT_FILE + ".gz", "wt") as f:
     json.dump(metadata, f, indent=2, sort_keys=True)
 
-print(f'Wrote metadata for {len(metadata)} entries to {OUT_FILE}')
+template_count = sum(1 for v in metadata.values() if v.get("is_template"))
+plain_count = len(metadata) - template_count
+print(
+    f"Wrote {len(metadata)} entries to {OUT_FILE} "
+    f"({plain_count} plain, {template_count} templates)"
+)
