@@ -3,6 +3,10 @@
 # This script helps run vscode-tunnel on HTCondor clusters.
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]:-$0}")" && pwd)"
+if [ ! -f "$SCRIPT_DIR/.common.sh" ]; then
+    echo "[ERR] .common.sh not found at $SCRIPT_DIR. Please ensure the helper scripts are properly installed." >&2
+    exit 1
+fi
 source "$SCRIPT_DIR/.common.sh"
 HELPER_NAME=vscode-tunnel
 
@@ -64,14 +68,12 @@ print_tunnel_info() {
     local job_id="$1"
     local auth_provider="$2"
     local cwd="$3"
-    local max_wait_time=600 # 10 minutes
     local check_interval=5
-    local elapsed_time=0
     local auth_instruction_printed=false
 
     print_info "Waiting for VS Code Tunnel to initialize..."
 
-    while [ $elapsed_time -lt $max_wait_time ]; do
+    while true; do
         if [ -f "$AUTH_STATUS_FILE" ]; then
             local auth_status=$(cat "$AUTH_STATUS_FILE")
 
@@ -103,11 +105,7 @@ print_tunnel_info() {
             fi
         fi
         sleep $check_interval
-        elapsed_time=$((elapsed_time + check_interval))
     done
-    echo -e "\n${RED}[TIMEOUT]${NC} Timed out waiting for tunnel start. Cancelling job ${YELLOW}$job_id${NC}."
-    condor_rm "$job_id"
-    return 1
 }
 
 # Override print_specs to add script-specific fields
@@ -251,10 +249,16 @@ JOB_SCRIPT_PATH="$LOG_DIR/$HELPER_NAME.job.sh"
 SUBMIT_PATH="$LOG_DIR/$HELPER_NAME.sub"
 printf "" > "$AUTH_STATUS_FILE"
 
+NOTIFY_CURL=""
+case "${NOTIFICATION,,}" in
+    ""|none|bell|email) ;;
+    *) NOTIFY_CURL="curl -s -d \"$HELPER_NAME started\" ntfy.sh/$NOTIFICATION >/dev/null 2>&1" ;;
+esac
 cat > "$JOB_SCRIPT_PATH" <<JOBEOF
 #!/bin/bash
 while ! grep -q "^JOB_ID=" "$STATE_FILE" 2>/dev/null; do sleep 1; done
 echo "NODE=\$(hostname)" >> "$STATE_FILE"
+${NOTIFY_CURL:+$NOTIFY_CURL}
 
 # Check if already logged in with the same provider before attempting login
 _SHOW_OUTPUT=\$($CODE_BIN tunnel user show 2>&1)
@@ -302,6 +306,7 @@ if [ -n "$GPU" ]; then
     printf 'request_gpus = %s\n' "$GPU" >> "$SUBMIT_PATH"
 fi
 
+[ "${NOTIFICATION,,}" = "email" ] && printf 'notification = Start\n' >> "$SUBMIT_PATH"
 printf 'queue\n' >> "$SUBMIT_PATH"
 
 rm -f "$STATE_FILE"

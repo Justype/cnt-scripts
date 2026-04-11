@@ -13,6 +13,10 @@ AVAIL_R_VERSIONS='
 '
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]:-$0}")" && pwd)"
+if [ ! -f "$SCRIPT_DIR/.common.sh" ]; then
+    echo "[ERR] .common.sh not found at $SCRIPT_DIR. Please ensure the helper scripts are properly installed." >&2
+    exit 1
+fi
 source "$SCRIPT_DIR/.common.sh"
 HELPER_NAME=rstudio-server
 
@@ -332,6 +336,7 @@ cat <<JOBEOF > "$JOB_SCRIPT_PATH"
 #!/bin/bash
 while ! grep -q "^JOB_ID=" "$STATE_FILE" 2>/dev/null; do sleep 1; done
 echo "NODE=\$(hostname)" >> "$STATE_FILE"
+${NOTIFY_CURL:+$NOTIFY_CURL}
 
 condatainer exec \
     -o r${R_VERSION} \
@@ -377,6 +382,7 @@ if [ -n "$GPU" ]; then
     printf 'request_gpus = %s\n' "$GPU" >> "$SUBMIT_PATH"
 fi
 
+[ "${NOTIFICATION,,}" = "email" ] && printf 'notification = Start\n' >> "$SUBMIT_PATH"
 printf 'queue\n' >> "$SUBMIT_PATH"
 
 rm -f "$STATE_FILE"

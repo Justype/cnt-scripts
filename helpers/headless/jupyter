@@ -3,6 +3,10 @@
 # This script helps run Jupyter (Lab or Notebook) on current machine.
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]:-$0}")" && pwd)"
+if [ ! -f "$SCRIPT_DIR/.common.sh" ]; then
+    echo "[ERR] .common.sh not found at $SCRIPT_DIR. Please ensure the helper scripts are properly installed." >&2
+    exit 1
+fi
 source "$SCRIPT_DIR/.common.sh"
 HELPER_NAME=jupyter
 

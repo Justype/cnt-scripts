@@ -3,6 +3,10 @@
 # This script helps run vscode-server on PBS clusters.
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]:-$0}")" && pwd)"
+if [ ! -f "$SCRIPT_DIR/.common.sh" ]; then
+    echo "[ERR] .common.sh not found at $SCRIPT_DIR. Please ensure the helper scripts are properly installed." >&2
+    exit 1
+fi
 source "$SCRIPT_DIR/.common.sh"
 HELPER_NAME=vscode-server
 
@@ -226,12 +230,20 @@ fi
 
 PBS_SCRIPT_PATH="$LOG_DIR/$HELPER_NAME.qsub"
 
+[ "${NOTIFICATION,,}" = "email" ] && NOTIFY_DIRECTIVE="#PBS -m b"
+NOTIFY_CURL=""
+case "${NOTIFICATION,,}" in
+    ""|none|bell|email) ;;
+    *) NOTIFY_CURL="curl -s -d \"$HELPER_NAME started\" ntfy.sh/$NOTIFICATION >/dev/null 2>&1" ;;
+esac
+
 cat <<EOT > "$PBS_SCRIPT_PATH"
 #!/bin/bash
 #PBS -N $HELPER_NAME
 #PBS -l $PBS_RESOURCES
 #PBS -l walltime=$TIME
 #PBS -j oe
+${NOTIFY_DIRECTIVE:+$NOTIFY_DIRECTIVE}
 #PBS -o /dev/null
 #PBS -d $CWD
 
@@ -241,6 +253,7 @@ exec &> "\$CUSTOM_LOG"
 
 while ! grep -q "^JOB_ID=" "$STATE_FILE" 2>/dev/null; do sleep 1; done
 echo "NODE=\$(hostname)" >> "$STATE_FILE"
+${NOTIFY_CURL:+$NOTIFY_CURL}
 
 condatainer exec \
     $BASE_IMAGE_ARG \

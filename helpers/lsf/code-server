@@ -3,6 +3,10 @@
 # This script helps run code-server on LSF clusters.
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]:-$0}")" && pwd)"
+if [ ! -f "$SCRIPT_DIR/.common.sh" ]; then
+    echo "[ERR] .common.sh not found at $SCRIPT_DIR. Please ensure the helper scripts are properly installed." >&2
+    exit 1
+fi
 source "$SCRIPT_DIR/.common.sh"
 HELPER_NAME=code-server
 
@@ -250,6 +254,13 @@ fi
 
 LSF_SCRIPT_PATH="$LOG_DIR/$HELPER_NAME.lsf"
 
+[ "${NOTIFICATION,,}" = "email" ] && NOTIFY_DIRECTIVE="#BSUB -B"
+NOTIFY_CURL=""
+case "${NOTIFICATION,,}" in
+    ""|none|bell|email) ;;
+    *) NOTIFY_CURL="curl -s -d \"$HELPER_NAME started\" ntfy.sh/$NOTIFICATION >/dev/null 2>&1" ;;
+esac
+
 cat <<EOT > "$LSF_SCRIPT_PATH"
 #!/bin/bash
 #BSUB -J $HELPER_NAME
@@ -262,6 +273,7 @@ ${LSF_GPU:+$LSF_GPU}
 
 while ! grep -q "^JOB_ID=" "$STATE_FILE" 2>/dev/null; do sleep 1; done
 echo "NODE=\$(hostname)" >> "$STATE_FILE"
+${NOTIFY_CURL:+$NOTIFY_CURL}
 
 condatainer exec \
     $BASE_IMAGE_ARG \

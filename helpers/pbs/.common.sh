@@ -38,6 +38,7 @@ LOG_DIR=$(condatainer config get logs_dir -q --local 2>/dev/null)
 LOG_DIR="${LOG_DIR:-$HOME/logs}"
 SCHEDULER_TIMEOUT=$(condatainer config get scheduler_timeout -q --local 2>/dev/null)
 SCHEDULER_TIMEOUT="${SCHEDULER_TIMEOUT:-5}"
+NOTIFICATION=$(condatainer config get notification -q --local 2>/dev/null)
 
 mkdir -p "$CONDATAINER_CONFIG_DIR" "$HELPER_DEFAULTS_DIR" "$HELPER_STATE_DIR" "$LOG_DIR"
 
@@ -593,4 +594,8 @@ wait_for_job() {
         exit 1
     fi
     print_info "Job ${YELLOW}$job_id${NC} is now running on node ${BLUE}$NODE${NC}."
+    case "${NOTIFICATION,,}" in
+        bell) printf "\a"; sleep 1.1; printf "\a" ;;
+        *)    ;;
+    esac
 }
