@@ -80,7 +80,7 @@ class RVersions:
         for i, line in enumerate(lines):
             if line.startswith("#PL:version:"):
                 if lines[i] == new_pl_line:
-                    print(f"No changes to {os.path.basename(self.pl_file)} (versions up to date).")
+                    print(f"[SKIP] {os.path.basename(self.pl_file)}: versions up to date")
                     return True
                 lines[i] = new_pl_line
                 break
@@ -91,7 +91,7 @@ class RVersions:
         with open(self.pl_file, "w") as f:
             f.writelines(lines)
 
-        print(f"Updated {os.path.basename(self.pl_file)} with {len(versions)} versions "
+        print(f"[UPDATED] {os.path.basename(self.pl_file)}: {len(versions)} versions "
               f"({versions[0]}–{versions[-1]}).")
         return True
 
@@ -100,15 +100,15 @@ class RVersions:
             "https://hub.docker.com/v2/repositories/posit/r-base/tags?page_size=100"
         )
         if not tags:
-            print("No tags retrieved; aborting.")
+            print("[SKIP] posit/r-base: no tags retrieved")
             return
 
         versions = self.filter_versions(tags)
         if not versions:
-            print(f"No matching {self.CODE_NAME} r-base versions found.")
+            print(f"[SKIP] posit/r-base: no {self.CODE_NAME} versions found")
             return
 
-        print(f"Found {len(versions)} {self.CODE_NAME} versions: {versions[0]}–{versions[-1]}")
+        print(f"[INFO] posit/r-base ({self.CODE_NAME}): {len(versions)} versions ({versions[0]}–{versions[-1]})")
         self.update_pl_file(versions)
 
 

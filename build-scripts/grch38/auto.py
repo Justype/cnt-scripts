@@ -61,7 +61,7 @@ def _update_dep_version(dep_file: str, package: str, new_version: str) -> bool:
                     break
             new_line = f"{prefix}{new_version}{constraint}\n"
             if lines[i] == new_line:
-                print(f"No changes to {os.path.basename(dep_file)} #DEP:{package} (up to date).")
+                print(f"[SKIP] {os.path.basename(dep_file)}: #DEP:{package} up to date")
                 return False
             lines[i] = new_line
             break
@@ -71,7 +71,7 @@ def _update_dep_version(dep_file: str, package: str, new_version: str) -> bool:
 
     with open(dep_file, "w") as f:
         f.writelines(lines)
-    print(f"Updated {os.path.basename(dep_file)} #DEP:{package} => {new_version}{constraint}")
+    print(f"[UPDATED] {os.path.basename(dep_file)}: #DEP:{package} => {new_version}{constraint}")
     return True
 
 
@@ -90,7 +90,7 @@ def _update_pl_key(pl_file: str, key: str, pl_value: str) -> bool:
     for i, line in enumerate(lines):
         if line.startswith(prefix):
             if lines[i] == new_line:
-                print(f"No changes to {os.path.basename(pl_file)} #{key} (up to date).")
+                print(f"[SKIP] {os.path.basename(pl_file)}: #PL:{key} up to date")
                 return False
             lines[i] = new_line
             break
@@ -100,7 +100,7 @@ def _update_pl_key(pl_file: str, key: str, pl_value: str) -> bool:
 
     with open(pl_file, "w") as f:
         f.writelines(lines)
-    print(f"Updated {os.path.basename(pl_file)} #{key} => {pl_value}")
+    print(f"[UPDATED] {os.path.basename(pl_file)}: #PL:{key} => {pl_value}")
     return True
 
 
@@ -129,11 +129,11 @@ class GencodeVersions:
     def run(self):
         gtf_versions = self.query_ftp_releases(min_version=22)
         if not gtf_versions:
-            print("No GENCODE releases found; aborting.")
+            print("[SKIP] GENCODE: no releases found")
             return
 
         transcript_versions = [v for v in gtf_versions if v >= 23]
-        print(f"Found {len(gtf_versions)} GENCODE versions: {gtf_versions[0]}–{gtf_versions[-1]}")
+        print(f"[INFO] GENCODE: {len(gtf_versions)} versions ({gtf_versions[0]}–{gtf_versions[-1]})")
 
         gtf_pl = _versions_to_pl_value(gtf_versions)
         _update_pl_key(os.path.join(BASE_DIR, "gtf-gencode"), "gencode_version", gtf_pl)
@@ -187,10 +187,10 @@ class BiocondaVersions:
     def run(self):
         versions = self.query_versions()
         if not versions:
-            print(f"No {self.PACKAGE} versions found; aborting.")
+            print(f"[SKIP] {self.PACKAGE}: no versions found")
             return
 
-        print(f"Found {len(versions)} bioconda {self.PACKAGE} versions: {versions[0]}–{versions[-1]}")
+        print(f"[INFO] {self.PACKAGE}: {len(versions)} bioconda versions ({versions[0]}–{versions[-1]})")
         pl_value = ",".join(versions)
         for name in self.PL_FILES:
             _update_pl_key(os.path.join(BASE_DIR, name), self.PL_KEY, pl_value)
@@ -218,10 +218,10 @@ class LatestDepVersion(BiocondaVersions):
     def run(self):
         versions = self.query_versions()
         if not versions:
-            print(f"No {self.PACKAGE} versions found; aborting.")
+            print(f"[SKIP] {self.PACKAGE}: no versions found")
             return
         latest = versions[-1]
-        print(f"Found {len(versions)} bioconda {self.PACKAGE} versions; latest: {latest}")
+        print(f"[INFO] {self.PACKAGE}: {len(versions)} bioconda versions, latest {latest}")
         for name in self.DEP_FILES:
             _update_dep_version(os.path.join(BASE_DIR, name), self.PACKAGE, latest)
 
