@@ -47,6 +47,11 @@ if [ -z "$SCRATCH" ]; then
     SCRATCH="$HOME"
 fi
 
+# Known package versions — auto-updated by helpers/auto.py
+POSIT_R_VERSIONS="4.5.3 4.5.2 4.5.1 4.5.0 4.4.3 4.4.2 4.4.1 4.4.0 4.3.3 4.3.2 4.3.1 4.3.0 4.2.3 4.2.2 4.2.1 4.2.0 4.1.3 4.1.2 4.1.1 4.1.0 4.0.5 4.0.4 4.0.3 4.0.2 4.0.1 4.0.0"
+CONDA_PYTHON_VERSIONS="3.14.4 3.14.3 3.14.2 3.14.1 3.14.0 3.13.13 3.13.12 3.13.11 3.13.10 3.13.9 3.13.8 3.13.7 3.13.5 3.13.3 3.13.2 3.13.1 3.13.0 3.12.13 3.12.12 3.12.11 3.12.10 3.12.9 3.12.8 3.12.7 3.12.6 3.12.5 3.12.4 3.12.3 3.12.2 3.12.1 3.12.0 3.11.15 3.11.14 3.11.13 3.11.12 3.11.11 3.11.10 3.11.9 3.11.8 3.11.7 3.11.6 3.11.5 3.11.4 3.11.3 3.11.2 3.11.1 3.11.0 3.10.20 3.10.19 3.10.18 3.10.17 3.10.16 3.10.15 3.10.14 3.10.13 3.10.12 3.10.11 3.10.10 3.10.9 3.10.8 3.10.7 3.10.6 3.10.5 3.10.4 3.10.2 3.10.1 3.10.0 3.9.23 3.9.22 3.9.21 3.9.20 3.9.19 3.9.18 3.9.17 3.9.16 3.9.15 3.9.14 3.9.13 3.9.12 3.9.10 3.9.9 3.9.7 3.9.6 3.9.5 3.9.4 3.9.2 3.9.1 3.9.0"
+CONDA_R_VERSIONS="4.5.3 4.5.2 4.5.1 4.4.3 4.4.2 4.4.1 4.4.0 4.3.3 4.3.2 4.3.1 4.3.0 4.2.3 4.2.2 4.2.1 4.2.0 4.1.3 4.1.2 4.1.1 4.1.0 4.0.5 4.0.3 4.0.2 4.0.1 4.0.0"
+
 # ============= Config Functions =============
 
 # config_load <helper-name>
@@ -207,6 +212,85 @@ confirm_default_no() {
         [Yy]*) return 0 ;;
         *) return 1 ;;
     esac
+}
+
+# read_with_default <VAR> <prompt> <default>
+#   Reads user input with readline editing; stores result in named variable.
+#   Falls back to default if user presses Enter.
+read_with_default() {
+    local -n _rwd_target="$1"
+    local prompt="$2" default="$3" _input
+    read -r -e -p "[MSG] $prompt [$default]: " _input
+    _rwd_target="${_input:-$default}"
+}
+
+# _print_version_groups <full_versions>
+#   Displays versions grouped by major.minor, one row per group.
+#   If a group has more than four patch releases, shows the first two and the last with an ellipsis.
+#   e.g. "3.13.3 3.13.2 3.13.1 3.12.10 3.12.9" →
+#     [INFO]   3.13: 3.13.3 ... 3.13.1
+#     [INFO]   3.12: 3.12.10 3.12.9
+_print_version_groups() {
+    local prev_mm=""
+    local -a group=()
+
+    _print_group() {
+        local mm="$1"
+        shift
+        local -a versions=("$@")
+
+        case "${#versions[@]}" in
+            0) return 0 ;;
+            1|2|3|4)
+                print_info "  ${mm}: ${versions[*]}"
+                ;;
+            *)
+                print_info "  ${mm}: ${versions[0]} ${versions[1]} ... ${versions[$(( ${#versions[@]} - 1 ))]}"
+                ;;
+        esac
+    }
+
+    for _v in $1; do
+        local mm="${_v%.*}"
+        if [ -n "$prev_mm" ] && [ "$mm" != "$prev_mm" ]; then
+            _print_group "$prev_mm" "${group[@]}"
+            group=()
+        fi
+        group+=("$_v")
+        prev_mm="$mm"
+    done
+
+    [ -n "$prev_mm" ] && _print_group "$prev_mm" "${group[@]}"
+}
+
+# read_version <VAR> <prompt> <default> <full_versions>
+#   Displays available versions grouped by major.minor, then reads input.
+#   Accepts both major.minor (e.g. 3.12) and full patch (e.g. 3.12.10).
+read_version() {
+    local -n _rv_target="$1"
+    local prompt="$2" default="$3" full_vers="$4" _input
+    if [ -n "$full_vers" ]; then
+        print_info "Available:"
+        _print_version_groups "$full_vers"
+    fi
+    read -r -e -p "[MSG] $prompt [$default]: " _input
+    _rv_target="${_input:-$default}"
+}
+
+# prompt_create_env_overlay
+#   Prompts to create env.img with optional conda packages.
+prompt_create_env_overlay() {
+    print_warn "Overlay ${BLUE}$OVERLAY${NC} not found, which is required for Conda env."
+    confirm_default_yes "Create one?" || exit 1
+    local _size _pkgs
+    read_with_default _size "Size" "20G"
+    read -r -e -p "[MSG] Packages to install (e.g. go nodejs, empty to skip): " _pkgs
+    if [ -n "$_pkgs" ]; then
+        # shellcheck disable=SC2086
+        condatainer o "$OVERLAY" -s "$_size" -- $_pkgs || exit 1
+    else
+        condatainer o "$OVERLAY" -s "$_size" || exit 1
+    fi
 }
 
 # ============= Port Functions =============

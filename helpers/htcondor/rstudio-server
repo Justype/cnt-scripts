@@ -3,14 +3,7 @@
 # This script helps run rstudio-server with r image on HTCondor clusters.
 
 # Use Posit r-base docker image https://hub.docker.com/r/posit/r-base
-AVAIL_R_VERSIONS='
-    4.0.0 4.0.1 4.0.2 4.0.3 4.0.4 4.0.5
-    4.1.0 4.1.1 4.1.2 4.1.3
-    4.2.0 4.2.1 4.2.2 4.2.3
-    4.3.0 4.3.1 4.3.2 4.3.3
-    4.4.0 4.4.1 4.4.2 4.4.3
-    4.5.0 4.5.1 4.5.2 4.5.3
-'
+# Available versions are in POSIT_R_VERSIONS (set by .common.sh, maintained by helpers/auto.py)
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]:-$0}")" && pwd)"
 if [ ! -f "$SCRIPT_DIR/.common.sh" ]; then
@@ -19,6 +12,31 @@ if [ ! -f "$SCRIPT_DIR/.common.sh" ]; then
 fi
 source "$SCRIPT_DIR/.common.sh"
 HELPER_NAME=rstudio-server
+
+# prompt_create_env_overlay
+#   Prompts to create env.img for rstudio-server.
+#   Optional Python adds python=<version> and conda for reticulate workflows.
+prompt_create_env_overlay() {
+    print_warn "Overlay ${BLUE}$OVERLAY${NC} not found, which is required to store R packages and Conda env."
+    confirm_default_yes "Create one?" || exit 1
+    local _size _pkgs _py _py_full _py_default _extra
+    read_with_default _size "Size" "20G"
+    _pkgs=""
+    if confirm_default_no "Include reticulate (Python)?"; then
+        _py_full="${CONDA_PYTHON_VERSIONS:-}"
+        _py_default=$(echo "${_py_full%% *}" | sed 's/\.[0-9]*$//')
+        read_version _py "Python version" "${_py_default:-3.12}" "$_py_full"
+        _pkgs="python=$_py conda"
+        read -r -e -p "[MSG] Additional Python packages (e.g. pandas numpy, empty to skip): " _extra
+        [ -n "$_extra" ] && _pkgs="$_pkgs${_pkgs:+ }$_extra"
+    fi
+    if [ -n "$_pkgs" ]; then
+        # shellcheck disable=SC2086
+        condatainer o "$OVERLAY" -s "$_size" -- $_pkgs || exit 1
+    else
+        condatainer o "$OVERLAY" -s "$_size" || exit 1
+    fi
+}
 
 # Save defaults on first run
 config_init $HELPER_NAME \
@@ -126,12 +144,13 @@ get_latest_r() {
     local search=$1
 
     if [[ -z "$search" ]]; then
-        echo "$AVAIL_R_VERSIONS" | xargs -n1 | tail -1
+        echo "${POSIT_R_VERSIONS%% *}"
         return
     fi
 
     # Accept either exact version matches (e.g. 4.4.3) or prefix matches (e.g. 4.4 -> 4.4.x)
-    local match=$(echo "$AVAIL_R_VERSIONS" | xargs -n1 | grep -E "^${search}($|\\.)" | tail -1)
+    local match
+    match=$(echo "$POSIT_R_VERSIONS" | tr ' ' '\n' | grep -E "^${search}($|\\.)" | head -1)
 
     if [[ -n "$match" ]]; then
         echo "$match"
@@ -255,12 +274,9 @@ check_and_install_overlays rstudio-server build-essential $OVERLAYS
 
 resolve_env_overlay
 if [ ! -f "$OVERLAY" ]; then
-    print_error "Overlay ${BLUE}$OVERLAY${NC} not found."
-    print_info "A workspace overlay is required for $HELPER_NAME to store R packages. Use ${YELLOW}condatainer o${NC} to create one."
-    exit 1
-else
-    check_overlay_integrity "$OVERLAY"
+    prompt_create_env_overlay
 fi
+check_overlay_integrity "$OVERLAY"
 #endregion
 
 # Construct arguments for CondaTainer exec
