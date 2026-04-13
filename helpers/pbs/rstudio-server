@@ -226,22 +226,16 @@ fi
 
 # R Version check
 if [ -z "$R_VERSION" ]; then
-    R_VERSION=$(get_latest_r) || {
-        print_error "Failed to get the latest R version."
-        exit 1
-    }
-    print_warn "R version not specified. Use the latest available version: ${YELLOW}$R_VERSION${NC}"
-    if ! confirm_default_yes "Proceed with this version?"; then
-        echo "Aborted by user."; exit 1
-    fi
-else
-    LATEST_MATCH=$(get_latest_r "$R_VERSION") || {
-        print_error "Specified R version prefix '${YELLOW}$R_VERSION${NC}' is not available."
-        exit 1
-    }
-    R_VERSION=$LATEST_MATCH
-    print_info "Using specified R version: ${BLUE}$R_VERSION${NC}"
+    _r_full="${POSIT_R_VERSIONS:-}"
+    _r_default="${_r_full%% *}"
+    read_version R_VERSION "R version" "${_r_default:-4.4.3}" "$_r_full"
 fi
+LATEST_MATCH=$(get_latest_r "$R_VERSION") || {
+    print_error "Specified R version prefix '${YELLOW}$R_VERSION${NC}' is not available."
+    exit 1
+}
+R_VERSION=$LATEST_MATCH
+print_info "Using R version: ${BLUE}$R_VERSION${NC}"
 
 # If no port specified, pick an available one
 if [ -z "$PORT" ]; then
