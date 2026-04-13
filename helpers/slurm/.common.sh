@@ -41,6 +41,20 @@ SCHEDULER_TIMEOUT=$(condatainer config get scheduler_timeout -q --local 2>/dev/n
 SCHEDULER_TIMEOUT="${SCHEDULER_TIMEOUT:-5}"
 NOTIFICATION=$(condatainer config get notification -q --local 2>/dev/null)
 
+# Detect if --mem is rejected on this cluster.
+# Clusters like Trillium pre-allocate all node memory per job (DefMemPerNode=UNLIMITED)
+# and reject explicit --mem requests. Returns "true" if rejected, "false" otherwise.
+_detect_slurm_def_mem_unlimited() {
+    command -v scontrol &>/dev/null || { echo false; return; }
+    if scontrol show partition -o 2>/dev/null \
+       | grep "Default=YES" | grep -q "DefMemPerNode=UNLIMITED"; then
+        echo true
+    else
+        echo false
+    fi
+}
+_SLURM_DEF_MEM_UNLIMITED=$(_detect_slurm_def_mem_unlimited)
+
 mkdir -p "$CONDATAINER_CONFIG_DIR" "$HELPER_DEFAULTS_DIR" "$HELPER_STATE_DIR" "$LOG_DIR"
 
 # Ensure SCRATCH is set up
@@ -655,4 +669,39 @@ wait_for_job() {
         bell) printf "\a"; sleep 1.1; printf "\a" ;;
         *)    ;;
     esac
+}
+
+# write_sbatch_header sets SBATCH_SCRIPT_PATH, prepares SBATCH directive variables
+# (MEM_SBATCH, NOTIFY_DIRECTIVE, NOTIFY_CURL), and writes the standard SLURM job
+# header to that file.
+# Reads globals: HELPER_NAME, NCPUS, MEM, TIME, GPU_SBATCH,
+#               LOG_DIR, NOTIFICATION, STATE_FILE, _SLURM_DEF_MEM_UNLIMITED
+# Sets globals:  SBATCH_SCRIPT_PATH, MEM_SBATCH, NOTIFY_DIRECTIVE, NOTIFY_CURL
+write_sbatch_header() {
+    SBATCH_SCRIPT_PATH="$LOG_DIR/$HELPER_NAME.sbatch"
+    NOTIFY_DIRECTIVE=""
+    [ "${NOTIFICATION,,}" = "email" ] && NOTIFY_DIRECTIVE="#SBATCH --mail-type=BEGIN"
+    MEM_SBATCH=""
+    [ -n "$MEM" ] && [ "$_SLURM_DEF_MEM_UNLIMITED" != "true" ] && MEM_SBATCH="#SBATCH --mem=$MEM"
+    NOTIFY_CURL=""
+    case "${NOTIFICATION,,}" in
+        ""|none|bell|email) ;;
+        *) NOTIFY_CURL="curl -s -d \"$HELPER_NAME started\" ntfy.sh/$NOTIFICATION >/dev/null 2>&1" ;;
+    esac
+
+    cat > "$SBATCH_SCRIPT_PATH" <<EOT
+#!/bin/bash
+#SBATCH --job-name=$HELPER_NAME
+#SBATCH --nodes=1
+#SBATCH --cpus-per-task=$NCPUS
+${MEM_SBATCH:+$MEM_SBATCH}
+#SBATCH --time=$TIME
+${GPU_SBATCH:+$GPU_SBATCH}
+${NOTIFY_DIRECTIVE:+$NOTIFY_DIRECTIVE}
+#SBATCH --output=$LOG_DIR/$HELPER_NAME-%j.log
+
+while ! grep -q "^JOB_ID=" "$STATE_FILE" 2>/dev/null; do sleep 1; done
+echo "NODE=\$(hostname)" >> "$STATE_FILE"
+${NOTIFY_CURL:+$NOTIFY_CURL}
+EOT
 }
