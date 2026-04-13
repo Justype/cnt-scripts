@@ -252,29 +252,8 @@ EOT
     mkdir -p "$DESKTOP_HOME"/{Desktop,Documents,Downloads,Music,Pictures,Public,Templates,Videos}
 fi
 
-SBATCH_SCRIPT_PATH="$LOG_DIR/$HELPER_NAME.sbatch"
-
-[ "${NOTIFICATION,,}" = "email" ] && NOTIFY_DIRECTIVE="#SBATCH --mail-type=BEGIN"
-NOTIFY_CURL=""
-case "${NOTIFICATION,,}" in
-    ""|none|bell|email) ;;
-    *) NOTIFY_CURL="curl -s -d \"$HELPER_NAME started\" ntfy.sh/$NOTIFICATION >/dev/null 2>&1" ;;
-esac
-
-cat <<EOT > "$SBATCH_SCRIPT_PATH"
-#!/bin/bash
-#SBATCH --job-name=$HELPER_NAME
-#SBATCH --nodes=1
-#SBATCH --cpus-per-task=$NCPUS
-#SBATCH --mem=$MEM
-#SBATCH --time=$TIME
-${GPU_SBATCH:+$GPU_SBATCH}
-${NOTIFY_DIRECTIVE:+$NOTIFY_DIRECTIVE}
-#SBATCH --output=$LOG_DIR/$HELPER_NAME-%j.log
-
-while ! grep -q "^JOB_ID=" "$STATE_FILE" 2>/dev/null; do sleep 1; done
-echo "NODE=\$(hostname)" >> "$STATE_FILE"
-${NOTIFY_CURL:+$NOTIFY_CURL}
+write_sbatch_header
+cat >> "$SBATCH_SCRIPT_PATH" <<EOT
 
 DISPLAY_NUM=""
 for i in \$(seq 10 99); do
