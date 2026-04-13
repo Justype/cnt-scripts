@@ -272,7 +272,7 @@ read_version() {
     local -n _rv_target="$1"
     local prompt="$2" default="$3" full_vers="$4" _input
     if [ -n "$full_vers" ]; then
-        print_info "Available:"
+        print_info "Available ${prompt}s:"
         _print_version_groups "$full_vers"
     fi
     read -r -e -p "[MSG] $prompt [$default]: " _input
@@ -396,7 +396,7 @@ check_overlay_in_use() {
 #   Each argument can be a single overlay name or a colon-separated list.
 check_and_install_overlays() {
     print_info "Checking required overlays..."
-    local missing=""
+    local -a missing=()
     for arg in "$@"; do
         # Split on colon to handle colon-separated overlay lists
         local IFS=':'
@@ -410,14 +410,14 @@ check_and_install_overlays() {
                 fi
             else
                 if ! condatainer list -e "$pkg" > /dev/null 2>&1; then
-                    missing+=" $pkg"
+                    missing+=("$pkg")
                 fi
             fi
         done
     done
-    if [ -n "$missing" ]; then
-        print_info "Installing missing overlays:${missing}."
-        condatainer create $missing
+    if [ ${#missing[@]} -gt 0 ]; then
+        print_info "Installing missing overlays: ${missing[*]}."
+        condatainer create "${missing[@]}"
         if [ $? -ne 0 ]; then
             print_error "Failed to install required overlays."
             exit 1
