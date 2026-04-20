@@ -11,7 +11,7 @@ install_app() {
     cd "$target_dir"
     url="https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_mouse/release_M{gencode_version}/gencode.vM{gencode_version}.transcripts.fa.gz"
     print_stderr "Downloading ${YELLOW}${app_name_version}${NC}"
-    wget -nv -O "gencode.vM{gencode_version}.transcripts.fa.gz" "$url"
+    curl -fsSL -o "gencode.vM{gencode_version}.transcripts.fa.gz" "$url"
 
     print_stderr "Extracting ${YELLOW}${app_name_version}${NC}"
     pigz_or_gunzip "gencode.vM{gencode_version}.transcripts.fa.gz"

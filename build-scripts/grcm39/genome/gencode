@@ -11,7 +11,7 @@ install_app() {
 
     url='https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_mouse/release_M38/GRCm39.primary_assembly.genome.fa.gz'
     print_stderr "Downloading ${YELLOW}${app_name_version}${NC}"
-    wget -nv -O "GRCm39.primary_assembly.genome.fa.gz" "$url"
+    curl -fsSL -o "GRCm39.primary_assembly.genome.fa.gz" "$url"
 
     print_stderr "Extracting ${YELLOW}${app_name_version}${NC}"
     pigz_or_gunzip "GRCm39.primary_assembly.genome.fa.gz"

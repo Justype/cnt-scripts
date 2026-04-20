@@ -15,7 +15,7 @@ install_app() {
     cd "$target_dir"
     url="https://github.com/Justype/modules/releases/download/rmsk/mm39_rmsk.gtf.gz"
     print_stderr "Downloading ${YELLOW}${app_name_version}${NC}"
-    wget -nv -O "mm39_rmsk.gtf.gz" "$url"
+    curl -fsSL -o "mm39_rmsk.gtf.gz" "$url"
 
     print_stderr "Extracting ${YELLOW}${app_name_version}${NC}"
     pigz_or_gunzip "mm39_rmsk.gtf.gz"
