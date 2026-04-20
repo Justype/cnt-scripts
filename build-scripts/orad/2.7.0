@@ -20,7 +20,7 @@ install_app() {
 
     print_stderr "Downloading ${YELLOW}${app_name_version}${NC} binaries"
     url="https://s3.amazonaws.com/webdata.illumina.com/downloads/software/dragen-decompression/orad.${version}.${os}.tar.gz"
-    wget -nv -O "${app_name}_${version}.tar.gz" "$url"
+    curl -fsSL -o "${app_name}_${version}.tar.gz" "$url"
 
     print_stderr "Extracting ${YELLOW}${app_name_version}${NC}"
     tar_xf_pigz "${app_name}_${version}.tar.gz" -C "$target_dir" --strip-components=1

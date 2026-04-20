@@ -24,7 +24,7 @@
 install_app() {
     # By default, $target_dir and $tmp_dir are created and we are now in $tmp_dir
     print_stderr "Downloading mapping file for chromosome names conversion from UCSC to GENCODE style"
-    wget -Nnv 'https://raw.githubusercontent.com/dpryan79/ChromosomeMappings/refs/heads/master/GRCh38_UCSC2gencode.txt'
+    curl -fsSLO 'https://raw.githubusercontent.com/dpryan79/ChromosomeMappings/refs/heads/master/GRCh38_UCSC2gencode.txt'
 
     print_stderr "Converting HPRC v1.1 GRCh38 VCF to GENCODE-style chromosome names"
     header=$(bcftools annotate --rename-chrs GRCh38_UCSC2gencode.txt $HPRC_VCF_GZ | head -n 1000 | grep "^#")

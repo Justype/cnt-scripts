@@ -25,7 +25,7 @@ install_app() {
         return 1
     fi
     print_stderr "Downloading ${YELLOW}${app_name_version}${NC}"
-    wget -nv -O "${app_name}_${version}.tar.gz" "$url"
+    curl -fsSL -o "${app_name}_${version}.tar.gz" "$url"
 
     print_stderr "Extracting ${YELLOW}${app_name_version}${NC}"
     tar_xf_pigz "${app_name}_${version}.tar.gz" -C "$target_dir" --strip-components=1
