@@ -69,7 +69,8 @@ print_tunnel_info() {
     local auth_provider="$2"
     local cwd="$3"
     local check_interval=5
-    local auth_instruction_printed=false
+    local last_auth_line=""
+    local _auth_lines_printed=0
 
     print_info "Waiting for VS Code Tunnel to initialize..."
 
@@ -95,13 +96,23 @@ print_tunnel_info() {
                 return 0
             fi
 
-            if [ -n "$auth_status" ] && [ "$auth_instruction_printed" = false ]; then
-                echo -e "\n[MSG] Please use the following message for authentication:"
+            local current_auth_line
+            current_auth_line=$(grep 'https://' "$AUTH_STATUS_FILE" 2>/dev/null | tail -1)
+            [ -z "$current_auth_line" ] && current_auth_line=$(grep -v '^[[:space:]]*$' "$AUTH_STATUS_FILE" 2>/dev/null | tail -1)
+
+            if [ -n "$current_auth_line" ] && [ "$current_auth_line" != "$last_auth_line" ]; then
+                if [ $_auth_lines_printed -gt 0 ]; then
+                    for i in $(seq 1 $_auth_lines_printed); do
+                        printf "\033[A\033[2K"
+                    done
+                fi
+                echo -e "[MSG] Please use the following message for authentication:"
                 echo -e "${YELLOW}------------------------------------------------${NC}"
-                cat "$AUTH_STATUS_FILE"
+                echo -e "$current_auth_line"
                 echo -e "${YELLOW}------------------------------------------------${NC}"
                 print_info "Waiting for authentication..."
-                auth_instruction_printed=true
+                last_auth_line="$current_auth_line"
+                _auth_lines_printed=5
             fi
         fi
         sleep $check_interval
