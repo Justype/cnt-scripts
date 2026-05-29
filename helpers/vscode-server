@@ -1,0 +1,44 @@
+#!/bin/bash
+#WHATIS: VS Code Server
+#NCPUS: 4
+#MEM: 16G
+#TIME: 12:00:00
+#PARAM: TOKEN=? --token,-a "Connection token (auto-generated if empty)"
+
+TOKEN="${TOKEN:-$(openssl rand -hex 8 2>/dev/null || echo "$(date +%s)$RANDOM")}"
+
+# VS Code CLI lives on NFS ($HOME/.local/bin/code) so it persists across jobs.
+CODE_BIN="$HOME/.local/bin/code"
+if [ ! -f "$CODE_BIN" ]; then
+    condatainer _server_message "Downloading VS Code CLI..."
+    ARCH=$(uname -m)
+    case "$ARCH" in
+        x86_64)  ARCH="linux-x64" ;;
+        aarch64) ARCH="linux-arm64" ;;
+        *)
+            condatainer _server_message "ERROR: Unsupported architecture: $ARCH"
+            exit 1
+            ;;
+    esac
+    mkdir -p "$(dirname "$CODE_BIN")"
+    wget -q -O "$CNT_HELPER_STATE_DIR/vscode-cli.tar.gz" \
+        "https://update.code.visualstudio.com/latest/cli-${ARCH}/stable"
+    tar -xzf "$CNT_HELPER_STATE_DIR/vscode-cli.tar.gz" -C "$(dirname "$CODE_BIN")" code
+    rm -f "$CNT_HELPER_STATE_DIR/vscode-cli.tar.gz"
+    chmod +x "$CODE_BIN"
+else
+    "$CODE_BIN" update >/dev/null 2>&1 || true
+fi
+
+"$CODE_BIN" serve-web \
+    --connection-token "$TOKEN" \
+    --host 127.0.0.1 \
+    --port "$CNT_HELPER_PORT" \
+    --accept-server-license-terms &
+PID=$!
+
+condatainer _server_ready \
+    --port "$CNT_HELPER_PORT" \
+    --url-path "?tkn=${TOKEN}&folder=${CNT_HELPER_CWD}"
+
+wait $PID

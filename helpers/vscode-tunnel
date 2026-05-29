@@ -1,0 +1,80 @@
+#!/bin/bash
+#WHATIS: VS Code Tunnel (with relay server)
+#NCPUS: 4
+#MEM: 16G
+#TIME: 12:00:00
+#PARAM: AUTH=github --auth,-a "Authentication provider"
+#VALUE: AUTH=github | microsoft
+#PARAM: MACHINE_NAME=? --name,-n "Tunnel name (auto-set on first run, saved to config)"
+#SINGLETON: true
+
+# MACHINE_NAME is injected by the Go wrapper from saved config.
+# On first run it is empty: compute from user+domain, save for all future runs.
+if [ -z "${MACHINE_NAME:-}" ]; then
+    _h="$(hostname -f 2>/dev/null || hostname -s)"
+    case "$_h" in *.*) _h="${_h#*.}" ;; esac  # node.netname.domain → netname.domain
+    MACHINE_NAME="$(whoami)-$(printf '%s' "$_h" | tr '.' '-')"
+    MACHINE_NAME="${MACHINE_NAME:0:20}"
+    condatainer helper "$CNT_HELPER_NAME" config set MACHINE_NAME "$MACHINE_NAME"
+    condatainer _server_message "Tunnel name set to: $MACHINE_NAME"
+fi
+
+# VS Code CLI lives on NFS ($HOME/.local/bin/code) so it persists across jobs.
+CODE_BIN="$HOME/.local/bin/code"
+if [ ! -f "$CODE_BIN" ]; then
+    condatainer _server_message "Downloading VS Code CLI..."
+    ARCH=$(uname -m)
+    case "$ARCH" in
+        x86_64)  ARCH="linux-x64" ;;
+        aarch64) ARCH="linux-arm64" ;;
+        *)
+            condatainer _server_message "ERROR: Unsupported architecture: $ARCH"
+            exit 1
+            ;;
+    esac
+    mkdir -p "$(dirname "$CODE_BIN")"
+    wget -q -O "$CNT_HELPER_STATE_DIR/vscode-cli.tar.gz" \
+        "https://update.code.visualstudio.com/latest/cli-${ARCH}/stable"
+    tar -xzf "$CNT_HELPER_STATE_DIR/vscode-cli.tar.gz" -C "$(dirname "$CODE_BIN")" code
+    rm -f "$CNT_HELPER_STATE_DIR/vscode-cli.tar.gz"
+    chmod +x "$CODE_BIN"
+else
+    "$CODE_BIN" update >/dev/null 2>&1 || true
+fi
+
+_show="$("$CODE_BIN" tunnel user show 2>&1)"
+if ! echo "$_show" | grep -qi "^logged in with provider ${AUTH:-github}"; then
+    "$CODE_BIN" tunnel user logout 2>/dev/null || true
+    "$CODE_BIN" tunnel user login --provider "${AUTH:-github}" 2>&1 | while IFS= read -r line; do
+        echo "$line"
+        case "$line" in
+            *github.com/login/device*|*microsoft.com/devicelogin*|*"To grant access"*|*"Enter code"*)
+                condatainer _server_message "$line" ;;
+        esac
+    done
+fi
+
+"$CODE_BIN" tunnel \
+    --accept-server-license-terms \
+    --name "$MACHINE_NAME"
+TUNNEL_PID=$!
+
+# Brief pause — lets fast failures (name conflict, auth error) surface before declaring ready.
+sleep 3
+if ! kill -0 "$TUNNEL_PID" 2>/dev/null; then
+    condatainer _server_message --level error \
+        "VS Code Tunnel failed to start."
+    exit 1
+fi
+
+condatainer _server_ready \
+    --port 0 \
+    --external-url "https://vscode.dev/tunnel/${MACHINE_NAME}${CNT_HELPER_CWD}"
+
+wait $TUNNEL_PID
+EXIT_CODE=$?
+if [ $EXIT_CODE -ne 0 ]; then
+    condatainer _server_message --level error \
+        "VS Code Tunnel exited (code $EXIT_CODE)."
+fi
+exit $EXIT_CODE
