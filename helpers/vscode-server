@@ -32,7 +32,7 @@ fi
 
 "$CODE_BIN" serve-web \
     --connection-token "$TOKEN" \
-    --host 127.0.0.1 \
+    --host "${CNT_HELPER_BIND_ADDR:-127.0.0.1}" \
     --port "$CNT_HELPER_PORT" \
     --accept-server-license-terms &
 PID=$!

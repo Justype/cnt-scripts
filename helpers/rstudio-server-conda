@@ -68,7 +68,7 @@ fi
     --server-user "$(whoami)" \
     --server-daemonize=0 \
     --server-data-dir="$CNT_JOB_TMPDIR" \
-    --www-address=127.0.0.1 \
+    --www-address="${CNT_HELPER_BIND_ADDR:-127.0.0.1}" \
     --www-port="$CNT_HELPER_PORT" \
     --rsession-which-r=/ext3/env/bin/R \
     --rsession-ld-library-path=/ext3/env/lib \

@@ -72,7 +72,7 @@ fi
     --server-user "$(whoami)" \
     --server-daemonize=0 \
     --server-data-dir="$CNT_JOB_TMPDIR" \
-    --www-address=127.0.0.1 \
+    --www-address="${CNT_HELPER_BIND_ADDR:-127.0.0.1}" \
     --www-port="$CNT_HELPER_PORT" \
     --rsession-which-r=/usr/bin/R \
     --rsession-path="$CNT_HELPER_STATE_DIR/rsession.sh" \

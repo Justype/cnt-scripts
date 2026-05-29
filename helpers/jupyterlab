@@ -12,9 +12,10 @@ TOKEN=$(python3 -c "import secrets; print(secrets.token_hex(8))" 2>/dev/null \
 
 jupyter-lab \
     --no-browser \
-    --ip=127.0.0.1 \
+    --ip="${CNT_HELPER_BIND_ADDR:-127.0.0.1}" \
     --port "$CNT_HELPER_PORT" \
-    --IdentityProvider.token "$TOKEN" &
+    --IdentityProvider.token "$TOKEN" \
+    ${CNT_HELPER_BIND_ALL:+--ServerApp.allow_remote_access=True} &
 PID=$!
 
 condatainer _server_ready \

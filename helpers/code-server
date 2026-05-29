@@ -19,7 +19,7 @@ fi
 
 code-server \
     --disable-update-check \
-    --bind-addr "127.0.0.1:${CNT_HELPER_PORT}" \
+    --bind-addr "${CNT_HELPER_BIND_ADDR:-127.0.0.1}:${CNT_HELPER_PORT}" \
     $AUTH_OPTS \
     "${CNT_HELPER_CWD:-.}" &
 PID=$!
