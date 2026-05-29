@@ -3,15 +3,15 @@
 #NCPUS: 4
 #MEM: 16G
 #TIME: 12:00:00
-#PARAM: AUTH=none --auth,-a "Password for authentication (or 'none' for no auth)"
 #REQUIRED_OVERLAYS: code-server
+#PARAM: PASSWORD=? --password,-p "Password for authentication (empty for no auth)"
 
 condatainer _server_message \
     "code-server cannot use Microsoft proprietary extensions such as Pylance or Copilot. Use vscode-server if you need them."
 
-if [ "${AUTH:-none}" != "none" ]; then
-    condatainer _server_message "Password: ${AUTH}"
-    export PASSWORD="${AUTH}"
+if [ -n "${PASSWORD:-}" ]; then
+    condatainer _server_message "Password: ${PASSWORD}"
+    export PASSWORD
     AUTH_OPTS="--auth password"
 else
     AUTH_OPTS="--auth none"
