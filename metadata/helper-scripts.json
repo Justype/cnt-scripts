@@ -1,4 +1,7 @@
 {
+  ".Rprofile": {
+    "path": "helpers/.Rprofile"
+  },
   "code-server": {
     "path": "helpers/code-server"
   },
