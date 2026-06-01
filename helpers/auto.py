@@ -22,7 +22,6 @@ import urllib.request
 
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-SCHEDULER_DIRS = ["headless", "slurm", "pbs", "lsf", "htcondor"]
 
 _SSL_CTX = ssl.create_default_context()
 _SSL_CTX.check_hostname = False
@@ -188,10 +187,9 @@ class BiocVersions:
         date_entries = self._format_table(bioc_to_date)
         r_entries    = self._format_table(bioc_to_r)
 
-        for d in SCHEDULER_DIRS:
-            self._update_rprofile(
-                os.path.join(SCRIPT_DIR, d, ".Rprofile"), date_entries, r_entries
-            )
+        self._update_rprofile(
+            os.path.join(SCRIPT_DIR, ".Rprofile"), date_entries, r_entries
+        )
 
 
 # ---------------------------------------------------------------------------
@@ -244,7 +242,7 @@ class CondaPythonVersions(CondaPackageVersions):
     """Collect available Python versions from conda-forge."""
 
     PACKAGE = "python"
-    MIN_VERSION = (3, 9, 0)
+    MIN_VERSION = (3, 8, 0)
 
     def run(self) -> list:
         versions = self.filter_and_sort(self._fetch_versions())
@@ -268,80 +266,89 @@ class CondaRVersions(CondaPackageVersions):
         return versions
 
 
+class CondaIGVVersions(CondaPackageVersions):
+    """Collect available IGV versions from bioconda."""
+
+    API_URL = "https://api.anaconda.org/package/bioconda/{package}"
+    PACKAGE = "igv"
+    MIN_VERSION = (2, 0, 0)
+
+    def run(self) -> list:
+        versions = self.filter_and_sort(self._fetch_versions())
+        if not versions:
+            print("[WARN] CondaIGVVersions: no versions found", file=sys.stderr)
+            return []
+        return versions
+
+
 # ---------------------------------------------------------------------------
-# Write version variables into helpers/*/.common.sh
+# Write #VALUE: lines into individual helper scripts
 # ---------------------------------------------------------------------------
 
-class VersionsInCommon:
-    """
-    Maintain POSIT_R_VERSIONS / CONDA_PYTHON_VERSIONS / CONDA_R_VERSIONS
-    inline in each helpers/<scheduler>/.common.sh via regex replacement.
+class VersionHeaders:
+    """Update #VALUE: KEY=... lines in individual helper scripts."""
 
-    All version lists are full X.Y.Z, space-separated, newest first.
-    Pattern matched: VARNAME="..."  (single line, auto-updated sentinel)
-    """
+    _VALUE_RE = re.compile(r"^(#VALUE:\s*{key}=)(.*)$")
 
     def _ver_key(self, ver: str):
         parts = re.split(r"[.-]", ver)
         return tuple(int(x) for x in parts if x.isdigit())
 
     def _delta(self, old_val: str, new_val: str) -> str:
-        """Return '+added -removed' string, or '' if unchanged."""
-        old_set = set(old_val.split())
-        new_set = set(new_val.split())
+        old_set = set(old_val.split(",")) if old_val else set()
+        new_set = set(new_val.split(",")) if new_val else set()
         added   = sorted(new_set - old_set, key=self._ver_key, reverse=True)
         removed = sorted(old_set - new_set, key=self._ver_key, reverse=True)
         parts = [f"+{v}" for v in added] + [f"-{v}" for v in removed]
         return " ".join(parts)
 
-    def _update_var(self, content: str, var: str, new_val: str) -> tuple:
-        """Replace VAR="..." line. Returns (new_content, old_val)."""
-        pat = re.compile(rf'^({re.escape(var)}=")([^"]*)(")', re.MULTILINE)
-        m = pat.search(content)
-        old_val = m.group(2) if m else ""
-        new_content = pat.sub(lambda _: f'{var}="{new_val}"', content)
-        return new_content, old_val
+    def _update_script(self, script_path: str, key: str, versions: list) -> bool:
+        if not os.path.exists(script_path):
+            print(f"[SKIP] {os.path.basename(script_path)}: not found", file=sys.stderr)
+            return False
+        new_val = ",".join(versions)
+        pat = re.compile(rf"^(#VALUE:\s*{re.escape(key)}=)(.*)$", re.MULTILINE)
+        with open(script_path) as f:
+            content = f.read()
+        match = pat.search(content)
+        if not match:
+            # print(f"[SKIP] {os.path.basename(script_path)}: no #VALUE: {key}= line found")
+            return False
+        old_val = match.group(2).strip()
+        if old_val == new_val:
+            print(f"[SKIP] {os.path.basename(script_path)}: #VALUE: {key} up to date")
+            return False
+        delta = self._delta(old_val, new_val)
+        new_content = pat.sub(lambda m: m.group(1) + new_val, content)
+        with open(script_path, "w") as f:
+            f.write(new_content)
+        print(f"[UPDATED] {os.path.basename(script_path)}: #VALUE: {key}: {delta}")
+        return True
 
-    def update(self, posit_r: list, conda_python: list, conda_r: list):
-        """Rewrite version variables in all scheduler .common.sh files."""
-        posit_val  = " ".join(reversed(posit_r))   # read_versions returns ascending
-        python_val = " ".join(conda_python)
-        r_val      = " ".join(conda_r)
-
-        new_vals = {
-            "POSIT_R_VERSIONS":      posit_val,
-            "CONDA_PYTHON_VERSIONS": python_val,
-            "CONDA_R_VERSIONS":      r_val,
-        }
-
-        for d in SCHEDULER_DIRS:
-            path = os.path.join(SCRIPT_DIR, d, ".common.sh")
-            if not os.path.exists(path):
-                continue
-            with open(path) as f:
-                content = f.read()
-
-            updated_vars = []
-            for var, val in new_vals.items():
-                content, old_val = self._update_var(content, var, val)
-                delta = self._delta(old_val, val)
-                if delta:
-                    updated_vars.append(f"{var} {delta}")
-
-            if updated_vars:
-                with open(path, "w") as f:
-                    f.write(content)
-                for msg in updated_vars:
-                    print(f"[UPDATED] {os.path.relpath(path, SCRIPT_DIR)}: {msg}")
-            # Silent if up to date
+    def update(self, key: str, versions: list):
+        if not versions:
+            return
+        for entry in os.scandir(SCRIPT_DIR):
+            if entry.is_file():
+                self._update_script(entry.path, key, versions)
 
 
 # ---------------------------------------------------------------------------
 
 if __name__ == "__main__":
-    posit_r_versions = RVersions().run()
+    headers = VersionHeaders()
+
+    posit_r = RVersions().run()
+    # POSIT_R comes ascending from RVersions.run() — reverse to newest-first.
+    headers.update("POSIT_R", list(reversed(posit_r)))
+
     BiocVersions().run()
+
     conda_python = CondaPythonVersions().run()
-    conda_r      = CondaRVersions().run()
-    if posit_r_versions or conda_python or conda_r:
-        VersionsInCommon().update(posit_r_versions, conda_python, conda_r)
+    headers.update("CONDA_PYTHON", conda_python)
+
+    conda_r = CondaRVersions().run()
+    headers.update("CONDA_R", conda_r)
+
+    conda_igv = CondaIGVVersions().run()
+    headers.update("CONDA_IGV", conda_igv)
