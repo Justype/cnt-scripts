@@ -34,7 +34,8 @@ From: ubuntu:22.04
     apt-get -y install dbus-x11 pulseaudio ffmpeg xfce4 \
         xfce4-terminal mousepad xfce4-screenshooter \
         ristretto xfce4-whiskermenu-plugin \
-        vlc audacious diodon drawing
+        vlc audacious diodon drawing \
+        fonts-noto-cjk
 
     # FireFox
     apt-get -y install software-properties-common
@@ -59,6 +60,32 @@ From: ubuntu:22.04
 
     # noVNC + websockify (browser VNC client / WebSocket bridge)
     apt-get -y install novnc python3-websockify
+
+    # KasmVNC (browser-based VNC alternative with built-in WebSocket)
+    KASMVNC_VERSION="1.4.0"
+    curl -fsSL \
+        -o /tmp/kasmvnc.deb \
+        "https://github.com/kasmtech/KasmVNC/releases/download/v${KASMVNC_VERSION}/kasmvncserver_jammy_${KASMVNC_VERSION}_${ARCH}.deb"
+    apt-get -y install /tmp/kasmvnc.deb
+    rm -f /tmp/kasmvnc.deb
+
+    # Node.js LTS + kclient (KasmVNC audio streaming via PulseAudio)
+    curl -fsSL https://deb.nodesource.com/setup_lts.x | bash -
+    apt-get install -y nodejs build-essential pkg-config libpulse-dev git
+    git clone https://github.com/Justype/kclient.git /opt/kclient
+    cd /opt/kclient && npm install --omit=dev
+
+    # NVIDIA EGL ICD for Apptainer --nv: tells libEGL where to find the NVIDIA
+    # implementation injected at runtime into /.singularity.d/libs/.
+    mkdir -p /usr/share/glvnd/egl_vendor.d
+    cat > /usr/share/glvnd/egl_vendor.d/10_nvidia.json <<'NVJSON'
+{
+    "file_format_version" : "1.0.0",
+    "ICD" : {
+        "library_path" : "libEGL_nvidia.so.0"
+    }
+}
+NVJSON
 
     # OpenGL/Vulkan/OpenCL — software rendering fallback + scientific viz deps + diagnostics
     apt-get -y install \
