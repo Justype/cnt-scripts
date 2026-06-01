@@ -680,11 +680,6 @@
     "path": "ubuntu20/code-server.def",
     "whatis": "Missing description"
   },
-  "ubuntu20/igv": {
-    "deps": [],
-    "path": "ubuntu20/igv.def",
-    "whatis": "Missing description"
-  },
   "ubuntu20/posit-r": {
     "deps": [],
     "is_template": true,
@@ -759,11 +754,6 @@
     "path": "ubuntu22/code-server.def",
     "whatis": "Missing description"
   },
-  "ubuntu22/igv": {
-    "deps": [],
-    "path": "ubuntu22/igv.def",
-    "whatis": "Missing description"
-  },
   "ubuntu22/posit-r": {
     "deps": [],
     "is_template": true,
@@ -836,11 +826,6 @@
   "ubuntu24/code-server": {
     "deps": [],
     "path": "ubuntu24/code-server.def",
-    "whatis": "Missing description"
-  },
-  "ubuntu24/igv": {
-    "deps": [],
-    "path": "ubuntu24/igv.def",
     "whatis": "Missing description"
   },
   "ubuntu24/posit-r": {
