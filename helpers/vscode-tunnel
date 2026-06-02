@@ -3,9 +3,12 @@
 #NCPUS: 4
 #MEM: 16G
 #TIME: 12:00:00
+
 #PARAM: AUTH=github --auth,-a "Authentication provider"
 #VALUE: AUTH=github | microsoft
+
 #PARAM: MACHINE_NAME=? --name,-n "Tunnel name (auto-set on first run, saved to config)"
+
 #SINGLETON: true
 
 # MACHINE_NAME is injected by the Go wrapper from saved config.

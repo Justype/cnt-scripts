@@ -3,6 +3,7 @@
 #NCPUS: 4
 #MEM: 16G
 #TIME: 12:00:00
+
 #PARAM: TOKEN=? --token,-a "Connection token (auto-generated if empty)"
 
 TOKEN="${TOKEN:-$(openssl rand -hex 8 2>/dev/null || echo "$(date +%s)$RANDOM")}"
