@@ -9,6 +9,27 @@
     "path": "cellranger/9.0.1",
     "whatis": "10X Genomics Single Cell Software Suite"
   },
+  "cytoscape": {
+    "deps": [],
+    "is_template": true,
+    "path": "cytoscape",
+    "pl": {
+      "cytoscape_version": [
+        "3.10.4",
+        "3.10.3",
+        "3.10.2",
+        "3.10.1",
+        "3.10.0",
+        "3.9.1",
+        "3.9.0"
+      ]
+    },
+    "pl_order": [
+      "cytoscape_version"
+    ],
+    "target_template": "cytoscape/{cytoscape_version}",
+    "whatis": "Cytoscape {cytoscape_version} \u2014 network biology visualization platform (needs Java)"
+  },
   "grch38/bowtie2/ucsc_no_alt": {
     "deps": [
       "bowtie2/2.5.5>=2.3",
@@ -334,8 +355,8 @@
   "grch38/vcf/hprc-v1.1-decomposed-gencode": {
     "deps": [
       "grch38/vcf/hprc-v1.1-decomposed",
-      "bcftools/1.22",
-      "htslib/1.22"
+      "bcftools/1.23.1",
+      "htslib/1.23.1"
     ],
     "path": "grch38/vcf/hprc-v1.1-decomposed-gencode",
     "whatis": "HPRC v1.1 GRCh38 Decomposed VCF with chromosome names matching GENCODE"
@@ -760,6 +781,7 @@
     "path": "ubuntu22/posit-r.def",
     "pl": {
       "version": [
+        "4.6.0",
         "4.5.3",
         "4.5.2",
         "4.5.1",
@@ -834,6 +856,7 @@
     "path": "ubuntu24/posit-r.def",
     "pl": {
       "version": [
+        "4.6.0",
         "4.5.3",
         "4.5.2",
         "4.5.1",
