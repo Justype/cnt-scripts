@@ -9,12 +9,19 @@
 #VALUE: VNC_PROVIDER=kasm | turbo
 
 # 1. Find free DISPLAY.
+#    File check: fast pre-filter; effective in headless (non-scheduler) mode where
+#    the container sees the real host /tmp.
+#    Port check: cross-user/cross-container guard for scheduler mode where each
+#    job gets a private /tmp (SLURM_TMPDIR) — TCP ports are always host-level.
 DISPLAY_NUM=""
-for i in $(seq 10 99); do
-    [ ! -f "/tmp/.X${i}-lock" ] && { DISPLAY_NUM=$i; break; }
+for i in $(seq 10 999); do
+    [ -f "/tmp/.X${i}-lock" ] && continue
+    nc -z 127.0.0.1 $((5900 + i)) 2>/dev/null && continue
+    DISPLAY_NUM=$i
+    break
 done
 if [ -z "$DISPLAY_NUM" ]; then
-    condatainer _server_message "ERROR: No free X display found (tried :10–:99)"
+    condatainer _server_message "ERROR: No free X display found (tried :10–:999)"
     exit 1
 fi
 export DISPLAY=":${DISPLAY_NUM}"
@@ -72,6 +79,10 @@ network:
   ssl:
     require_ssl: false
 EOT
+    # kasmtech/KasmVNC#330: vncserver script hardcodes ~/.kasmpasswd regardless of
+    # kasm_password_file config and prompts interactively if no write-access user exists.
+    # Auth is disabled (-SecurityTypes None), so this dummy entry has no security impact.
+    [ -f "$HOME/.kasmpasswd" ] || echo "${USER}::wo" > "$HOME/.kasmpasswd"
 
     # GPU detection — only enable hw3d if NVIDIA EGL is available (fails on MIG).
     DRI_NODE=$(ls /dev/dri/renderD* 2>/dev/null | head -1)
@@ -129,6 +140,11 @@ EOT
         -SecurityTypes None \
         -disableBasicAuth \
         -PublicIP 127.0.0.1
+    # Wait for KasmVNC to bind its WebSocket port before starting kclient.
+    for _i in $(seq 1 20); do
+        nc -z 127.0.0.1 "$KASM_INTERNAL_PORT" 2>/dev/null && break
+        sleep 0.5
+    done
 
     # Start kclient.
     LISTEN_PORT="$CNT_HELPER_PORT" \
@@ -156,8 +172,7 @@ else
     printf '%s\n%s\n' "$VNC_PASSWD" "$VNC_PASSWD" | vncpasswd -f > "$HOME/.vnc/passwd"
     chmod 600 "$HOME/.vnc/passwd"
 
-    VNC_PORT=$(condatainer _pick_port)
-    [ "$VNC_PORT" = "$CNT_HELPER_PORT" ] && VNC_PORT=$(condatainer _pick_port)
+    VNC_PORT=$((5900 + DISPLAY_NUM))
 
     # Cleanup trap.
     WEBSOCKIFY_PID=""
