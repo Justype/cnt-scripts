@@ -7,12 +7,9 @@ Query remote sources to update grch38/* build script files
     - transcript-gencode (release 23+)
     - star-gencode       (synced from gtf-gencode)
     - salmon-gencode     (synced from transcript-gencode, release 23+)
-- bioconda packages (all versions) => updates #PL:*_version: in:
-    - star-gencode, star-cellranger  (star_version)
-    - salmon-gencode                 (salmon_version)
-- bioconda packages (pin latest) => updates #DEP:*/ in:
-    - transcript-gencode, genome/gencode, genome/ucsc_no_alt  (samtools)
     python3 build-scripts/grch38/auto.py  # to update all
+
+#PL: and #DEP: bioconda/github updates are handled by unified_auto.py via #AUTOUPDATE: headers.
 """
 
 import json
@@ -37,42 +34,6 @@ def _versions_to_pl_value(versions: list) -> str:
         return f"{versions[0]}-{versions[-1]}"
     return ",".join(str(v) for v in versions)
 
-
-def _update_dep_version(dep_file: str, package: str, new_version: str) -> bool:
-    """Rewrite a #DEP:{package}/X.Y.Z[>=min] line to use new_version, preserving any constraint suffix. Returns True if changed."""
-    if not os.path.exists(dep_file):
-        print(f"Error: {dep_file} not found.", file=sys.stderr)
-        return False
-
-    prefix = f"#DEP:{package}/"
-
-    with open(dep_file) as f:
-        lines = f.readlines()
-
-    for i, line in enumerate(lines):
-        if line.startswith(prefix):
-            rest = line[len(prefix):].rstrip("\n")
-            # Preserve any version constraint suffix (e.g. ">=1.10" or ">1.10")
-            constraint = ""
-            for op in (">=", ">"):
-                idx = rest.find(op)
-                if idx >= 0:
-                    constraint = rest[idx:]
-                    break
-            new_line = f"{prefix}{new_version}{constraint}\n"
-            if lines[i] == new_line:
-                print(f"[SKIP] {os.path.basename(dep_file)}: #DEP:{package} up to date")
-                return False
-            lines[i] = new_line
-            break
-    else:
-        print(f"Warning: no {prefix} line in {dep_file}.", file=sys.stderr)
-        return False
-
-    with open(dep_file, "w") as f:
-        f.writelines(lines)
-    print(f"[UPDATED] {os.path.basename(dep_file)}: #DEP:{package} => {new_version}{constraint}")
-    return True
 
 
 def _update_pl_key(pl_file: str, key: str, pl_value: str) -> bool:
@@ -144,117 +105,5 @@ class GencodeVersions:
         _update_pl_key(os.path.join(BASE_DIR, "salmon-gencode"), "gencode_version", transcript_pl)
 
 
-class BiocondaVersions:
-    """
-    Query a bioconda package via the Anaconda API and update a #PL: key
-    in one or more template files.
-
-    Subclass and set PACKAGE, PL_KEY, PL_FILES, and optionally MIN_VERSION.
-    """
-
-    PACKAGE = ""                 # bioconda package name, e.g. "star"
-    PL_KEY = ""                  # placeholder key to update, e.g. "star_version"
-    PL_FILES: list = []          # template file names relative to BASE_DIR
-    MIN_VERSION = (0, 0, 0)      # minimum version tuple to include
-
-    def _parse_version(self, v: str):
-        """Parse version strings (e.g. '2.7.11b', '2.3', '2025b', '2.3.5.1') into a sortable tuple."""
-        m = re.match(r"^(\d+)(?:\.(\d+))?(?:\.(\d+))?(?:\.(\d+))?([a-z]?)$", v)
-        if not m:
-            return None
-        parts = [int(m.group(i)) if m.group(i) is not None else 0 for i in range(1, 5)]
-        return (parts[0], parts[1], parts[2], parts[3], m.group(5))
-
-    def query_versions(self) -> list:
-        """Return ascending sorted list of version strings from bioconda."""
-        try:
-            url = f"https://api.anaconda.org/package/bioconda/{self.PACKAGE}"
-            with urllib.request.urlopen(url, timeout=15, context=_SSL_CTX) as resp:
-                data = json.load(resp)
-        except Exception as e:
-            print(f"Warning: failed to query Anaconda API for {self.PACKAGE}: {e}", file=sys.stderr)
-            return []
-
-        parsed = []
-        for v in data.get("versions", []):
-            key = self._parse_version(v)
-            if key is not None and key[:3] >= self.MIN_VERSION:
-                parsed.append((key, v))
-
-        parsed.sort()
-        return [v for _, v in parsed]
-
-    def run(self):
-        versions = self.query_versions()
-        if not versions:
-            print(f"[SKIP] {self.PACKAGE}: no versions found")
-            return
-
-        print(f"[INFO] {self.PACKAGE}: {len(versions)} bioconda versions ({versions[0]}–{versions[-1]})")
-        pl_value = ",".join(versions)
-        for name in self.PL_FILES:
-            _update_pl_key(os.path.join(BASE_DIR, name), self.PL_KEY, pl_value)
-
-
-class StarVersions(BiocondaVersions):
-    PACKAGE = "star"
-    PL_KEY = "star_version"
-    PL_FILES = ["star-gencode", "star-cellranger"]
-    MIN_VERSION = (2, 7, 0)
-
-
-class SalmonVersions(BiocondaVersions):
-    PACKAGE = "salmon"
-    PL_KEY = "salmon_version"
-    PL_FILES = ["salmon-gencode"]
-    MIN_VERSION = (1, 0, 0)
-
-
-class LatestDepVersion(BiocondaVersions):
-    """Update #DEP:{PACKAGE}/X.Y.Z to the latest bioconda release in DEP_FILES."""
-
-    DEP_FILES: list = []
-
-    def run(self):
-        versions = self.query_versions()
-        if not versions:
-            print(f"[SKIP] {self.PACKAGE}: no versions found")
-            return
-        latest = versions[-1]
-        print(f"[INFO] {self.PACKAGE}: {len(versions)} bioconda versions, latest {latest}")
-        for name in self.DEP_FILES:
-            _update_dep_version(os.path.join(BASE_DIR, name), self.PACKAGE, latest)
-
-
-class SamtoolsLatestVersion(LatestDepVersion):
-    PACKAGE = "samtools"
-    DEP_FILES = ["transcript-gencode", "genome/gencode", "genome/ucsc_no_alt"]
-    MIN_VERSION = (1, 0, 0)
-
-
-class BwaLatestVersion(LatestDepVersion):
-    PACKAGE = "bwa"
-    DEP_FILES = ["bwa/ucsc_no_alt"]
-    MIN_VERSION = (0, 7, 0)
-
-
-class BwaMem2LatestVersion(LatestDepVersion):
-    PACKAGE = "bwa-mem2"
-    DEP_FILES = ["bwa-mem2/ucsc_no_alt"]
-    MIN_VERSION = (2, 0, 0)
-
-
-class Bowtie2LatestVersion(LatestDepVersion):
-    PACKAGE = "bowtie2"
-    DEP_FILES = ["bowtie2/ucsc_no_alt"]
-    MIN_VERSION = (2, 0, 0)
-
-
 if __name__ == "__main__":
     GencodeVersions().run()
-    StarVersions().run()
-    SalmonVersions().run()
-    SamtoolsLatestVersion().run()
-    BwaLatestVersion().run()
-    BwaMem2LatestVersion().run()
-    Bowtie2LatestVersion().run()
