@@ -5,6 +5,9 @@
   "code-server": {
     "path": "helpers/code-server"
   },
+  "cytoscape": {
+    "path": "helpers/cytoscape"
+  },
   "igv": {
     "path": "helpers/igv"
   },
