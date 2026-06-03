@@ -142,24 +142,27 @@ EOT
     fi
 
     # PulseAudio — null sink for browser audio streaming.
+    # Minimal config (-n -F) avoids loading dbus-dependent modules (module-console-kit,
+    # module-systemd-login) which fail on nodes without a system D-Bus socket.
     export PULSE_RUNTIME_PATH="$XDG_RUNTIME_DIR/pulse"
     mkdir -p "$PULSE_RUNTIME_PATH"
     export PULSE_SERVER="unix:$PULSE_RUNTIME_PATH/native"
     if command -v pulseaudio >/dev/null 2>&1; then
+        cat > "$CNT_HELPER_STATE_DIR/pulse.pa" <<EOT
+load-module module-native-protocol-unix auth-anonymous=1 socket=${PULSE_RUNTIME_PATH}/native
+load-module module-null-sink sink_name=auto_null
+set-default-sink auto_null
+EOT
         pulseaudio --daemonize=yes --exit-idle-time=-1 --disallow-exit --disable-shm=true \
-            >/dev/null 2>&1 || true
+            -n -F "$CNT_HELPER_STATE_DIR/pulse.pa" \
+            --log-target=file:"$CNT_HELPER_STATE_DIR/pulseaudio.log" 2>/dev/null || true
         for _i in $(seq 1 10); do pactl info >/dev/null 2>&1 && break; sleep 0.5; done
-        if pactl load-module module-null-sink sink_name=auto_null >/dev/null 2>&1; then
-            pactl set-default-sink auto_null >/dev/null 2>&1 || true
-            _found=0
-            for _i in $(seq 1 4); do
-                pactl list sources short 2>/dev/null | grep -q "auto_null.monitor" && { _found=1; break; }
-                sleep 0.5
-            done
-            [ "$_found" -eq 0 ] && condatainer _server_message "WARNING: auto_null.monitor not confirmed; browser audio may not work."
-        else
-            condatainer _server_message "WARNING: PulseAudio null sink failed to load; browser audio may not work."
-        fi
+        _found=0
+        for _i in $(seq 1 4); do
+            pactl list sources short 2>/dev/null | grep -q "auto_null.monitor" && { _found=1; break; }
+            sleep 0.5
+        done
+        [ "$_found" -eq 0 ] && condatainer _server_message "WARNING: auto_null.monitor not confirmed; browser audio may not work."
     else
         condatainer _server_message "WARNING: pulseaudio not found; browser audio will be unavailable."
     fi
