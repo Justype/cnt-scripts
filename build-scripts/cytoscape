@@ -1,35 +1,36 @@
 #!/usr/bin/bash
-#DEP:bowtie2/2.5.5>=2.3
-#AUTOUPDATE:bowtie2:bioconda:bowtie2
-#DEP:grch38/genome/ucsc_no_alt
-#WHATIS:bowtie2 index for GRCh38 UCSC no alt reference genome
-#URL:https://bowtie-bio.sourceforge.net/bowtie2/index.shtml
-#ENV:BOWTIE2_PREFIX=$app_root/GRCh38_no_alt_analysis_set
-#ENVNOTE:GRCh38 reference genome
+#PL:cytoscape_version:3.9.0,3.9.1,3.10.0,3.10.1,3.10.2,3.10.3,3.10.4
+#AUTOUPDATE:cytoscape_version:github:cytoscape/cytoscape>=3.9.0
+#TARGET:cytoscape/{cytoscape_version}
+#WHATIS:Cytoscape {cytoscape_version} — network biology visualization platform (needs Java)
+#URL:https://github.com/cytoscape/cytoscape/releases
 
-#SBATCH --cpus-per-task=12
-#SBATCH --mem=12G
-#SBATCH --time=2:00:00
-#SBATCH --job-name=bowtie2-build
-#SBATCH --output=%x-%j.log
+#########################################################
+# Cytoscape build script
+# - Downloads the official pre-built Linux binary from GitHub releases
+# - Requires Java (openjdk) to run
+#########################################################
 
 install_app() {
-    # By default, $target_dir and $tmp_dir are created and we are now in $tmp_dir
-    cd "$target_dir"
+    local url="https://github.com/cytoscape/cytoscape/releases/download/{cytoscape_version}/cytoscape-unix-{cytoscape_version}.tar.gz"
 
-    BOWTIE2_PREFIX="GRCh38_no_alt_analysis_set"
+    print_stderr "Downloading ${YELLOW}${app_name_cytoscape_version}${NC}"
+    curl -fsSL -o "cytoscape.tar.gz" "$url"
 
-    print_stderr "Indexing ${YELLOW}${app_name_version}${NC} with bowtie2-build"
-    bowtie2-build --threads "$NCPUS" "$GENOME_FASTA" "$BOWTIE2_PREFIX"
+    print_stderr "Extracting ${YELLOW}${app_name_cytoscape_version}${NC}"
+    tar --no-same-owner -xzf cytoscape.tar.gz -C "$target_dir" --strip-components=1
+
+    mkdir -p "$target_dir/bin"
+    ln -s "$target_dir/cytoscape.sh" "$target_dir/bin/cytoscape"
 }
 
 # Available variables:
 # - NCPUS: number of cores to use (default: 4; set by condatainer)
 # - app_name:         name     of the app (set by condatainer)
-# - version:          version  of the app (set by condatainer)
-# - app_name_version: name/version        (set by condatainer)
+# - cytoscape_version:          cytoscape_version  of the app (set by condatainer)
+# - app_name_cytoscape_version: name/cytoscape_version        (set by condatainer)
 
-# - target_dir:       opt/assembly/data_type/version (set by condatainer)
+# - target_dir:       opt/name/cytoscape_version (set by condatainer)
 # - tmp_dir:          tmp directory (set by condatainer)
 
 # region common_functions
@@ -41,9 +42,8 @@ NC='\033[0m'        # No Color
 NCPUS=${NCPUS:-4}   # number of cores to use when building from source
 
 install() {
-    print_stderr "Installing the target module: ${YELLOW}${app_name_version}${NC}"
+    print_stderr "Installing the target module: ${YELLOW}${app_name_cytoscape_version}${NC}"
     print_stderr "🎯 Target directory: $target_dir"
-    # if target directory exists, exit 1
     if [ -d "$target_dir" ]; then
         print_stderr "${RED}ERROR${NC}: Target app dir exists!"
         print_stderr "Exit Installing"
@@ -66,7 +66,7 @@ install() {
     mkdir -p "$tmp_dir"
     cd "$tmp_dir"
     install_app
-    print_stderr "✅ Installation completed. ${YELLOW}${app_name_version}${NC} is ready to use."
+    print_stderr "✅ Installation completed. ${YELLOW}${app_name_cytoscape_version}${NC} is ready to use."
 }
 
 print_stderr() {
@@ -96,18 +96,6 @@ tar_xf_pigz() {
         tar --no-same-owner -xzf "$@"
     fi
 }
-
-smart_copy_or_link() {
-    local src="$1"
-    local dst="$2"
-
-    if [ -n "$IN_CONDATAINER" ]; then
-        cp "$src" "$dst"
-    else
-        ln "$src" "$dst" || cp "$src" "$dst"
-    fi
-}
-
 #endregion
 
 install

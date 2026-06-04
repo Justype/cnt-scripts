@@ -1,21 +1,17 @@
 #!/usr/bin/env python3
-"""Generate helper metadata for scripts grouped by folders under `helpers/`.
+"""Generate helper metadata for scripts in `helpers/`.
 
-Scans each top-level subfolder under `helpers/` (for example
-`helpers/slurm`, `helpers/headless`, etc.) and writes JSON to
-`metadata/helper-scripts.json` with structure:
+Scans files directly under `helpers/` (not subfolders) and writes JSON to
+`metadata/helper-scripts.json` with flat structure:
 {
-    "slurm": {
-        "script_name": { "path": "helpers/slurm/script_name" },
-        ...
-    },
-    "headless": { ... }
+    "script_name": { "path": "helpers/script_name" },
+    ...
 }
 
 Script is safe to run locally or in CI.
 """
+import gzip
 import json
-import os
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -24,49 +20,25 @@ OUT_FILE = OUT_DIR / "helper-scripts.json"
 
 HELPERS_ROOT = ROOT / "helpers"
 
-# Dynamically discover all top-level folders under helpers/ and use the folder
-# name as the metadata category key. This allows adding new groups without
-# changing this script (e.g., 'slurm', 'headless', ...).
-FOLDERS = {}
-if HELPERS_ROOT.exists():
-    for p in sorted(HELPERS_ROOT.iterdir()):
-        if p.is_dir():
-            FOLDERS[p.name] = p
-
-EXT_WHITELIST = {".sh", ".py", ".bash", ".md"}
-
-
-def scan_folder(folder_path: Path):
-    out = {}
-    if not folder_path.exists():
-        return out
-    for p in sorted(folder_path.rglob("*")):
-        if p.is_file():
-            if p.suffix and p.suffix.lower() not in EXT_WHITELIST:
-                continue
-            # Use repo-relative path
-            rel = p.relative_to(ROOT).as_posix()
-            key = p.stem
-            # If duplicate keys (same stem) exist, make a unique key using path
-            if key in out:
-                key = rel
-            out[key] = {"path": rel}
-    return out
-
+BLACKLIST = {"README.md", "auto.py"}
 
 def main():
     data = {}
-    for k, folder in FOLDERS.items():
-        data[k] = scan_folder(folder)
+    if HELPERS_ROOT.exists():
+        for p in sorted(HELPERS_ROOT.iterdir()):
+            if not p.is_file():
+                continue
+            if p.name in BLACKLIST:
+                continue
+            rel = p.relative_to(ROOT).as_posix()
+            data[p.stem] = {"path": rel}
 
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     json_text = json.dumps(data, indent=2, ensure_ascii=False)
     with OUT_FILE.open("w", encoding="utf-8") as f:
         f.write(json_text)
 
-    # Also write a gzipped copy to match generate-metadata.yml style
     try:
-        import gzip
         with gzip.open(str(OUT_FILE) + ".gz", "wb") as gz:
             gz.write(json_text.encode("utf-8"))
     except Exception as e:

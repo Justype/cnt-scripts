@@ -8,15 +8,11 @@ Build scripts and helper scripts for [CondaTainer](https://github.com/Justype/co
 cnt-scripts/
 ├── build-scripts/              # Build recipes
 │   ├── <distro>/<name>.def     # OS: Apptainer definition files
-│   ├── <name>/<version>        # Apps: Custom tools
-│   └── <assembly|project>/<datatype>/<version>  # Data
-├── helpers/                # Interactive service helpers
-│   ├── headless/           # on the current server
-│   ├── slurm/              # on SLURM clusters
-│   ├── pbs/                # on PBS clusters
-│   ├── lsf/                # on LSF clusters
-│   └── htcondor/           # on HTCondor servers/clusters
-└── metadata/               # Auto-generated index files
+│   ├── <name>/<version>        # Apps: one file per version
+│   ├── <name>                  # Apps (PL template): one file, #PL: expands all versions
+│   └── <assembly>/<datatype>/… # Data: reference genomes, indexes, annotations
+├── helpers/                    # Interactive service helpers
+└── metadata/                   # Auto-generated index files
 ```
 
 > [!NOTE]
@@ -79,6 +75,37 @@ make clean      # remove build/ directory
 - `base_image.def` → `build/<distro>/base_image_<arch>.sif`
 - other `.def` → `build/<distro>/<name>_<arch>.sqf` (except posit R and code-server)
 - Override variables: `CONDATINER`, `APPTAINER`, `COND_FLAGS`, `APPT_FLAGS`
+
+## Automatic Version Maintenance
+
+Version lists in build scripts and helpers are kept up to date by a CI workflow that runs on the 1st and 15th of each month.
+
+### `#AUTOUPDATE:` header
+
+Add this header to any build script or helper to opt into automatic updates:
+
+```
+#AUTOUPDATE:{key}:{source}:{identifier}[>={min_version}]
+```
+
+| Source | Identifier | Example |
+|---|---|---|
+| `github` | `org/repo` | `github:cytoscape/cytoscape>=3.9.0` |
+| `bioconda` | `package` | `bioconda:star>=2.7.0b` |
+| `conda-forge` | `package` | `conda-forge:python>=3.8.0` |
+| `docker` | `image:tag_pattern` | `docker:posit/r-base:^(\d+\.\d+\.\d+)-noble(?:-[^-]+)?$>=4.0.0` |
+
+The `key` matches an existing header in the same file. The target type is detected automatically:
+
+- **`#PL:key:`** (build scripts) — rewrites the full version list
+- **`#DEP:key/`** (build scripts) — rewrites only the latest version, preserving `>=constraint`
+- **`#VALUE: key=`** (helpers) — rewrites the value list, newest first
+
+The unified updater (`.github/scripts/unified_auto.py`) groups entries by source and fetches each API once, even if the same package appears in multiple scripts.
+
+### Per-directory `auto.py`
+
+Scripts that need custom logic (e.g., GENCODE releases from EBI FTP) keep a per-directory `auto.py`. These run after the unified updater in the same CI job.
 
 ## Contributing
 
