@@ -18,17 +18,15 @@ From: ubuntu:24.04
     # Avoid interactive prompts
     export DEBIAN_FRONTEND=noninteractive
 
-    apt-get -y update && apt-get -y install \
-        wget libssl-dev libclang-dev psmisc \
-        libsqlite3-0 lsb-release sudo
+    apt-get -y update && apt-get -y install curl
 
     # RStudio Server
     case "$(uname -m)" in
-        x86_64) url="https://download2.rstudio.org/server/jammy/amd64/rstudio-server-2026.01.0-392-amd64.deb" ;;
-        aarch64) url="https://s3.amazonaws.com/rstudio-ide-build/server/jammy/arm64/rstudio-server-2026.01.0-392-arm64.deb" ;;
+        x86_64) url="https://download2.rstudio.org/server/jammy/amd64/rstudio-server-2026.05.0-218-amd64.deb" ;;
+        aarch64) url="https://s3.amazonaws.com/rstudio-ide-build/server/jammy/arm64/rstudio-server-2026.05.0-218-arm64.deb" ;;
         *) echo "ERROR: Unsupported architecture: $(uname -m)"; exit 1 ;;
     esac
-    wget -nv -O rstudio.deb $url
-    dpkg -i rstudio.deb && rm rstudio.deb
+    curl -fsSL -o rstudio.deb "$url"
+    apt-get install -y ./rstudio.deb && rm rstudio.deb
 
     apt-get clean && rm -rf /var/lib/apt/lists/*

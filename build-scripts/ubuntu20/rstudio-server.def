@@ -18,9 +18,7 @@ From: ubuntu:20.04
     # Avoid interactive prompts
     export DEBIAN_FRONTEND=noninteractive
 
-    apt-get -y update && apt-get -y install \
-        wget libssl-dev libclang-dev psmisc \
-        libsqlite3-0 lsb-release sudo
+    apt-get -y update && apt-get -y install curl
 
     # RStudio Server
     case "$(uname -m)" in
@@ -28,7 +26,7 @@ From: ubuntu:20.04
         aarch64) url="https://s3.amazonaws.com/rstudio-ide-build/server/focal/arm64/rstudio-server-2025.05.1-513-arm64.deb" ;;
         *) echo "ERROR: Unsupported architecture: $(uname -m)"; exit 1 ;;
     esac
-    wget -nv -O rstudio.deb $url
-    dpkg -i rstudio.deb && rm rstudio.deb
+    curl -fsSL -o rstudio.deb "$url"
+    apt-get install -y ./rstudio.deb && rm rstudio.deb
 
     apt-get clean && rm -rf /var/lib/apt/lists/*
