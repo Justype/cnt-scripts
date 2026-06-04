@@ -64,8 +64,7 @@ build/%$(SUFFIX):
 	if [ ! -e "$$def_path" ]; then echo "ERROR: def file not found: $$def_path"; exit 1; fi; \
 	echo "[condatainer] Creating $@ from $$def_path"; \
 	mkdir -p $(dir $@); \
-	$(CONDATINER) $(COND_CREATE) $@ -f "$$def_path" $(COND_FLAGS); \
-	touch $@.sqf
+	$(CONDATINER) $(COND_CREATE) $@ -f "$$def_path" $(COND_FLAGS)
 
 
 # listing helpers

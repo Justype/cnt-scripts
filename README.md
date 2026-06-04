@@ -70,6 +70,7 @@ make all        # build all: base_image SIFs + other defs as prefix dirs
 make ubuntu24   # build only ubuntu24 targets
 make list       # show discovered .def files and planned targets
 make clean      # remove build/ directory
+make -k all     # build all targets, continuing past failures
 ```
 
 - `base_image.def` → `build/<distro>/base_image_<arch>.sif`
