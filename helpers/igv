@@ -1,5 +1,5 @@
 #!/bin/bash
-#WHATIS: Integrative Genomics Viewer
+#WHATIS: Integrative Genomics Viewer (VNC)
 #NCPUS: 3
 #MEM: 12G
 #TIME: 8:00:00

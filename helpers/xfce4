@@ -1,5 +1,5 @@
 #!/bin/bash
-#WHATIS: XFCE4 desktop (TurboVNC or KasmVNC + audio)
+#WHATIS: XFCE4 desktop (KasmVNC + audio or TurboVNC)
 #NCPUS: 3
 #MEM: 12G
 #TIME: 8:00:00

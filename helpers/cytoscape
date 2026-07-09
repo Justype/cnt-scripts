@@ -1,5 +1,5 @@
 #!/bin/bash
-#WHATIS: Cytoscape network visualization platform
+#WHATIS: Cytoscape network visualization platform (VNC)
 #NCPUS: 3
 #MEM: 16G
 #TIME: 8:00:00
