@@ -41,18 +41,13 @@ if [[ ! -d "$BUILD_DIR" ]]; then
 fi
 
 uploaded=0
+declare -A tag_files
 
 while IFS= read -r -d '' file; do
     rel="${file#"$BUILD_DIR/"}"
     tag="${rel%%/*}"
     [[ -z "$tag" ]] && continue
-
-    echo "→ [$tag] $(basename "$file")"
-    if [[ "$DRY_RUN" -eq 1 ]]; then
-        echo "  (dry-run) gh release upload $tag $file --clobber -R $REPO"
-    else
-        gh release upload "$tag" "$file" --clobber -R "$REPO"
-    fi
+    tag_files["$tag"]+=" $file"
     uploaded=$((uploaded + 1))
 done < <(find "$BUILD_DIR" -type f \( -name "*.sif" -o -name "*.sqf" \) -print0 | sort -z)
 
@@ -60,6 +55,16 @@ if [[ $uploaded -eq 0 ]]; then
     echo "No .sif/.sqf artifacts found under $BUILD_DIR"
     exit 1
 fi
+
+for tag in "${!tag_files[@]}"; do
+    read -ra files <<< "${tag_files[$tag]}"
+    echo "→ [$tag] ${files[*]##*/}"
+    if [[ "$DRY_RUN" -eq 1 ]]; then
+        echo "  (dry-run) gh release upload $tag ${files[*]} --clobber -R $REPO"
+    else
+        gh release upload "$tag" "${files[@]}" --clobber -R "$REPO"
+    fi
+done
 
 echo
 echo "Done: $uploaded file(s) uploaded to $REPO"
