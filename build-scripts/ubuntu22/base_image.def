@@ -39,7 +39,7 @@ From: ubuntu:22.04
         build-essential libseccomp-dev uidmap \
         fakeroot squashfuse fuse2fs gocryptfs \
         cryptsetup tzdata dh-apparmor libfuse3-3
-    wget -qO apptainer.deb https://github.com/apptainer/apptainer/releases/download/v1.4.5/apptainer_1.4.5_amd64.deb
+    wget -qO apptainer.deb https://github.com/apptainer/apptainer/releases/download/v1.5.2/apptainer_1.5.2_amd64.deb
     dpkg -i apptainer.deb && rm -f apptainer.deb
 
     apt-get clean && rm -rf /var/lib/apt/lists/*

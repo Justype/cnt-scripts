@@ -69,7 +69,7 @@ From: ubuntu:20.04
     apt-get -y install /tmp/kasmvnc.deb
     rm -f /tmp/kasmvnc.deb
 
-    # Node.js LTS + kclient (KasmVNC audio streaming via PulseAudio)
+    # Node.js 22 + kclient (KasmVNC audio streaming via PulseAudio)
     curl -fsSL https://deb.nodesource.com/setup_22.x | bash -
     apt-get install -y nodejs build-essential pkg-config libpulse-dev git
     git clone https://github.com/Justype/kclient.git /opt/kclient
