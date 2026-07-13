@@ -1,0 +1,89 @@
+#!/usr/bin/bash
+#PL:human_gencode_version:22-50
+#PL:mouse_gencode_version:5-39
+#TARGET:grch38_grcm39/gtf-gencode/{human_gencode_version}-M{mouse_gencode_version}
+#WHATIS:Combined GRCh38 GENCODE v{human_gencode_version} + GRCm39 GENCODE vM{mouse_gencode_version} GTF, seqnames prefixed GRCh38_/GRCm39_ (for PDX/xenograft STAR index)
+#URL:https://www.gencodegenes.org/
+#ENV:ANNOTATION_GTF=$app_root/gencode.v{human_gencode_version}_vM{mouse_gencode_version}.primary_assembly.annotation.gtf
+#ENVNOTE:Combined human+mouse GTF; seqnames prefixed GRCh38_/GRCm39_ to match the combined genome FASTA
+
+install_app() {
+    cd "$target_dir"
+    human_url="https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_{human_gencode_version}/gencode.v{human_gencode_version}.primary_assembly.annotation.gtf.gz"
+    mouse_url="https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_mouse/release_M{mouse_gencode_version}/gencode.vM{mouse_gencode_version}.primary_assembly.annotation.gtf.gz"
+
+    print_stderr "Downloading GRCh38 GTF for ${YELLOW}${app_name_version}${NC}"
+    curl -fsSL -o "gencode.v{human_gencode_version}.primary_assembly.annotation.gtf.gz" "$human_url"
+    print_stderr "Downloading GRCm39 GTF for ${YELLOW}${app_name_version}${NC}"
+    curl -fsSL -o "gencode.vM{mouse_gencode_version}.primary_assembly.annotation.gtf.gz" "$mouse_url"
+
+    print_stderr "Extracting GTFs for ${YELLOW}${app_name_version}${NC}"
+    pigz_or_gunzip "gencode.v{human_gencode_version}.primary_assembly.annotation.gtf.gz"
+    pigz_or_gunzip "gencode.vM{mouse_gencode_version}.primary_assembly.annotation.gtf.gz"
+
+    print_stderr "Prefixing seqnames and merging for ${YELLOW}${app_name_version}${NC}"
+    awk 'BEGIN{OFS="\t"} /^#/ {print; next} {$1="GRCh38_"$1; print}' "gencode.v{human_gencode_version}.primary_assembly.annotation.gtf" > "gencode.v{human_gencode_version}_vM{mouse_gencode_version}.primary_assembly.annotation.gtf"
+    awk 'BEGIN{OFS="\t"} /^#/ {next} {$1="GRCm39_"$1; print}' "gencode.vM{mouse_gencode_version}.primary_assembly.annotation.gtf" >> "gencode.v{human_gencode_version}_vM{mouse_gencode_version}.primary_assembly.annotation.gtf"
+    rm "gencode.v{human_gencode_version}.primary_assembly.annotation.gtf" "gencode.vM{mouse_gencode_version}.primary_assembly.annotation.gtf"
+}
+
+# region common_functions
+set -e
+RED='\033[0;91m'
+BLUE='\033[0;94m'
+YELLOW='\033[0;93m'
+NC='\033[0m'
+NCPUS=${NCPUS:-4}
+
+install() {
+    print_stderr "Installing the target module: ${YELLOW}${app_name_version}${NC}"
+    print_stderr "🎯 Target directory: $target_dir"
+    if [ -d "$target_dir" ]; then
+        print_stderr "${RED}ERROR${NC}: Target app dir exists!"
+        exit 1
+    fi
+    if [[ -z "$tmp_dir" ]]; then
+        print_stderr "${RED}ERROR${NC}: tmp_dir is not set!"
+        exit 1
+    fi
+    if [[ -z "$target_dir" ]]; then
+        print_stderr "${RED}ERROR${NC}: target_dir is not set!"
+        exit 1
+    fi
+    mkdir -p "$target_dir"
+    mkdir -p "$tmp_dir"
+    cd "$tmp_dir"
+    install_app
+    print_stderr "✅ Installation completed. ${YELLOW}${app_name_version}${NC} is ready to use."
+}
+
+print_stderr() {
+    printf "[$(date +"%Y-%m-%d %T")] $1\n" 1>&2
+}
+
+pigz_or_gunzip() {
+    if command -v pigz &> /dev/null; then
+        pigz -d -p $NCPUS "$1"
+    else
+        gunzip "$1"
+    fi
+}
+
+pigz_or_gunzip_pipe() {
+    if command -v pigz &> /dev/null; then
+        pigz -d -p $NCPUS -c "$1"
+    else
+        gunzip -c "$1"
+    fi
+}
+
+tar_xf_pigz() {
+    if command -v pigz &> /dev/null; then
+        tar --no-same-owner --use-compress-program="pigz -d -p $NCPUS" -xf "$@"
+    else
+        tar --no-same-owner -xzf "$@"
+    fi
+}
+#endregion
+
+install
