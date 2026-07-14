@@ -17,25 +17,13 @@
 #PARAM: VNC_PROVIDER=kasm --vnc,-v "VNC provider"
 #VALUE: VNC_PROVIDER=kasm | turbo
 
-# 1. Find free DISPLAY.
-#    File check: fast pre-filter; effective in headless (non-scheduler) mode where
-#    the container sees the real host /tmp.
-#    Port check: cross-user/cross-container guard for scheduler mode where each
-#    job gets a private /tmp (SLURM_TMPDIR) — TCP ports are always host-level.
-DISPLAY_NUM=""
-for i in $(seq 10 999); do
-    [ -f "/tmp/.X${i}-lock" ] && continue
-    nc -z 127.0.0.1 $((5900 + i)) 2>/dev/null && continue
-    DISPLAY_NUM=$i
-    break
-done
-if [ -z "$DISPLAY_NUM" ]; then
-    condatainer _server_message "ERROR: No free X display found (tried :10–:999)"
-    exit 1
-fi
-export DISPLAY=":${DISPLAY_NUM}"
+# Check if 127.0.0.1:$1 is accepting TCP connections. Uses bash's /dev/tcp
+# redirection instead of `nc` — these images don't install netcat.
+_port_open() {
+    (exec 3<>"/dev/tcp/127.0.0.1/$1") 2>/dev/null
+}
 
-# 2. Desktop dirs always under SCRATCH to protect HOME quota.
+# 1. Desktop dirs always under SCRATCH to protect HOME quota.
 DESKTOP_HOME="${SCRATCH:-$HOME}/desktop-home"
 mkdir -p "$HOME/.config"
 cat > "$HOME/.config/user-dirs.dirs" <<EOT
@@ -50,7 +38,7 @@ XDG_VIDEOS_DIR="$DESKTOP_HOME/Videos"
 EOT
 mkdir -p "$DESKTOP_HOME"/{Desktop,Documents,Downloads,Music,Pictures,Public,Templates,Videos}
 
-# 3. xstartup — per-id in state dir.
+# 2. xstartup — per-id in state dir.
 cat > "$CNT_HELPER_STATE_DIR/xstartup" <<'EOF'
 #!/bin/sh
 unset SESSION_MANAGER
@@ -59,12 +47,12 @@ exec dbus-launch --exit-with-session startxfce4
 EOF
 chmod +x "$CNT_HELPER_STATE_DIR/xstartup"
 
-# 4. XDG_RUNTIME_DIR — per-id to avoid dbus conflicts between sessions.
+# 3. XDG_RUNTIME_DIR — per-id to avoid dbus conflicts between sessions.
 export XDG_RUNTIME_DIR="$CNT_JOB_TMPDIR/xdg_runtime"
 mkdir -p "$XDG_RUNTIME_DIR"
 chmod 700 "$XDG_RUNTIME_DIR"
 
-# 5. glib schemas — compile into per-job share dir (wiped by Slurm/cleanup; avoids quota).
+# 4. glib schemas — compile into per-job share dir (wiped by Slurm/cleanup; avoids quota).
 SCHEMA_DIR="$CNT_JOB_TMPDIR/share/glib-2.0/schemas"
 mkdir -p "$SCHEMA_DIR"
 cp -r /usr/share/glib-2.0/schemas/* "$SCHEMA_DIR/" 2>/dev/null || true
@@ -72,7 +60,7 @@ glib-compile-schemas "$SCHEMA_DIR" 2>/dev/null || true
 export XDG_DATA_DIRS="$CNT_JOB_TMPDIR/share:/usr/local/share:/usr/share"
 xdg-user-dirs-update 2>/dev/null || true
 
-# 6. Java — derive JAVA_HOME from the openjdk overlay so cytoscape.sh finds it.
+# 5. Java — derive JAVA_HOME from the openjdk overlay so cytoscape.sh finds it.
 _JAVA_BIN=$(command -v java 2>/dev/null)
 if [ -n "$_JAVA_BIN" ]; then
     export JAVA_HOME="$(dirname "$(dirname "$(readlink -f "$_JAVA_BIN")")")"
@@ -177,15 +165,32 @@ EOT
     }
     trap cleanup SIGINT SIGTERM
 
-    # Start KasmVNC.
-    vncserver "$DISPLAY" \
-        -select-de manual \
-        -xstartup "$CNT_HELPER_STATE_DIR/xstartup" \
-        -SecurityTypes None \
-        -disableBasicAuth \
-        -PublicIP 127.0.0.1
+    # Start KasmVNC — try displays in order; a failed attempt (e.g. lost a race
+    # with another launch for the same display) just advances to the next
+    # candidate instead of aborting.
+    DISPLAY_NUM=""
+    for i in $(seq 10 999); do
+        [ -f "/tmp/.X${i}-lock" ] && continue
+        _port_open $((5900 + i)) && continue
+        if { echo "=== attempt :${i} $(date) ==="; vncserver ":${i}" \
+                -select-de manual \
+                -xstartup "$CNT_HELPER_STATE_DIR/xstartup" \
+                -SecurityTypes None \
+                -disableBasicAuth \
+                -PublicIP 127.0.0.1; } >>"$CNT_HELPER_STATE_DIR/vncserver.log" 2>&1; then
+            DISPLAY_NUM=$i
+            break
+        fi
+        rm -f "/tmp/.X${i}-lock" "/tmp/.X11-unix/X${i}"
+    done
+    if [ -z "$DISPLAY_NUM" ]; then
+        condatainer _server_message "ERROR: No free X display found (tried :10-:999)"
+        exit 1
+    fi
+    export DISPLAY=":${DISPLAY_NUM}"
+
     for _i in $(seq 1 20); do
-        nc -z 127.0.0.1 "$KASM_INTERNAL_PORT" 2>/dev/null && break
+        _port_open "$KASM_INTERNAL_PORT" && break
         sleep 0.5
     done
 
@@ -198,7 +203,7 @@ EOT
     KCLIENT_PID=$!
 
     for _i in $(seq 1 20); do
-        nc -z 127.0.0.1 "$CNT_HELPER_PORT" 2>/dev/null && break
+        _port_open "$CNT_HELPER_PORT" && break
         sleep 0.5
     done
 
@@ -216,9 +221,6 @@ else
     printf '%s\n%s\n' "$VNC_PASSWD" "$VNC_PASSWD" | vncpasswd -f > "$HOME/.vnc/passwd"
     chmod 600 "$HOME/.vnc/passwd"
 
-    VNC_PORT=$(condatainer _pick_port)
-    [ "$VNC_PORT" = "$CNT_HELPER_PORT" ] && VNC_PORT=$(condatainer _pick_port)
-
     # Cleanup trap.
     WEBSOCKIFY_PID=""
     cleanup() {
@@ -229,13 +231,30 @@ else
     }
     trap cleanup SIGINT SIGTERM
 
-    # Start TurboVNC.
-    vncserver "$DISPLAY" \
-        -geometry 1600x900 \
-        -depth 24 \
-        -rfbport "$VNC_PORT" \
-        -rfbauth "$HOME/.vnc/passwd" \
-        -xstartup "$CNT_HELPER_STATE_DIR/xstartup"
+    # Start TurboVNC — try displays in order; a failed attempt (e.g. lost a race
+    # with another launch for the same display) just advances to the next
+    # candidate instead of aborting.
+    DISPLAY_NUM=""
+    for i in $(seq 10 999); do
+        [ -f "/tmp/.X${i}-lock" ] && continue
+        VNC_PORT=$((5900 + i))
+        _port_open "$VNC_PORT" && continue
+        if { echo "=== attempt :${i} $(date) ==="; vncserver ":${i}" \
+                -geometry 1600x900 \
+                -depth 24 \
+                -rfbport "$VNC_PORT" \
+                -rfbauth "$HOME/.vnc/passwd" \
+                -xstartup "$CNT_HELPER_STATE_DIR/xstartup"; } >>"$CNT_HELPER_STATE_DIR/vncserver.log" 2>&1; then
+            DISPLAY_NUM=$i
+            break
+        fi
+        rm -f "/tmp/.X${i}-lock" "/tmp/.X11-unix/X${i}"
+    done
+    if [ -z "$DISPLAY_NUM" ]; then
+        condatainer _server_message "ERROR: No free X display found (tried :10-:999)"
+        exit 1
+    fi
+    export DISPLAY=":${DISPLAY_NUM}"
 
     # Start websockify (noVNC WebSocket bridge).
     websockify --web /usr/share/novnc \
