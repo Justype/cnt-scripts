@@ -18,7 +18,7 @@ mkdir -p "$CNT_HELPER_STATE_DIR"
 # --server-data-dir: rserver sockets/PID/cookie-key. (With path limit 108 bytes rstudio/rstudio#15024).
 # RSTUDIO_DATA_HOME: rsession suspended sessions. Set to $CNT_HELPER_CWD/.rstudio so each project dir keeps its own session state.
 
-_PROXY_LINES=$(condatainer proxy show --export 2>/dev/null || true)
+_PROXY_LINES=$(condatainer proxy export 2>/dev/null || true)
 
 cat > "$CNT_HELPER_STATE_DIR/rsession.sh" <<RSESSION
 #!/bin/bash
