@@ -54,7 +54,7 @@ From: ubuntu:20.04
     # VirtualGL (OpenGL GPU offload for VNC; provides vglrun)
     curl -fsSL \
         -o /tmp/virtualgl.deb \
-        "https://github.com/VirtualGL/virtualgl/releases/download/3.1.4/virtualgl_3.1.4_${ARCH}.deb"
+        "https://github.com/VirtualGL/virtualgl/releases/download/3.1.5/virtualgl_3.1.5_${ARCH}.deb"
     apt-get -y install /tmp/virtualgl.deb
     rm -f /tmp/virtualgl.deb
 
@@ -62,7 +62,7 @@ From: ubuntu:20.04
     apt-get -y install novnc python3-websockify
 
     # KasmVNC (browser-based VNC alternative with built-in WebSocket)
-    KASMVNC_VERSION="1.4.0"
+    KASMVNC_VERSION="1.5.0"
     curl -fsSL \
         -o /tmp/kasmvnc.deb \
         "https://github.com/kasmtech/KasmVNC/releases/download/v${KASMVNC_VERSION}/kasmvncserver_focal_${KASMVNC_VERSION}_${ARCH}.deb"

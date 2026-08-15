@@ -22,8 +22,8 @@ From: ubuntu:22.04
 
     # RStudio Server
     case "$(uname -m)" in
-        x86_64) url="https://download2.rstudio.org/server/jammy/amd64/rstudio-server-2026.06.0-242-amd64.deb" ;;
-        aarch64) url="https://s3.amazonaws.com/rstudio-ide-build/server/jammy/arm64/rstudio-server-2026.06.0-242-arm64.deb" ;;
+        x86_64) url="https://download2.rstudio.org/server/jammy/amd64/rstudio-server-2026.08.0-187-amd64.deb" ;;
+        aarch64) url="https://s3.amazonaws.com/rstudio-ide-build/server/jammy/arm64/rstudio-server-2026.08.0-187-arm64.deb" ;;
         *) echo "ERROR: Unsupported architecture: $(uname -m)"; exit 1 ;;
     esac
     curl -fsSL -o rstudio.deb "$url"
