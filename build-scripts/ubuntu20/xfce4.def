@@ -62,7 +62,7 @@ From: ubuntu:20.04
     apt-get -y install novnc python3-websockify
 
     # KasmVNC (browser-based VNC alternative with built-in WebSocket)
-    KASMVNC_VERSION="1.4.0"
+    KASMVNC_VERSION="1.5.0"
     curl -fsSL \
         -o /tmp/kasmvnc.deb \
         "https://github.com/kasmtech/KasmVNC/releases/download/v${KASMVNC_VERSION}/kasmvncserver_focal_${KASMVNC_VERSION}_${ARCH}.deb"
