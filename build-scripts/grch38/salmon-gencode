@@ -1,7 +1,7 @@
 #!/usr/bin/bash
-#PL:salmon_version:1.0.0,1.1.0,1.2.0,1.2.1,1.3.0,1.4.0,1.5.0,1.5.1,1.5.2,1.6.0,1.7.0,1.8.0,1.9.0,1.10.0,1.10.1,1.10.2,1.10.3,1.11.4
+#PL:salmon_version:1.0.0,1.1.0,1.2.0,1.2.1,1.3.0,1.4.0,1.5.0,1.5.1,1.5.2,1.6.0,1.7.0,1.8.0,1.9.0,1.10.0,1.10.1,1.10.2,1.10.3,1.11.4,1.12.0,1.12.1,2.0.0,2.0.1,2.1.0,2.1.1,2.1.2,2.2.1
 #AUTOUPDATE:salmon_version:bioconda:salmon>=1.0.0
-#PL:gencode_version:23-49
+#PL:gencode_version:23-50
 #TARGET:grch38/salmon/{salmon_version}/gencode{gencode_version}
 #DEP:grch38/genome/gencode
 #DEP:grch38/transcript-gencode/{gencode_version}
