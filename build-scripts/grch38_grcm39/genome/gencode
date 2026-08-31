@@ -1,5 +1,5 @@
 #!/usr/bin/bash
-#DEP:samtools/1.23.1>=1.10
+#DEP:samtools/1.24>=1.10
 #AUTOUPDATE:samtools:bioconda:samtools
 #WHATIS:Combined GRCh38+GRCm39 reference genome FASTA, contigs prefixed GRCh38_/GRCm39_ (for PDX/xenograft alignment)
 #URL:https://www.gencodegenes.org/
