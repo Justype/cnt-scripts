@@ -1,8 +1,8 @@
 #!/usr/bin/bash
 #DEP:grch38/vcf/hprc-v1.1-decomposed
-#DEP:bcftools/1.23.1
+#DEP:bcftools/1.24
 #AUTOUPDATE:bcftools:bioconda:bcftools
-#DEP:htslib/1.23.1
+#DEP:htslib/1.24
 #AUTOUPDATE:htslib:bioconda:htslib
 #WHATIS:HPRC v1.1 GRCh38 Decomposed VCF with chromosome names matching GENCODE
 #URL:https://github.com/human-pangenomics/hpp_pangenome_resources
