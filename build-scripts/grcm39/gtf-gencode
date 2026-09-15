@@ -1,5 +1,5 @@
 #!/usr/bin/bash
-#PL:gencode_version:5-38
+#PL:gencode_version:5-39
 #TARGET:grcm39/gtf-gencode/M{gencode_version}
 #WHATIS:GRCm39 reference genome GTF for GENCODE M{gencode_version}
 #URL:https://www.gencodegenes.org/mouse/
