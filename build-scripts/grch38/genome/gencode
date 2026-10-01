@@ -1,5 +1,5 @@
 #!/usr/bin/bash
-#DEP:samtools/1.23.1>=1.10
+#DEP:samtools/1.24>=1.10
 #AUTOUPDATE:samtools:bioconda:samtools
 #WHATIS:GRCh38 reference genome FASTA
 #URL:https://www.gencodegenes.org/human/
