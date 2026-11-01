@@ -1,5 +1,5 @@
 #!/usr/bin/bash
-#PL:gencode_version:22-49
+#PL:gencode_version:22-50
 #TARGET:grch38/gtf-gencode/{gencode_version}
 #WHATIS:GRCh38 reference genome GTF for GENCODE {gencode_version}
 #URL:https://www.gencodegenes.org/human/
